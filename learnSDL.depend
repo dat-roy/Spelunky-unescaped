@@ -1,0 +1,27 @@
+# depslib dependency file v1.0
+1647040619 source:d:\learnsdl\main.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<iostream>
+	<string>
+
+1646554538 source:d:\learnsdl\texture_tutorial.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<iostream>
+	<string>
+
+1647040304 source:d:\learnsdl\animation.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<stdio.h>
+	<string>
+
+1595135239 source:d:\learnsdl\21_sound_effects_and_music.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<stdio.h>
+	<string>
+
