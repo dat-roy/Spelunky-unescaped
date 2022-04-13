@@ -1,0 +1,175 @@
+# depslib dependency file v1.0
+1649598746 source:d:\sdlproject\main.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	"Global.h"
+	"SDL_Utils.h"
+	"LTexture.h"
+	"Dot.h"
+	"ProjectileMotion.h"
+
+1648717719 d:\sdlproject\ltexture.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+
+1647786161 source:d:\sdlproject\ltexture.cpp
+	"LTexture.h"
+
+1649172382 d:\sdlproject\global.h
+	<SDL.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	"LTexture.h"
+
+1647535958 source:d:\sdlproject\global.cpp
+	"Global.h"
+
+1649148365 d:\sdlproject\dot.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	"Global.h"
+	"LTexture.h"
+
+1647793548 source:d:\sdlproject\dot.cpp
+	"Dot.h"
+
+1648721159 d:\sdlproject\sdl_utils.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	"Global.h"
+
+1648721202 source:d:\sdlproject\sdl_utils.cpp
+	"SDL_Utils.h"
+
+1649153244 source:d:\sdlproject\mydot.cpp
+	"MyDot.h"
+
+1649152586 d:\sdlproject\mydot.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	"Global.h"
+	"LTexture.h"
+
+1649171400 d:\sdlproject\projectilemotion.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	"Global.h"
+	"LTexture.h"
+
+1649171225 source:d:\sdlproject\projectilemotion.cpp
+	"ProjectileMotion.h"
+
+1647793548 source:d:\sdlproject\src\dot.cpp
+	"Dot.h"
+
+1649148365 d:\sdlproject\src\dot.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	"Global.h"
+	"LTexture.h"
+
+1649840624 d:\sdlproject\src\global.h
+	<SDL.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	"LTexture.h"
+
+1648717719 d:\sdlproject\src\ltexture.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+
+1647786161 source:d:\sdlproject\src\ltexture.cpp
+	"LTexture.h"
+
+1649846867 source:d:\sdlproject\src\main.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	"Global.h"
+	"SDL_Utils.h"
+	"LTexture.h"
+	"Bullet.h"
+
+1648721159 d:\sdlproject\src\sdl_utils.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	"Global.h"
+
+1649839782 d:\sdlproject\src\projectilemotion.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	"Global.h"
+	"LTexture.h"
+
+1649171225 source:d:\sdlproject\src\projectilemotion.cpp
+	"ProjectileMotion.h"
+
+1649600540 source:d:\sdlproject\src\sdl_utils.cpp
+	"SDL_Utils.h"
+
+1649847267 source:d:\sdlproject\src\bullet.cpp
+	"Bullet.h"
+
+1649847257 d:\sdlproject\src\bullet.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	"Global.h"
+	"LTexture.h"
+
