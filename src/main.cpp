@@ -14,22 +14,34 @@
 //Text texture
 static LTexture textLine_01;
 static LTexture textLine_02;
+static LTexture gBgTexture;
+static LTexture gPointerTexture;
 static LTexture gBulletTexture;
 
 bool loadMedia(SDL_Window* &gWindow, SDL_Renderer* &gRenderer, TTF_Font* &gFont)
 {
     try
     {
-        //Load bmp
-        if( !gBulletTexture.loadFromFile( gRenderer, "res/img/dot.bmp" ) )
+        //Load background
+        if( !gBgTexture.loadFromFile( gRenderer, "res/img/bg.jpg" ) )
+        {
+            throw "Failed to load background texture!\n";
+        }
+        //Load pointer for motion
+        if( !gPointerTexture.loadFromFile( gRenderer, "res/img/point.png" ) )
+        {
+            throw "Failed to load pointer texture!\n";
+        }
+        if( !gBulletTexture.loadFromFile( gRenderer, "res/img/monkey.png" ) )
         {
             throw "Failed to load dot texture!\n";
         }
 		//Render text
-		SDL_Color textColor = { 0, 0, 0 };
+		SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
 		if (! textLine_01.loadFromRenderedText(
                                           gRenderer,
-                                          "Simulate projectile motion of a bullet: ",
+                                          //"Simulate projectile motion of a bullet: ",
+                                          "MONKEY IN JUNGLE",
                                           gFont,
                                           textColor
                                           ))
@@ -80,12 +92,13 @@ int main( int argc, char* args[] )
             int mouseX = 0;
             int mouseY = 0;
 
-            int initPosX = 100;
-            int initPosY = 200;
-            Bullet bullet(100, 200, 0, 0);
+            int initPosX = 150;
+            int initPosY = 120;
+            Bullet bullet(initPosX, initPosY, 0, 0);
 
             bool mouseDown = false;
             bool mousePressed = false;
+
 
 			while( !quitGame )
 			{
@@ -97,11 +110,12 @@ int main( int argc, char* args[] )
                             quitGame = true;
                             break;
                     }
-                    bullet.handleEvent(e, mouseX, mouseY, mouseDown, mousePressed);
+                    bullet.handleEvent(gRenderer, gPointerTexture, e, mouseX, mouseY, mouseDown, mousePressed);
 				}
 
-                SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-				SDL_RenderClear( gRenderer );
+                /*SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+				SDL_RenderClear( gRenderer );*/
+				gBgTexture.render(gRenderer, 0, 0);
                 textLine_01.render(
                                 gRenderer,
                                 ( SCREEN_WIDTH - textLine_01.getWidth() ) / 2,
@@ -109,27 +123,37 @@ int main( int argc, char* args[] )
                             );
                 textLine_02.render(
                                 gRenderer,
-                                ( SCREEN_WIDTH - textLine_01.getWidth() ) / 2,
+                                ( SCREEN_WIDTH - textLine_02.getWidth() ) / 2,
                                 150
                             );
-                bullet.render(gRenderer, gBulletTexture);
 
-				//Update screen
+				double time = 0;
+				double alpha = atan(1.0 * (SCREEN_HEIGHT - initPosY - mouseY) / (mouseX - initPosX));
+				double maxTime = bullet.getTimeOfMotion(alpha);
+
+				bullet.render(gRenderer, gBulletTexture, 0);
 				SDL_RenderPresent( gRenderer );
+                while (mousePressed == true && mouseDown == false) {
+                    time += 0.12;
+                    if (time > maxTime) mousePressed = false;
+                    gBgTexture.render(gRenderer, 0, 0);
+                    bullet.projectileMotion(gRenderer, gBulletTexture, alpha, time, quitGame);
 
-                if (mousePressed == true && mouseDown == false) {
-
-                    double alpha = atan(1.0 * (SCREEN_HEIGHT - initPosY - mouseY) / (mouseX - initPosX));
-                    double time = 0;
-                    //std::cout << 180.0 * alpha / 3.14 << std::endl;
-                    bullet.projectileMotion(gRenderer, gBulletTexture, alpha, time,  mouseX, mouseY, quitGame);
-                    mousePressed = false;
+                    while( SDL_PollEvent( &e ) != 0 )
+                    {
+                        if( e.type == SDL_QUIT )
+                        {
+                            quitGame = true;
+                        }
+                    }
                 }
 			}
 		}
 	}
 
 	//Free resources and close SDL
+	gPointerTexture.free();
+	gBgTexture.free();
 	gBulletTexture.free();
 	textLine_01.free();
 	textLine_02.free();

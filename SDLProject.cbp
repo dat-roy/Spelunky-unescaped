@@ -31,13 +31,11 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="src/Dot.cpp" />
-		<Unit filename="src/Dot.h" />
+		<Unit filename="src/Bullet.cpp" />
+		<Unit filename="src/Bullet.h" />
 		<Unit filename="src/Global.h" />
 		<Unit filename="src/LTexture.cpp" />
 		<Unit filename="src/LTexture.h" />
-		<Unit filename="src/ProjectileMotion.cpp" />
-		<Unit filename="src/ProjectileMotion.h" />
 		<Unit filename="src/SDL_Utils.cpp" />
 		<Unit filename="src/SDL_Utils.h" />
 		<Unit filename="src/main.cpp" />

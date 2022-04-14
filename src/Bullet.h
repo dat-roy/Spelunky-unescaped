@@ -28,12 +28,14 @@ public:
 
     Bullet();
     Bullet(int _posX, int _posY, int _velX = 0, int _velY = 0, int _initVel = 0);
-    void handleEvent(SDL_Event e, int& mouseX, int& mouseY, bool& mouseDown, bool& mousePressed);
+    void handleEvent(SDL_Renderer* &gRenderer, LTexture &gPointerTexture, SDL_Event& e, int& mouseX, int& mouseY, bool& mouseDown, bool& mousePressed);
+
+    double getTimeOfMotion(const double &alpha);
     void projectileMotion(SDL_Renderer* &gRenderer, LTexture &gBulletTexture,
-                          double alpha, double time, int mouseX, int mouseY,
+                          double &alpha, double &time,
                           bool& quitGame);
     void updateState(double alpha, double time);
-    void render(SDL_Renderer* &gRenderer, LTexture &gBulletTexture);
+    void render(SDL_Renderer* &gRenderer, LTexture &gBulletTexture, double alpha);
 
     int getPosX() {return posX;}
     int getPosY() {return posY;}

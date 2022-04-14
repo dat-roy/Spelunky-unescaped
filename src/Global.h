@@ -10,8 +10,8 @@
 #include "LTexture.h"
 
 //Window properties
-const std::string WINDOW_TITLE = "Awesome Bullet";
-const int SCREEN_WIDTH = 1200;
+const std::string WINDOW_TITLE = "Stupid monkey";
+const int SCREEN_WIDTH = 1000;
 const int SCREEN_HEIGHT = 500;
 
 #endif // GLOBAL__H_

@@ -6,6 +6,11 @@ double rad(double deg)
     return deg * PI / 180;
 }
 
+double deg(double rad)
+{
+    return 180.0 * rad / PI;
+}
+
 Bullet::Bullet()
 {
     initPosX = posX = 0;
@@ -24,14 +29,14 @@ Bullet::Bullet(int _posX, int _posY, int _velX, int _velY, int _initVel)
     initVel = _initVel;
 }
 
-void Bullet::handleEvent(SDL_Event e, int& mouseX, int& mouseY, bool& mouseDown, bool& mousePressed)
+void Bullet::handleEvent(SDL_Renderer* &gRenderer, LTexture &gPointerTexture, SDL_Event& e, int& mouseX, int& mouseY, bool& mouseDown, bool& mousePressed)
 {
     switch (e.type)
     {
          case SDL_KEYDOWN:
             if (e.key.keysym.sym == SDLK_SPACE)
             {
-                initVel += 1;
+                initVel += 2;
                 initVel = std::min(initVel, MAX_INIT_VELOCITY);
                 std::cout << "Velocity = " << initVel << std::endl;
             }
@@ -46,9 +51,13 @@ void Bullet::handleEvent(SDL_Event e, int& mouseX, int& mouseY, bool& mouseDown,
                     mouseX = posX;
                 }
                 //SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-                //SDL_RenderDrawLine(gRenderer, initPosX, SCREEN_HEIGHT - initPosY, mouseX, mouseY);
-                //Update screen
-                //SDL_RenderPresent( gRenderer );
+                //SDL_RenderDrawLine(gRenderer, , mouseX, mouseY);
+
+                /*gPointerTexture.render(
+                                gRenderer,
+                                initPosX, SCREEN_HEIGHT - initPosY
+                            );
+                SDL_RenderPresent( gRenderer );*/
             }
             break;
         case SDL_MOUSEBUTTONUP:
@@ -60,49 +69,52 @@ void Bullet::handleEvent(SDL_Event e, int& mouseX, int& mouseY, bool& mouseDown,
     }
 }
 
-void Bullet::projectileMotion(SDL_Renderer* &gRenderer, LTexture &gBulletTexture, double alpha, double time, int mouseX, int mouseY, bool& quitGame)
+double Bullet::getTimeOfMotion(const double &alpha)
 {
-    for (int i = 0; i <= 200; i++) {
-        time += 0.1;
-        updateState(alpha, time);
+    double t1 = initVel * sin(alpha) / GRAVITY;
+    double H = pow(initVel,2) * pow(sin(alpha),2) / (2 * GRAVITY);
+    double t2 = sqrt( 2 * (H + initPosY - 120) / GRAVITY);
+    return t1 + t2;
+}
 
-        if (posY < 0) {
-            alpha = atan(1.0 * std::abs(velY) / std::abs(velX));
-            time = 0;
-            initPosX = posX;
-            initPosY = posY;
-            initVel = sqrt( pow(velY, 2) + pow(velX, 2) );
-        }
-        render(gRenderer, gBulletTexture);
-        SDL_RenderPresent( gRenderer );
-        //Clear screen
-        SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-        SDL_RenderClear( gRenderer );
+void Bullet::projectileMotion(SDL_Renderer* &gRenderer, LTexture &gBulletTexture, double &alpha, double &time, bool& quitGame)
+{
+    updateState(alpha, time);
 
-        SDL_Event e;
-        while( SDL_PollEvent( &e ) != 0 )
-        {
-            if( e.type == SDL_QUIT )
-            {
-                quitGame = true;
-                return;
-            }
-        }
-    }
+    /*if (posY < 0) {
+        alpha = atan(1.0 * std::abs(velY) / std::abs(velX));
+        //std::cout << "Alpha: " << alpha << std::endl;
+        time = 0;
+        initPosX = posX;
+        initPosY = posY;
+        //posY = 0;
+        initVel = sqrt( pow(velY, 2) + pow(velX, 2) );
+    }*/
+
+    render(gRenderer, gBulletTexture, alpha);
+    SDL_RenderPresent( gRenderer );
+    //Clear screen
+    SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+    SDL_RenderClear( gRenderer );
 }
 
 void Bullet::updateState(double alpha, double time)
 {
     velX = initVel * cos(alpha);
     velY = initVel * sin(alpha) - GRAVITY * time;
-
     posX = initPosX + initVel * cos(alpha) * time;
     posY = initPosY + initVel * sin(alpha) * time - GRAVITY * time * time / 2;
 }
 
-
-void Bullet::render(SDL_Renderer* &gRenderer, LTexture &gTexture)
+void Bullet::render(SDL_Renderer* &gRenderer, LTexture &gTexture, double alpha)
 {
-    gTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY);
+    double angle = -alpha;
+    if (velX != 0) {
+        angle = atan(std::abs(velY) / std::abs(velX));
+        if (velY > 0)
+            angle = -angle;
+    }
+    //std::cout << deg(angle) << " angle" << std::endl;
+    gTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, NULL, deg(angle));
 }
 
