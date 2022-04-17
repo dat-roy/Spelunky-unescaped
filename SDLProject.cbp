@@ -31,6 +31,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Entity.h" />
 		<Unit filename="src/Bullet.cpp" />
 		<Unit filename="src/Bullet.h" />
 		<Unit filename="src/Global.h" />

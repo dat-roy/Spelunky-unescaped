@@ -72,28 +72,8 @@ int main( int argc, char* args[] )
     while( !quitGame )
     {
         //Handle events on queue
-        while( SDL_PollEvent( &e ) != 0 )
-        {
-            if (e.type == SDL_QUIT)
-            {
-                quitGame = true;
-                break;
-            }
-
-            bullet.handleEvent(gRenderer, gPointerTexture, e, mouseX, mouseY, mouseDown, mousePressed);
-            if (mousePressed && mouseDown)
-            {
-                gPointerTexture.render(
-                    gRenderer,
-                    initPosX, SCREEN_HEIGHT - initPosY,
-                    NULL,
-                    -180 / PI * atan(1.0 * (SCREEN_HEIGHT - initPosY - mouseY) / (mouseX - initPosX))
-                );
-                SDL_RenderPresent( gRenderer );
-            }
-        }
-
         gBgTexture.render(gRenderer, 0, 0);
+        gCharacterTexture.render(gRenderer, 150, SCREEN_HEIGHT - 130);
         textLine_01.render(
             gRenderer,
             ( SCREEN_WIDTH - textLine_01.getWidth() ) / 2,
@@ -105,9 +85,16 @@ int main( int argc, char* args[] )
             150
         );
 
+        while( SDL_PollEvent( &e ) != 0 )
+        {
+            if (e.type == SDL_QUIT)
+            {
+                quitGame = true;
+                break;
+            }
+            bullet.handleEvent(gRenderer, gPointerTexture, e, mouseX, mouseY, mouseDown, mousePressed);
+        }
 
-        //bullet.render(gRenderer, gBulletTexture, 0);
-        gCharacterTexture.render(gRenderer, 150, SCREEN_HEIGHT - 130);
         SDL_RenderPresent( gRenderer );
         double time = 0;
         double alpha = atan(1.0 * (SCREEN_HEIGHT - initPosY - mouseY) / (mouseX - initPosX));
@@ -120,9 +107,9 @@ int main( int argc, char* args[] )
             {
                 gBgTexture.render(gRenderer, 0, 0);
                 gCharacterTexture.render(gRenderer, 150, SCREEN_HEIGHT - 130);
-                gExplodeTexture.render(gRenderer,bullet.getPosX(),SCREEN_HEIGHT - 130);
+                gExplodeTexture.render(gRenderer,bullet.getPosX(),SCREEN_HEIGHT - 100);
                 SDL_RenderPresent(gRenderer);
-                SDL_Delay(100);
+                SDL_Delay(800);
                 mousePressed = false;
             }
             gBgTexture.render(gRenderer, 0, 0);

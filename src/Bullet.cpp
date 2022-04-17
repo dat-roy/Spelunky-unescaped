@@ -50,6 +50,13 @@ void Bullet::handleEvent(SDL_Renderer* &gRenderer, LTexture &gPointerTexture, SD
             {
                 mouseX = posX;
             }
+            gPointerTexture.render(
+                gRenderer,
+                initPosX, SCREEN_HEIGHT - initPosY,
+                NULL,
+                -180 / PI * atan(1.0 * (SCREEN_HEIGHT - initPosY - mouseY) / (mouseX - initPosX))
+            );
+            SDL_RenderPresent( gRenderer );
         }
         break;
     case SDL_KEYUP:
