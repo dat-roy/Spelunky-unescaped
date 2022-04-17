@@ -55,17 +55,17 @@ bool LTexture::loadFromFile( SDL_Renderer* &gRenderer, std::string path )
     }
     catch (const char* error)
     {
-        std::cerr << error << std::endl;
+        std::cerr << "In LTexture::loadFromFile(): " << path << ": " << error << std::endl;
         return false;
     }
 }
 
 bool LTexture::loadFromRenderedText(
-                                    SDL_Renderer* &gRenderer,
-                                    std::string textureText,
-                                    TTF_Font* gFont,
-                                    SDL_Color textColor
-                                    )
+    SDL_Renderer* &gRenderer,
+    std::string textureText,
+    TTF_Font* gFont,
+    SDL_Color textColor
+)
 {
     //Get rid of preexisting texture
     free();
@@ -74,10 +74,10 @@ bool LTexture::loadFromRenderedText(
     {
         //Render text surface
         SDL_Surface* textSurface = TTF_RenderText_Solid(
-                                                        gFont,
-                                                        textureText.c_str(),
-                                                        textColor
-                                                        );
+                                       gFont,
+                                       textureText.c_str(),
+                                       textColor
+                                   );
         if (textSurface == NULL)
         {
             throw TTF_GetError();
@@ -98,7 +98,7 @@ bool LTexture::loadFromRenderedText(
     }
     catch (const char* error)
     {
-        std::cerr << error << std::endl;
+        std::cerr << "In LTexture::loadFromRenderedText(): " << textureText << ": " << error << std::endl;
         return false;
     }
 }
@@ -134,14 +134,14 @@ void LTexture::setAlpha( Uint8 alpha )
 }
 
 void LTexture::render(
-                      SDL_Renderer* &gRenderer,
-                      int x,
-                      int y,
-                      SDL_Rect* clip,
-                      double angle,
-                      SDL_Point* center,
-                      SDL_RendererFlip flip
-                      )
+    SDL_Renderer* &gRenderer,
+    int x,
+    int y,
+    SDL_Rect* clip,
+    double angle,
+    SDL_Point* center,
+    SDL_RendererFlip flip
+)
 {
     //Set rendering space and render to screen
     SDL_Rect renderQuad = { x, y, mWidth, mHeight };

@@ -16,14 +16,14 @@ bool utils::init(SDL_Window* &gWindow, SDL_Renderer* &gRenderer, TTF_Font* &gFon
         }
 
         //Create window
-		gWindow = SDL_CreateWindow(
-                             WINDOW_TITLE.c_str(),
-                             SDL_WINDOWPOS_UNDEFINED,
-                             SDL_WINDOWPOS_UNDEFINED,
-                             SCREEN_WIDTH,
-                             SCREEN_HEIGHT,
-                             SDL_WINDOW_SHOWN
-                             );
+        gWindow = SDL_CreateWindow(
+                      WINDOW_TITLE.c_str(),
+                      SDL_WINDOWPOS_UNDEFINED,
+                      SDL_WINDOWPOS_UNDEFINED,
+                      SCREEN_WIDTH,
+                      SCREEN_HEIGHT,
+                      SDL_WINDOW_SHOWN
+                  );
         if (gWindow == NULL)
         {
             throw SDL_GetError();
@@ -31,10 +31,10 @@ bool utils::init(SDL_Window* &gWindow, SDL_Renderer* &gRenderer, TTF_Font* &gFon
 
         //Create vsynced renderer for window
         gRenderer = SDL_CreateRenderer(
-                              gWindow,
-                              -1,
-                              SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
-                              );
+                        gWindow,
+                        -1,
+                        SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+                    );
         std::cout << gRenderer;
         if (gRenderer == NULL)
         {
@@ -89,15 +89,15 @@ void utils::close(SDL_Window* &gWindow, SDL_Renderer* &gRenderer, TTF_Font* &gFo
     TTF_CloseFont( gFont );
     gFont = NULL;
 
-	//Destroy window, renderer
-	SDL_DestroyWindow( gWindow );
-	SDL_DestroyRenderer( gRenderer );
-	gWindow = NULL;
-	gRenderer = NULL;
+    //Destroy window, renderer
+    SDL_DestroyWindow( gWindow );
+    SDL_DestroyRenderer( gRenderer );
+    gWindow = NULL;
+    gRenderer = NULL;
 
-	//Quit SDL subsystems
-	TTF_Quit();
-	IMG_Quit();
-	Mix_Quit();
-	SDL_Quit();
+    //Quit SDL subsystems
+    TTF_Quit();
+    IMG_Quit();
+    Mix_Quit();
+    SDL_Quit();
 }
