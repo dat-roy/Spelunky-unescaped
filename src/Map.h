@@ -25,8 +25,6 @@ public:
     ~Map();
     void loadTextures(SDL_Renderer* &gRenderer, TTF_Font* &gFont24, TTF_Font* &gFont32, TTF_Font* &gFont48);
 
-    LTexture getText_01();
-    LTexture getText_02();
     void renderBackground(SDL_Renderer* &gRenderer, int x = 0, int y = 0);
     void renderText_01(SDL_Renderer* &gRenderer, int x = 0, int y = 0);
     void renderText_02(SDL_Renderer* &gRenderer, int x = 0, int y = 0);

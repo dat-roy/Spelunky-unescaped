@@ -49,8 +49,8 @@ int main( int argc, char* args[] )
     while( !quitGame )
     {
         map.renderBackground(gRenderer, 0, 0);
-        map.renderText_01( gRenderer, ( SCREEN_WIDTH - map.getText_01().getWidth() ) / 2, 100 );
-        map.renderText_02( gRenderer, ( SCREEN_WIDTH - map.getText_02().getWidth() ) / 2, 150 );
+        map.renderText_01(gRenderer);
+        map.renderText_02(gRenderer);
         //SDL_Delay(100);
 
         while( SDL_PollEvent( &event ) != 0 )

@@ -22,16 +22,6 @@ void Map::loadTextures(SDL_Renderer* &gRenderer, TTF_Font* &gFont24, TTF_Font* &
                                       gFont24, textColor);
 }
 
-LTexture Map::getText_01()
-{
-    return text_01;
-}
-
-LTexture Map::getText_02()
-{
-    return text_02;
-}
-
 void Map::renderBackground(SDL_Renderer* &gRenderer, int x, int y)
 {
     gBgTexture.render(gRenderer, x, y);
@@ -39,9 +29,9 @@ void Map::renderBackground(SDL_Renderer* &gRenderer, int x, int y)
 
 void Map::renderText_01(SDL_Renderer* &gRenderer, int x, int y)
 {
-    text_01.render(gRenderer, x, y);
+    text_01.render(gRenderer, ( SCREEN_WIDTH - text_01.getWidth() ) / 2, 100);
 }
 void Map::renderText_02(SDL_Renderer* &gRenderer, int x, int y)
 {
-    text_02.render(gRenderer, x, y);
+    text_02.render(gRenderer, ( SCREEN_WIDTH - text_02.getWidth() ) / 2, 150);
 }
