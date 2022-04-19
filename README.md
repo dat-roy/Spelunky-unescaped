@@ -4,4 +4,6 @@
 
 **Week 8:**
 + Simulate projectile motion of a bullet (without friction).
-+ Add graphics: Monkey in jungle.
++ Add background, character, weapon.
+
+**Week 9:**

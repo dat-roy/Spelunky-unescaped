@@ -1,6 +1,6 @@
 #include "SDL_Utils.h"
 
-bool utils::init(SDL_Window* &gWindow, SDL_Renderer* &gRenderer, TTF_Font* &gFont)
+bool utils::init(SDL_Window* &gWindow, SDL_Renderer* &gRenderer, TTF_Font* &gFont24, TTF_Font* &gFont32, TTF_Font* &gFont48)
 {
     try
     {
@@ -35,7 +35,6 @@ bool utils::init(SDL_Window* &gWindow, SDL_Renderer* &gRenderer, TTF_Font* &gFon
                         -1,
                         SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
                     );
-        std::cout << gRenderer;
         if (gRenderer == NULL)
         {
             throw SDL_GetError();
@@ -50,12 +49,6 @@ bool utils::init(SDL_Window* &gWindow, SDL_Renderer* &gRenderer, TTF_Font* &gFon
             throw IMG_GetError();
         }
 
-        //Initialize SDL_mixer
-        //44100 is a standard frequency that works on most systems
-        //The second argument determines the sample format.
-        //The third argument is the number of hardware channels, and here using 2 channels for stereo.
-        //The last argument is the sample size, which determines the size of the chunks we use when playing sound.
-        //2048 bytes (AKA 2 kilobyes) worked fine for me, but you may have to experiment with this value to minimize lag when playing sounds.
         if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
         {
             throw Mix_GetError();
@@ -67,8 +60,18 @@ bool utils::init(SDL_Window* &gWindow, SDL_Renderer* &gRenderer, TTF_Font* &gFon
             throw TTF_GetError();
         }
         //Open the font
-        gFont = TTF_OpenFont( "res/font/SourceCodePro-Regular.ttf", 24 );
-        if (gFont == NULL)
+        gFont24 = TTF_OpenFont( "res/font/SourceCodePro-Regular.ttf", 24 );
+        if (gFont24 == NULL)
+        {
+            throw TTF_GetError();
+        }
+        gFont32 = TTF_OpenFont( "res/font/SourceCodePro-Regular.ttf", 32 );
+        if (gFont32 == NULL)
+        {
+            throw TTF_GetError();
+        }
+        gFont48 = TTF_OpenFont( "res/font/SourceCodePro-Regular.ttf", 48 );
+        if (gFont48 == NULL)
         {
             throw TTF_GetError();
         }
@@ -82,12 +85,16 @@ bool utils::init(SDL_Window* &gWindow, SDL_Renderer* &gRenderer, TTF_Font* &gFon
 }
 
 
-void utils::close(SDL_Window* &gWindow, SDL_Renderer* &gRenderer, TTF_Font* &gFont)
+void utils::close(SDL_Window* &gWindow, SDL_Renderer* &gRenderer, TTF_Font* &gFont24, TTF_Font* &gFont32, TTF_Font* &gFont48)
 {
 
     //Free global font
-    TTF_CloseFont( gFont );
-    gFont = NULL;
+    TTF_CloseFont( gFont24 );
+    TTF_CloseFont( gFont32 );
+    TTF_CloseFont( gFont48 );
+    gFont24 = NULL;
+    gFont32 = NULL;
+    gFont48 = NULL;
 
     //Destroy window, renderer
     SDL_DestroyWindow( gWindow );

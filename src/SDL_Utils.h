@@ -11,8 +11,8 @@
 #include "Global.h"
 
 namespace utils {
-    bool init(SDL_Window* &gWindow, SDL_Renderer* &gRenderer, TTF_Font* &gFont);
-    void close(SDL_Window* &gWindow, SDL_Renderer* &gRenderer, TTF_Font* &gFont);
+    bool init(SDL_Window* &gWindow, SDL_Renderer* &gRenderer, TTF_Font* &gFont24, TTF_Font* &gFont32, TTF_Font* &gFont48);
+    void close(SDL_Window* &gWindow, SDL_Renderer* &gRenderer, TTF_Font* &gFont24, TTF_Font* &gFont32, TTF_Font* &gFont48);
 }
 
 

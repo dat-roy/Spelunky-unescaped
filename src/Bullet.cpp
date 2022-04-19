@@ -29,38 +29,32 @@ Bullet::Bullet(int _posX, int _posY, int _velX, int _velY, int _initVel)
     initVel = _initVel;
 }
 
-void Bullet::handleEvent(SDL_Renderer* &gRenderer, LTexture &gPointerTexture, SDL_Event& e, int& mouseX, int& mouseY, bool& mouseDown, bool& mousePressed)
+void Bullet::handleEvent(SDL_Event& event, int& mouseX, int& mouseY, bool& mouseDown, bool& mousePressed)
 {
-    switch (e.type)
+    switch (event.type)
     {
     case SDL_KEYDOWN:
-        if (e.key.keysym.sym == SDLK_SPACE)
+        if (event.key.keysym.sym == SDLK_SPACE)
         {
             initVel += 2;
             initVel = std::min(initVel, MAX_INIT_VELOCITY);
             std::cout << "Velocity = " << initVel << std::endl;
         }
-        if (e.key.keysym.sym == SDLK_m)
+        if (event.key.keysym.sym == SDLK_m)
         {
             mouseDown = true;
             mousePressed = true;
+            endMove = false;
 
             SDL_GetMouseState(&mouseX, &mouseY);
             if (mouseX < posX)
             {
                 mouseX = posX;
             }
-            gPointerTexture.render(
-                gRenderer,
-                initPosX, SCREEN_HEIGHT - initPosY,
-                NULL,
-                -180 / PI * atan(1.0 * (SCREEN_HEIGHT - initPosY - mouseY) / (mouseX - initPosX))
-            );
-            SDL_RenderPresent( gRenderer );
         }
         break;
     case SDL_KEYUP:
-        if (e.key.keysym.sym == SDLK_m)
+        if (event.key.keysym.sym == SDLK_m)
         {
             mouseDown = false;
         }
@@ -76,15 +70,12 @@ double Bullet::getTimeOfMotion(const double &alpha)
     return t1 + t2;
 }
 
-void Bullet::projectileMotion(SDL_Renderer* &gRenderer, LTexture &gBulletTexture, double &alpha, double &time, bool& quitGame)
+void Bullet::projectileMotion(SDL_Renderer* &gRenderer, LTexture &gBulletTexture, double &alpha, double &time)
 {
     updateState(alpha, time);
 
     render(gRenderer, gBulletTexture, alpha);
     SDL_RenderPresent( gRenderer );
-    //Clear screen
-    SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-    SDL_RenderClear( gRenderer );
 }
 
 void Bullet::updateState(double alpha, double time)
@@ -95,7 +86,7 @@ void Bullet::updateState(double alpha, double time)
     posY = initPosY + initVel * sin(alpha) * time - GRAVITY * time * time / 2;
 }
 
-void Bullet::render(SDL_Renderer* &gRenderer, LTexture &gTexture, double alpha)
+void Bullet::render(SDL_Renderer* &gRenderer, LTexture &gArrowTexture, double alpha)
 {
     double angle = -alpha;
     if (velX != 0)
@@ -104,6 +95,34 @@ void Bullet::render(SDL_Renderer* &gRenderer, LTexture &gTexture, double alpha)
         if (velY > 0)
             angle = -angle;
     }
-    gTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, NULL, deg(angle));
+    gArrowTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, NULL, deg(angle));
 }
 
+void Bullet::renderArrow(SDL_Renderer* &gRenderer, LTexture &gArrowTexture, int& mouseX, int& mouseY)
+{
+    gArrowTexture.render(
+        gRenderer,
+        initPosX, SCREEN_HEIGHT - initPosY,
+        NULL,
+        -180 / PI * atan(1.0 * (SCREEN_HEIGHT - initPosY - mouseY) / (mouseX - initPosX))
+    );
+}
+
+int Bullet::getPosX() {return posX;}
+int Bullet::getPosY() {return posY;}
+int Bullet::getVelX() {return velX;}
+int Bullet::getVelY() {return velY;}
+bool Bullet::getEndMove() {return endMove;}
+
+void Bullet::setInitPosX(int _initPosX)
+{
+    initPosX = _initPosX;
+}
+void Bullet::setInitPosY(int _initPosY)
+{
+    initPosY = _initPosY;
+}
+void Bullet::setEndMove(bool _endMove)
+{
+    endMove = _endMove;
+}
