@@ -20,7 +20,6 @@ bool LTexture::loadFromFile( SDL_Renderer* &gRenderer, std::string path )
     free();
     //The final texture
     SDL_Texture* newTexture = NULL;
-
     try
     {
         //Load image at specified path
@@ -31,10 +30,8 @@ bool LTexture::loadFromFile( SDL_Renderer* &gRenderer, std::string path )
             throw path.c_str();
             throw IMG_GetError();
         }
-
         //Color key image
         SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0xFF, 0xFF, 0xFF ) );
-
         //Create texture from surface pixels
         newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
 
@@ -46,10 +43,8 @@ bool LTexture::loadFromFile( SDL_Renderer* &gRenderer, std::string path )
         //Get image dimensions
         mWidth = loadedSurface->w;
         mHeight = loadedSurface->h;
-
         //Get rid of old loaded surface
         SDL_FreeSurface( loadedSurface );
-
         mTexture = newTexture;
         return true;
     }
@@ -69,7 +64,6 @@ bool LTexture::loadFromRenderedText(
 {
     //Get rid of preexisting texture
     free();
-
     try
     {
         //Render text surface

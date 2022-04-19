@@ -18,6 +18,7 @@ Bullet::Bullet()
     velX = 0;
     velY = 0;
     initVel = 0;
+    maxTime = 0.0;
 }
 
 Bullet::Bullet(int _posX, int _posY, int _velX, int _velY, int _initVel)
@@ -27,8 +28,61 @@ Bullet::Bullet(int _posX, int _posY, int _velX, int _velY, int _initVel)
     velX = _velX;
     velY = _velY;
     initVel = _initVel;
+    maxTime = 0.0;
 }
 
+Bullet::~Bullet()
+{
+    gBulletTexture.free();
+    gArrowTexture.free();
+    gExplodeTexture.free();
+}
+
+int Bullet::getPosX()
+{
+    return posX;
+}
+int Bullet::getPosY()
+{
+    return posY;
+}
+int Bullet::getVelX()
+{
+    return velX;
+}
+int Bullet::getVelY()
+{
+    return velY;
+}
+bool Bullet::getEndMove()
+{
+    return endMove;
+}
+double Bullet::getTimeOfMotion()
+{
+    return maxTime;
+}
+
+void Bullet::setInitPosX(int _initPosX)
+{
+    initPosX = _initPosX;
+}
+void Bullet::setInitPosY(int _initPosY)
+{
+    initPosY = _initPosY;
+}
+void Bullet::setEndMove(bool _endMove)
+{
+    endMove = _endMove;
+}
+
+
+void Bullet::loadTextures(SDL_Renderer* &gRenderer)
+{
+    gBulletTexture.loadFromFile( gRenderer, "res/img/bomb.png" );
+    gArrowTexture.loadFromFile( gRenderer, "res/img/arrow.png" );
+    gExplodeTexture.loadFromFile( gRenderer, "res/img/explode.png" );
+}
 void Bullet::handleEvent(SDL_Event& event, int& mouseX, int& mouseY, bool& mouseDown, bool& mousePressed)
 {
     switch (event.type)
@@ -62,19 +116,18 @@ void Bullet::handleEvent(SDL_Event& event, int& mouseX, int& mouseY, bool& mouse
     }
 }
 
-double Bullet::getTimeOfMotion(const double &alpha)
+void Bullet::computeTimeOfMotion(const double &alpha)
 {
     double t1 = initVel * sin(alpha) / GRAVITY;
     double H = pow(initVel,2) * pow(sin(alpha),2) / (2 * GRAVITY);
     double t2 = sqrt( 2 * (H + initPosY - 120) / GRAVITY);
-    return t1 + t2;
+    maxTime = t1 + t2;
 }
 
-void Bullet::projectileMotion(SDL_Renderer* &gRenderer, LTexture &gBulletTexture, double &alpha, double &time)
+void Bullet::projectileMotion(SDL_Renderer* &gRenderer, double &alpha, double &time)
 {
     updateState(alpha, time);
-
-    render(gRenderer, gBulletTexture, alpha);
+    renderBullet(gRenderer, alpha);
     SDL_RenderPresent( gRenderer );
 }
 
@@ -86,7 +139,7 @@ void Bullet::updateState(double alpha, double time)
     posY = initPosY + initVel * sin(alpha) * time - GRAVITY * time * time / 2;
 }
 
-void Bullet::render(SDL_Renderer* &gRenderer, LTexture &gArrowTexture, double alpha)
+void Bullet::renderBullet(SDL_Renderer* &gRenderer, double alpha)
 {
     double angle = -alpha;
     if (velX != 0)
@@ -95,10 +148,10 @@ void Bullet::render(SDL_Renderer* &gRenderer, LTexture &gArrowTexture, double al
         if (velY > 0)
             angle = -angle;
     }
-    gArrowTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, NULL, deg(angle));
+    gBulletTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, NULL, deg(angle));
 }
 
-void Bullet::renderArrow(SDL_Renderer* &gRenderer, LTexture &gArrowTexture, int& mouseX, int& mouseY)
+void Bullet::renderArrow(SDL_Renderer* &gRenderer, int& mouseX, int& mouseY)
 {
     gArrowTexture.render(
         gRenderer,
@@ -108,21 +161,7 @@ void Bullet::renderArrow(SDL_Renderer* &gRenderer, LTexture &gArrowTexture, int&
     );
 }
 
-int Bullet::getPosX() {return posX;}
-int Bullet::getPosY() {return posY;}
-int Bullet::getVelX() {return velX;}
-int Bullet::getVelY() {return velY;}
-bool Bullet::getEndMove() {return endMove;}
-
-void Bullet::setInitPosX(int _initPosX)
+void Bullet::renderExplosion(SDL_Renderer* &gRenderer)
 {
-    initPosX = _initPosX;
-}
-void Bullet::setInitPosY(int _initPosY)
-{
-    initPosY = _initPosY;
-}
-void Bullet::setEndMove(bool _endMove)
-{
-    endMove = _endMove;
+    gExplodeTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY);
 }

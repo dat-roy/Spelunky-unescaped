@@ -6,13 +6,33 @@ Character::Character()
     posY = 0;
     blood = MAX_BLOOD;
     is_forward = true;
+    current_walking_frame = 0;
 }
-
 Character::Character(int _posX, int _posY, bool _is_forward)
 {
     posX = _posX;
     posY = _posY;
     is_forward = _is_forward;
+    current_walking_frame = 0;
+}
+Character::~Character()
+{
+    gStandingTexture.free();
+    gWalkingTexture.free();
+}
+
+int Character::getPosX() { return posX; }
+int Character::getPosY() { return posY; }
+bool Character::isForward() { return is_forward; }
+
+void Character::loadTextures(SDL_Renderer* &gRenderer)
+{
+    gStandingTexture.loadFromFile( gRenderer, "res/img/idle.png" );
+    gWalkingTexture.loadFromFile( gRenderer, "res/sprites/walking.png" );
+    for (int i = 0; i < 10; i++)
+    {
+        gWalkingClips[i] = { 128 * i, 0, 128, 128};
+    }
 }
 
 void Character::handleAction(SDL_Event& event)
@@ -57,17 +77,20 @@ void Character::move(int dx, int dy)
     posY += dy;
 }
 
-int Character::getPosX()
+
+void Character::renderStanding(SDL_Renderer* &gRenderer)
 {
-    return posX;
+    SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
+    gStandingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, NULL, 0.0, NULL, flipType);
 }
 
-int Character::getPosY()
+void Character::renderWalking(SDL_Renderer* &gRenderer)
 {
-    return posY;
-}
-
-bool Character::isForward()
-{
-    return is_forward;
+    SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
+    gWalkingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, &gWalkingClips[current_walking_frame], 0.0, NULL, flipType);
+    current_walking_frame++;
+    if (current_walking_frame == WALKING_FRAME_TOTAL)
+    {
+        current_walking_frame = 0;
+    }
 }

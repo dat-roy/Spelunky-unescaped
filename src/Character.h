@@ -12,14 +12,19 @@
 #include "Global.h"
 #include "LTexture.h"
 
+const int WALKING_FRAME_TOTAL = 10;
+
 class Character
 {
     const int MAX_BLOOD = 1000;
     int posX, posY;
     int blood;
     bool is_forward;
-    //bool is_walking;
-    //bool is_idle;
+
+    LTexture gStandingTexture;
+    LTexture gWalkingTexture;
+    SDL_Rect gWalkingClips[WALKING_FRAME_TOTAL];
+    int current_walking_frame;
 public:
     enum CharacterAction {
         STANDING,
@@ -28,14 +33,24 @@ public:
     };
     CharacterAction action = STANDING;
 
+    //Constructors & Destructors
     Character();
     Character(int _posX, int _posY, bool _is_forward = true);
-    void handleAction(SDL_Event& event);
-    void move(int dx, int dy);
+    ~Character();
 
+    //Getter
     int getPosX();
     int getPosY();
     bool isForward();
+
+    //Load textures
+    void loadTextures(SDL_Renderer* &gRenderer);
+
+    void handleAction(SDL_Event& event);
+    void move(int dx, int dy);
+
+    void renderStanding(SDL_Renderer* &gRenderer);
+    void renderWalking(SDL_Renderer* &gRenderer);
 };
 
 #endif // CHARACTER__H_
