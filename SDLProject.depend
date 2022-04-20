@@ -120,7 +120,7 @@
 1650379400 source:d:\sdlproject\src\ltexture.cpp
 	"LTexture.h"
 
-1650470530 source:d:\sdlproject\src\main.cpp
+1650476255 source:d:\sdlproject\src\main.cpp
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -134,6 +134,7 @@
 	"Map.h"
 	"Bullet.h"
 	"Character.h"
+	"Enemy.h"
 
 1650201693 d:\sdlproject\src\sdl_utils.h
 	<SDL.h>
@@ -161,10 +162,10 @@
 1650205602 source:d:\sdlproject\src\sdl_utils.cpp
 	"SDL_Utils.h"
 
-1650471166 source:d:\sdlproject\src\bullet.cpp
+1650475403 source:d:\sdlproject\src\bullet.cpp
 	"Bullet.h"
 
-1650382655 d:\sdlproject\src\bullet.h
+1650472764 d:\sdlproject\src\bullet.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -176,7 +177,7 @@
 	"LTexture.h"
 	"Character.h"
 
-1650469042 d:\sdlproject\src\character.h
+1650472849 d:\sdlproject\src\character.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -187,7 +188,7 @@
 	"Global.h"
 	"LTexture.h"
 
-1650469815 source:d:\sdlproject\src\character.cpp
+1650476478 source:d:\sdlproject\src\character.cpp
 	"Character.h"
 
 1650385535 d:\sdlproject\src\map.h
@@ -203,4 +204,18 @@
 
 1650447816 source:d:\sdlproject\src\map.cpp
 	"Map.h"
+
+1650473601 d:\sdlproject\src\enemy.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	"Global.h"
+	"LTexture.h"
+
+1650476531 source:d:\sdlproject\src\enemy.cpp
+	"Enemy.h"
 

@@ -151,12 +151,13 @@ void Character::renderStanding(SDL_Renderer* &gRenderer)
 void Character::renderWalking(SDL_Renderer* &gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    walkingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, &walkingClips[current_walking_frame], 0.0, NULL, flipType);
+    walkingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, &walkingClips[current_walking_frame / 2], 0.0, NULL, flipType);
     current_walking_frame++;
-    if (current_walking_frame == WALKING_FRAME_TOTAL)
+    if (current_walking_frame / 2 == WALKING_FRAME_TOTAL)
     {
         current_walking_frame = 0;
     }
+    SDL_Delay(10);
 }
 
 void Character::renderLying(SDL_Renderer* &gRenderer)
@@ -172,9 +173,9 @@ void Character::renderLying(SDL_Renderer* &gRenderer)
 void Character::renderCrawling(SDL_Renderer* &gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    crawlingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 5, &crawlingClips[current_crawling_frame], 0.0, NULL, flipType);
+    crawlingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 5, &crawlingClips[current_crawling_frame / 3], 0.0, NULL, flipType);
     current_crawling_frame++;
-    if (current_crawling_frame == CRAWLING_FRAME_TOTAL)
+    if (current_crawling_frame / 3 == CRAWLING_FRAME_TOTAL)
     {
         current_crawling_frame = 0;
     }
@@ -183,12 +184,12 @@ void Character::renderCrawling(SDL_Renderer* &gRenderer)
 void Character::renderThrowing(SDL_Renderer* &gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    throwingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, &throwingClips[current_throwing_frame], 0.0, NULL, flipType);
-    if (current_throwing_frame < THROWING_FRAME_TOTAL - 1)
+    throwingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, &throwingClips[current_throwing_frame / 2], 0.0, NULL, flipType);
+    if (current_throwing_frame / 2 < THROWING_FRAME_TOTAL - 1)
     {
         current_throwing_frame++;
     }
-    if (current_throwing_frame == THROWING_FRAME_TOTAL - 1)
+    if (current_throwing_frame / 2 == THROWING_FRAME_TOTAL - 1)
     {
         current_throwing_frame = 0;
         action = STANDING;

@@ -35,6 +35,8 @@
 		<Unit filename="src/Bullet.h" />
 		<Unit filename="src/Character.cpp" />
 		<Unit filename="src/Character.h" />
+		<Unit filename="src/Enemy.cpp" />
+		<Unit filename="src/Enemy.h" />
 		<Unit filename="src/Global.h" />
 		<Unit filename="src/LTexture.cpp" />
 		<Unit filename="src/LTexture.h" />

@@ -33,9 +33,9 @@ Bullet::Bullet(int _posX, int _posY, int _velX, int _velY, int _initVel)
 
 Bullet::~Bullet()
 {
-    gBulletTexture.free();
-    gArrowTexture.free();
-    gExplodeTexture.free();
+    bulletTexture.free();
+    arrowTexture.free();
+    explodeTexture.free();
 }
 
 int Bullet::getPosX()
@@ -79,9 +79,9 @@ void Bullet::setEndMove(bool _endMove)
 
 void Bullet::loadTextures(SDL_Renderer* &gRenderer)
 {
-    gBulletTexture.loadFromFile( gRenderer, "res/img/dot.bmp" );
-    gArrowTexture.loadFromFile( gRenderer, "res/img/arrow.png" );
-    gExplodeTexture.loadFromFile( gRenderer, "res/img/explode.png" );
+    bulletTexture.loadFromFile( gRenderer, "res/img/dot.bmp" );
+    arrowTexture.loadFromFile( gRenderer, "res/img/arrow.png" );
+    explodeTexture.loadFromFile( gRenderer, "res/img/explode.png" );
 }
 void Bullet::handleEvent(SDL_Event& event, int& mouseX, int& mouseY, bool& mouseDown, bool& mousePressed)
 {
@@ -148,14 +148,14 @@ void Bullet::renderBullet(SDL_Renderer* &gRenderer, double alpha)
         if (velY > 0)
             angle = -angle;
     }
-    gBulletTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 45, NULL, deg(angle));
+    bulletTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 45, NULL, deg(angle));
 }
 
 void Bullet::renderArrow(SDL_Renderer* &gRenderer, int& mouseX, int& mouseY)
 {
-    gArrowTexture.render(
+    arrowTexture.render(
         gRenderer,
-        initPosX, SCREEN_HEIGHT - initPosY,
+        initPosX, SCREEN_HEIGHT - initPosY + 15,
         NULL,
         -180 / PI * atan(1.0 * (SCREEN_HEIGHT - initPosY - mouseY) / (mouseX - initPosX))
     );
@@ -163,5 +163,5 @@ void Bullet::renderArrow(SDL_Renderer* &gRenderer, int& mouseX, int& mouseY)
 
 void Bullet::renderExplosion(SDL_Renderer* &gRenderer)
 {
-    gExplodeTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 20);
+    explodeTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 20);
 }

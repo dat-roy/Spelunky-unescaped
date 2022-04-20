@@ -25,15 +25,19 @@ class Character
     bool is_forward;
 
     LTexture standingTexture;
+
     LTexture walkingTexture;
     SDL_Rect walkingClips[WALKING_FRAME_TOTAL];
     int current_walking_frame;
+
     LTexture lyingTexture;
     SDL_Rect lyingClips[LYING_FRAME_TOTAL];
     int current_lying_frame;
+
     LTexture crawlingTexture;
     SDL_Rect crawlingClips[CRAWLING_FRAME_TOTAL];
     int current_crawling_frame;
+
     LTexture throwingTexture;
     SDL_Rect throwingClips[THROWING_FRAME_TOTAL];
     int current_throwing_frame;
@@ -64,6 +68,7 @@ public:
     void handleAction(SDL_Event& event);
     void move(int dx, int dy);
 
+    //Render graphics
     void renderStanding(SDL_Renderer* &gRenderer);
     void renderWalking(SDL_Renderer* &gRenderer);
     void renderLying(SDL_Renderer* &gRenderer);

@@ -21,9 +21,9 @@ class Bullet {
     double maxTime;
     bool endMove = false;
 
-    LTexture gBulletTexture;
-    LTexture gArrowTexture;
-    LTexture gExplodeTexture;
+    LTexture bulletTexture;
+    LTexture arrowTexture;
+    LTexture explodeTexture;
 public:
     const int BULLET_WIDTH = 30;
     const int BULLET_HEIGHT = 30;

@@ -12,6 +12,7 @@
 #include "Map.h"
 #include "Bullet.h"
 #include "Character.h"
+#include "Enemy.h"
 
 #define PI 3.14159265
 
@@ -40,8 +41,12 @@ int main( int argc, char* args[] )
     int mouseY = 0;
     Character character(100, 150, true);
     character.loadTextures(gRenderer);
+
     Bullet bullet(character.getPosX(), character.getPosY());
     bullet.loadTextures(gRenderer);
+
+    Enemy enemy(700, 150, false);
+    enemy.loadTextures(gRenderer);
 
     bool mouseDown = false;
     bool mousePressed = false;
@@ -51,6 +56,8 @@ int main( int argc, char* args[] )
         map.renderBackground(gRenderer, 0, 0);
         map.renderText_01(gRenderer);
         map.renderText_02(gRenderer);
+        enemy.renderSnake(gRenderer);
+        enemy.move(1, 0);
 
         while( SDL_PollEvent( &event ) != 0 )
         {
@@ -80,21 +87,18 @@ int main( int argc, char* args[] )
         if (character.action == Character::LYING)
         {
             character.renderLying(gRenderer);
-            SDL_Delay(100);
         }
         if (character.action == Character::WALKING)
         {
             character.renderWalking(gRenderer);
-            character.move(8, 0);
-            SDL_Delay(30);
+            character.move(10, 0);
             character.action = Character::STANDING;
         }
 
         if (character.action == Character::CRAWLING)
         {
             character.renderCrawling(gRenderer);
-            character.move(8, 0);
-            SDL_Delay(50);
+            character.move(3, 0);
             character.action == Character::LYING;
         }
         SDL_RenderPresent( gRenderer );
@@ -114,11 +118,12 @@ int main( int argc, char* args[] )
                 bullet.setEndMove(true);
             }
             map.renderBackground(gRenderer, 0, 0);
+            enemy.renderSnake(gRenderer);
+            enemy.move(1, 0);
 
             if (character.action == Character::THROWING)
             {
                 character.renderThrowing(gRenderer);
-                SDL_Delay(25);
             }
             if (character.action == Character::STANDING)
             {
@@ -128,7 +133,7 @@ int main( int argc, char* args[] )
             {
                 bullet.renderExplosion(gRenderer);
                 SDL_RenderPresent(gRenderer);
-                SDL_Delay(800);
+                SDL_Delay(500);
                 break;
             }
             bullet.projectileMotion(gRenderer, alpha, time);
@@ -137,8 +142,6 @@ int main( int argc, char* args[] )
         SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
         SDL_RenderClear( gRenderer );
     }
-    return 0;
-
     utils::close(gWindow, gRenderer, gFont24, gFont32, gFont48);
 }
 
