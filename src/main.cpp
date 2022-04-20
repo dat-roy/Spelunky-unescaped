@@ -38,7 +38,7 @@ int main( int argc, char* args[] )
     SDL_Event event;
     int mouseX = 0;
     int mouseY = 0;
-    Character character(100, 200, true);
+    Character character(100, 150, true);
     character.loadTextures(gRenderer);
     Bullet bullet(character.getPosX(), character.getPosY());
     bullet.loadTextures(gRenderer);
@@ -51,7 +51,6 @@ int main( int argc, char* args[] )
         map.renderBackground(gRenderer, 0, 0);
         map.renderText_01(gRenderer);
         map.renderText_02(gRenderer);
-        //SDL_Delay(100);
 
         while( SDL_PollEvent( &event ) != 0 )
         {
@@ -74,19 +73,30 @@ int main( int argc, char* args[] )
             character.renderStanding(gRenderer);
         }
 
+        if (character.action == Character::LYING)
+        {
+            character.renderLying(gRenderer);
+            SDL_Delay(100);
+        }
         if (character.action == Character::WALKING)
         {
-            bullet.setInitPosX(character.getPosX());
-            bullet.setInitPosY(character.getPosY());
-
             character.renderWalking(gRenderer);
             character.move(8, 0);
-            SDL_Delay(10);
-            SDL_RenderPresent( gRenderer );
-
+            SDL_Delay(30);
             character.action = Character::STANDING;
         }
+
+        if (character.action == Character::CRAWLING)
+        {
+            character.renderCrawling(gRenderer);
+            character.move(8, 0);
+            SDL_Delay(50);
+            character.action == Character::LYING;
+        }
+
         SDL_RenderPresent( gRenderer );
+        bullet.setInitPosX(character.getPosX());
+        bullet.setInitPosY(character.getPosY());
         double time = 0;
         double alpha = atan(1.0 * (SCREEN_HEIGHT - character.getPosY() - mouseY) / (mouseX - character.getPosX()));
 

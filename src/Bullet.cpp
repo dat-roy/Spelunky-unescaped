@@ -79,7 +79,7 @@ void Bullet::setEndMove(bool _endMove)
 
 void Bullet::loadTextures(SDL_Renderer* &gRenderer)
 {
-    gBulletTexture.loadFromFile( gRenderer, "res/img/bomb.png" );
+    gBulletTexture.loadFromFile( gRenderer, "res/img/dot.bmp" );
     gArrowTexture.loadFromFile( gRenderer, "res/img/arrow.png" );
     gExplodeTexture.loadFromFile( gRenderer, "res/img/explode.png" );
 }
@@ -163,5 +163,5 @@ void Bullet::renderArrow(SDL_Renderer* &gRenderer, int& mouseX, int& mouseY)
 
 void Bullet::renderExplosion(SDL_Renderer* &gRenderer)
 {
-    gExplodeTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY);
+    gExplodeTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 25);
 }

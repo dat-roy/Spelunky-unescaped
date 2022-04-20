@@ -35,10 +35,11 @@
 		<Unit filename="src/Bullet.h" />
 		<Unit filename="src/Character.cpp" />
 		<Unit filename="src/Character.h" />
-		<Unit filename="src/Entity.h" />
 		<Unit filename="src/Global.h" />
 		<Unit filename="src/LTexture.cpp" />
 		<Unit filename="src/LTexture.h" />
+		<Unit filename="src/Map.cpp" />
+		<Unit filename="src/Map.h" />
 		<Unit filename="src/SDL_Utils.cpp" />
 		<Unit filename="src/SDL_Utils.h" />
 		<Unit filename="src/main.cpp" />

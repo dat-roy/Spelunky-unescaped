@@ -12,7 +12,9 @@
 #include "Global.h"
 #include "LTexture.h"
 
-const int WALKING_FRAME_TOTAL = 10;
+const int WALKING_FRAME_TOTAL = 9;
+const int LYING_FRAME_TOTAL = 2;
+const int CRAWLING_FRAME_TOTAL = 7;
 
 class Character
 {
@@ -21,15 +23,23 @@ class Character
     int blood;
     bool is_forward;
 
-    LTexture gStandingTexture;
-    LTexture gWalkingTexture;
-    SDL_Rect gWalkingClips[WALKING_FRAME_TOTAL];
+    LTexture standingTexture;
+    LTexture walkingTexture;
+    SDL_Rect walkingClips[WALKING_FRAME_TOTAL];
     int current_walking_frame;
+    LTexture lyingTexture;
+    SDL_Rect lyingClips[LYING_FRAME_TOTAL];
+    int current_lying_frame;
+    LTexture crawlingTexture;
+    SDL_Rect crawlingClips[CRAWLING_FRAME_TOTAL];
+    int current_crawling_frame;
+
 public:
     enum CharacterAction {
         STANDING,
         WALKING,
-        JUMPING
+        LYING,
+        CRAWLING
     };
     CharacterAction action = STANDING;
 
@@ -51,6 +61,8 @@ public:
 
     void renderStanding(SDL_Renderer* &gRenderer);
     void renderWalking(SDL_Renderer* &gRenderer);
+    void renderLying(SDL_Renderer* &gRenderer);
+    void renderCrawling(SDL_Renderer* &gRenderer);
 };
 
 #endif // CHARACTER__H_

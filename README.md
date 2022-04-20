@@ -7,3 +7,4 @@
 + Add background, character, weapon.
 
 **Week 9:**
++ Add character's action: standing, walking, lying, crawling.

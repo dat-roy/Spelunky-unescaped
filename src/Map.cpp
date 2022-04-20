@@ -15,7 +15,7 @@ void Map::loadTextures(SDL_Renderer* &gRenderer, TTF_Font* &gFont24, TTF_Font* &
     //Render text
     SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
     text_01.loadFromRenderedText( gRenderer,
-                                      " ",
+                                      "Ninja In Jungle",
                                       gFont32, textColor);
     text_02.loadFromRenderedText( gRenderer,
                                       "Use SPACE to modify initial velocity [0..100]",
