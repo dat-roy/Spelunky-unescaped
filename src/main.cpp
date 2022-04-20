@@ -68,6 +68,10 @@ int main( int argc, char* args[] )
             character.action = Character::STANDING;
             bullet.renderArrow(gRenderer, mouseX, mouseY);
         }
+        if (!mouseDown && mousePressed)
+        {
+            character.action = Character::THROWING;
+        }
         if (character.action == Character::STANDING)
         {
             character.renderStanding(gRenderer);
@@ -93,24 +97,33 @@ int main( int argc, char* args[] )
             SDL_Delay(50);
             character.action == Character::LYING;
         }
-
         SDL_RenderPresent( gRenderer );
         bullet.setInitPosX(character.getPosX());
         bullet.setInitPosY(character.getPosY());
-        double time = 0;
         double alpha = atan(1.0 * (SCREEN_HEIGHT - character.getPosY() - mouseY) / (mouseX - character.getPosX()));
 
+        double time = 0;
         bullet.computeTimeOfMotion(alpha);
 
         while (mousePressed == true && mouseDown == false && !bullet.getEndMove())
         {
-            time += 0.12;
+            time += 0.1;
             if (time > bullet.getTimeOfMotion())
             {
+                mousePressed = false;
                 bullet.setEndMove(true);
             }
             map.renderBackground(gRenderer, 0, 0);
-            character.renderStanding(gRenderer);
+
+            if (character.action == Character::THROWING)
+            {
+                character.renderThrowing(gRenderer);
+                SDL_Delay(25);
+            }
+            if (character.action == Character::STANDING)
+            {
+                character.renderStanding(gRenderer);
+            }
             if (bullet.getEndMove())
             {
                 bullet.renderExplosion(gRenderer);

@@ -15,6 +15,7 @@
 const int WALKING_FRAME_TOTAL = 9;
 const int LYING_FRAME_TOTAL = 2;
 const int CRAWLING_FRAME_TOTAL = 7;
+const int THROWING_FRAME_TOTAL = 7;
 
 class Character
 {
@@ -33,13 +34,17 @@ class Character
     LTexture crawlingTexture;
     SDL_Rect crawlingClips[CRAWLING_FRAME_TOTAL];
     int current_crawling_frame;
+    LTexture throwingTexture;
+    SDL_Rect throwingClips[THROWING_FRAME_TOTAL];
+    int current_throwing_frame;
 
 public:
     enum CharacterAction {
         STANDING,
         WALKING,
         LYING,
-        CRAWLING
+        CRAWLING,
+        THROWING
     };
     CharacterAction action = STANDING;
 
@@ -63,6 +68,7 @@ public:
     void renderWalking(SDL_Renderer* &gRenderer);
     void renderLying(SDL_Renderer* &gRenderer);
     void renderCrawling(SDL_Renderer* &gRenderer);
+    void renderThrowing(SDL_Renderer* &gRenderer);
 };
 
 #endif // CHARACTER__H_

@@ -148,7 +148,7 @@ void Bullet::renderBullet(SDL_Renderer* &gRenderer, double alpha)
         if (velY > 0)
             angle = -angle;
     }
-    gBulletTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, NULL, deg(angle));
+    gBulletTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 45, NULL, deg(angle));
 }
 
 void Bullet::renderArrow(SDL_Renderer* &gRenderer, int& mouseX, int& mouseY)
@@ -163,5 +163,5 @@ void Bullet::renderArrow(SDL_Renderer* &gRenderer, int& mouseX, int& mouseY)
 
 void Bullet::renderExplosion(SDL_Renderer* &gRenderer)
 {
-    gExplodeTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 25);
+    gExplodeTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 20);
 }

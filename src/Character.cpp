@@ -9,6 +9,7 @@ Character::Character()
     current_walking_frame = 0;
     current_lying_frame = 0;
     current_crawling_frame = 0;
+    current_throwing_frame = 0;
 }
 Character::Character(int _posX, int _posY, bool _is_forward)
 {
@@ -18,6 +19,7 @@ Character::Character(int _posX, int _posY, bool _is_forward)
     current_walking_frame = 0;
     current_lying_frame = 0;
     current_crawling_frame = 0;
+    current_throwing_frame = 0;
 }
 Character::~Character()
 {
@@ -25,6 +27,7 @@ Character::~Character()
     walkingTexture.free();
     lyingTexture.free();
     crawlingTexture.free();
+    throwingTexture.free();
 }
 
 int Character::getPosX() { return posX; }
@@ -48,6 +51,11 @@ void Character::loadTextures(SDL_Renderer* &gRenderer)
     for (int i = 0; i < CRAWLING_FRAME_TOTAL; i++)
     {
         crawlingClips[i] = {81 * i, 0, 81, 76};
+    }
+    throwingTexture.loadFromFile( gRenderer, "res/sprites/throwing.png");
+    for (int i = 0; i < THROWING_FRAME_TOTAL; i++)
+    {
+        throwingClips[i] = {76 * i, 0, 76, 76};
     }
 }
 
@@ -169,6 +177,21 @@ void Character::renderCrawling(SDL_Renderer* &gRenderer)
     if (current_crawling_frame == CRAWLING_FRAME_TOTAL)
     {
         current_crawling_frame = 0;
+    }
+}
+
+void Character::renderThrowing(SDL_Renderer* &gRenderer)
+{
+    SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
+    throwingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, &throwingClips[current_throwing_frame], 0.0, NULL, flipType);
+    if (current_throwing_frame < THROWING_FRAME_TOTAL - 1)
+    {
+        current_throwing_frame++;
+    }
+    if (current_throwing_frame == THROWING_FRAME_TOTAL - 1)
+    {
+        current_throwing_frame = 0;
+        action = STANDING;
     }
 }
 
