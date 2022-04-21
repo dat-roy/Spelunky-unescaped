@@ -23,10 +23,10 @@ Enemy::~Enemy()
 
 void Enemy::loadTextures(SDL_Renderer* &gRenderer)
 {
-    snakeTexture.loadFromFile(gRenderer, "res/sprites/snake.png");
+    snakeTexture.loadFromFile(gRenderer, "res/sprites/enemy/snake.png");
     for (int i = 0; i < SNAKE_FRAME_TOTAL; i++)
     {
-        snakeClips[i] = {79 * i, 0, 79, 76};
+        snakeClips[i] = {95 * i, 0, 95, 91};
     }
 }
 
@@ -35,13 +35,13 @@ void Enemy::move(int dx, int dy)
     if (is_forward)
     {
         posX = std::min(posX + dx, SCREEN_WIDTH - 100);
-        if (posX > SCREEN_WIDTH - 400)
+        if (posX > SCREEN_WIDTH - 500)
             is_forward = false;
     }
     else
     {
         posX = std::max(posX - dx, 0);
-        if (posX < 800)
+        if (posX < 1000)
             is_forward = true;
     }
     posY += dy;
@@ -50,9 +50,9 @@ void Enemy::move(int dx, int dy)
 void Enemy::renderSnake(SDL_Renderer* &gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    snakeTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 7, &snakeClips[current_snake_frame / 2], 0.0, NULL, flipType);
+    snakeTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 7, &snakeClips[current_snake_frame / 3], 0.0, NULL, flipType);
     current_snake_frame++;
-    if (current_snake_frame == SNAKE_FRAME_TOTAL)
+    if (current_snake_frame / 3 == SNAKE_FRAME_TOTAL)
     {
         current_snake_frame = 0;
     }

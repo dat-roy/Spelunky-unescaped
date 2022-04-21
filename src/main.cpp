@@ -39,13 +39,13 @@ int main( int argc, char* args[] )
     SDL_Event event;
     int mouseX = 0;
     int mouseY = 0;
-    Character character(100, 150, true);
+    Character character(100, 185, true);
     character.loadTextures(gRenderer);
 
     Bullet bullet(character.getPosX(), character.getPosY());
     bullet.loadTextures(gRenderer);
 
-    Enemy enemy(700, 150, false);
+    Enemy enemy(1000, 160, false);
     enemy.loadTextures(gRenderer);
 
     bool mouseDown = false;
@@ -92,14 +92,12 @@ int main( int argc, char* args[] )
         {
             character.renderWalking(gRenderer);
             character.move(10, 0);
-            character.action = Character::STANDING;
         }
 
         if (character.action == Character::CRAWLING)
         {
             character.renderCrawling(gRenderer);
             character.move(3, 0);
-            character.action == Character::LYING;
         }
         SDL_RenderPresent( gRenderer );
         bullet.setInitPosX(character.getPosX());
@@ -116,6 +114,7 @@ int main( int argc, char* args[] )
             {
                 mousePressed = false;
                 bullet.setEndMove(true);
+                character.action = Character::STANDING;
             }
             map.renderBackground(gRenderer, 0, 0);
             enemy.renderSnake(gRenderer);

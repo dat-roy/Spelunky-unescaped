@@ -36,26 +36,26 @@ bool Character::isForward() { return is_forward; }
 
 void Character::loadTextures(SDL_Renderer* &gRenderer)
 {
-    standingTexture.loadFromFile( gRenderer, "res/sprites/standing.png" );
-    walkingTexture.loadFromFile( gRenderer, "res/sprites/walking.png" );
+    standingTexture.loadFromFile( gRenderer, "res/sprites/ninja/standing.png" );
+    walkingTexture.loadFromFile( gRenderer, "res/sprites/ninja/walking.png" );
     for (int i = 0; i < WALKING_FRAME_TOTAL; i++)
     {
-        walkingClips[i] = {76 * i, 0, 76, 76};
+        walkingClips[i] = {116 * i, 0, 116, 116};
     }
-    lyingTexture.loadFromFile( gRenderer, "res/sprites/lying.png");
+    lyingTexture.loadFromFile( gRenderer, "res/sprites/ninja/lying.png");
     for (int i = 0; i < LYING_FRAME_TOTAL; i++)
     {
-        lyingClips[i] = {76 * i, 0, 76, 76};
+        lyingClips[i] = {116 * i, 0, 116, 116};
     }
-    crawlingTexture.loadFromFile( gRenderer, "res/sprites/crawling.png");
+    crawlingTexture.loadFromFile( gRenderer, "res/sprites/ninja/crawling.png");
     for (int i = 0; i < CRAWLING_FRAME_TOTAL; i++)
     {
-        crawlingClips[i] = {81 * i, 0, 81, 76};
+        crawlingClips[i] = {121 * i, 0, 121, 116};
     }
-    throwingTexture.loadFromFile( gRenderer, "res/sprites/throwing.png");
+    throwingTexture.loadFromFile( gRenderer, "res/sprites/ninja/throwing.png");
     for (int i = 0; i < THROWING_FRAME_TOTAL; i++)
     {
-        throwingClips[i] = {76 * i, 0, 76, 76};
+        throwingClips[i] = {116 * i, 0, 116, 116};
     }
 }
 
@@ -184,12 +184,12 @@ void Character::renderCrawling(SDL_Renderer* &gRenderer)
 void Character::renderThrowing(SDL_Renderer* &gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    throwingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, &throwingClips[current_throwing_frame / 2], 0.0, NULL, flipType);
-    if (current_throwing_frame / 2 < THROWING_FRAME_TOTAL - 1)
+    throwingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, &throwingClips[current_throwing_frame / 4], 0.0, NULL, flipType);
+    if (current_throwing_frame / 4 < THROWING_FRAME_TOTAL - 1)
     {
         current_throwing_frame++;
     }
-    if (current_throwing_frame / 2 == THROWING_FRAME_TOTAL - 1)
+    if (current_throwing_frame / 4 == THROWING_FRAME_TOTAL - 1)
     {
         current_throwing_frame = 0;
         action = STANDING;

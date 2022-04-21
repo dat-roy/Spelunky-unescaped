@@ -10,8 +10,8 @@
 #include "LTexture.h"
 
 //Window properties
-const std::string WINDOW_TITLE = "Love peace";
-const int SCREEN_WIDTH = 1400;
+const std::string WINDOW_TITLE = "Unescaped";
+const int SCREEN_WIDTH = 1800;
 const int SCREEN_HEIGHT = 720;
 
 #endif // GLOBAL__H_

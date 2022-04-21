@@ -101,7 +101,7 @@
 	"Global.h"
 	"LTexture.h"
 
-1650361485 d:\sdlproject\src\global.h
+1650527047 d:\sdlproject\src\global.h
 	<SDL.h>
 	<SDL_ttf.h>
 	<iostream>
@@ -120,7 +120,7 @@
 1650379400 source:d:\sdlproject\src\ltexture.cpp
 	"LTexture.h"
 
-1650476255 source:d:\sdlproject\src\main.cpp
+1650528320 source:d:\sdlproject\src\main.cpp
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -188,7 +188,7 @@
 	"Global.h"
 	"LTexture.h"
 
-1650476478 source:d:\sdlproject\src\character.cpp
+1650528519 source:d:\sdlproject\src\character.cpp
 	"Character.h"
 
 1650385535 d:\sdlproject\src\map.h
@@ -216,6 +216,6 @@
 	"Global.h"
 	"LTexture.h"
 
-1650476531 source:d:\sdlproject\src\enemy.cpp
+1650528366 source:d:\sdlproject\src\enemy.cpp
 	"Enemy.h"
 

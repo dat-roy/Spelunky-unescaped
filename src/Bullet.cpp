@@ -148,14 +148,14 @@ void Bullet::renderBullet(SDL_Renderer* &gRenderer, double alpha)
         if (velY > 0)
             angle = -angle;
     }
-    bulletTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 45, NULL, deg(angle));
+    bulletTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 60, NULL, deg(angle));
 }
 
 void Bullet::renderArrow(SDL_Renderer* &gRenderer, int& mouseX, int& mouseY)
 {
     arrowTexture.render(
         gRenderer,
-        initPosX, SCREEN_HEIGHT - initPosY + 15,
+        initPosX + 10, SCREEN_HEIGHT - initPosY + 10,
         NULL,
         -180 / PI * atan(1.0 * (SCREEN_HEIGHT - initPosY - mouseY) / (mouseX - initPosX))
     );
