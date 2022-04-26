@@ -19,6 +19,7 @@ Bullet::Bullet()
     velY = 0;
     initVel = 0;
     maxTime = 0.0;
+    current_explosion_frame = 0;
 }
 
 Bullet::Bullet(int _posX, int _posY, int _velX, int _velY, int _initVel)
@@ -29,6 +30,7 @@ Bullet::Bullet(int _posX, int _posY, int _velX, int _velY, int _initVel)
     velY = _velY;
     initVel = _initVel;
     maxTime = 0.0;
+    current_explosion_frame = 0;
 }
 
 Bullet::~Bullet()
@@ -79,9 +81,13 @@ void Bullet::setEndMove(bool _endMove)
 
 void Bullet::loadTextures(SDL_Renderer* &gRenderer)
 {
-    bulletTexture.loadFromFile( gRenderer, "res/img/dot.bmp" );
+    bulletTexture.loadFromFile( gRenderer, "res/img/bomb.png" );
     arrowTexture.loadFromFile( gRenderer, "res/img/arrow.png" );
-    explodeTexture.loadFromFile( gRenderer, "res/img/explode.png" );
+    explodeTexture.loadFromFile( gRenderer, "res/sprites/explosion/explosion.png" );
+    for (int i = 0; i < EXPLOSION_FRAME_TOTAL; i++)
+    {
+        explodeClips[i] = {0, 128 * i, 128, 128};
+    }
 }
 void Bullet::handleEvent(SDL_Event& event, int& mouseX, int& mouseY, bool& mouseDown, bool& mousePressed)
 {
@@ -92,6 +98,7 @@ void Bullet::handleEvent(SDL_Event& event, int& mouseX, int& mouseY, bool& mouse
         {
             initVel += 2;
             initVel = std::min(initVel, MAX_INIT_VELOCITY);
+            system("cls");
             std::cout << "Velocity = " << initVel << std::endl;
         }
         if (event.key.keysym.sym == SDLK_m)
@@ -148,7 +155,7 @@ void Bullet::renderBullet(SDL_Renderer* &gRenderer, double alpha)
         if (velY > 0)
             angle = -angle;
     }
-    bulletTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 60, NULL, deg(angle));
+    bulletTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, NULL, deg(angle));
 }
 
 void Bullet::renderArrow(SDL_Renderer* &gRenderer, int& mouseX, int& mouseY)
@@ -163,5 +170,10 @@ void Bullet::renderArrow(SDL_Renderer* &gRenderer, int& mouseX, int& mouseY)
 
 void Bullet::renderExplosion(SDL_Renderer* &gRenderer)
 {
-    explodeTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 20);
+    for (int i = 0; i < EXPLOSION_FRAME_TOTAL; i++)
+    {
+        explodeTexture.render(gRenderer, posX - 50, SCREEN_HEIGHT - posY - 50, &explodeClips[i]);
+        SDL_RenderPresent(gRenderer);
+        SDL_Delay(30);
+    }
 }

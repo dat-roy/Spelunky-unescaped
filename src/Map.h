@@ -19,6 +19,7 @@ class Map
     //Text textures
     LTexture text_01;
     LTexture text_02;
+    LTexture text_03;
 
 public:
     Map();
@@ -28,6 +29,7 @@ public:
     void renderBackground(SDL_Renderer* &gRenderer, int x = 0, int y = 0);
     void renderText_01(SDL_Renderer* &gRenderer, int x = 0, int y = 0);
     void renderText_02(SDL_Renderer* &gRenderer, int x = 0, int y = 0);
+    void renderText_03(SDL_Renderer* &gRenderer, int x = 0, int y = 0);
 };
 
 #endif // MAP__H_

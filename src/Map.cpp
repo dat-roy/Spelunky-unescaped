@@ -7,6 +7,7 @@ Map::~Map()
     gBgTexture.free();
     text_01.free();
     text_02.free();
+    text_03.free();
 }
 
 void Map::loadTextures(SDL_Renderer* &gRenderer, TTF_Font* &gFont24, TTF_Font* &gFont32, TTF_Font* &gFont48)
@@ -20,6 +21,10 @@ void Map::loadTextures(SDL_Renderer* &gRenderer, TTF_Font* &gFont24, TTF_Font* &
     text_02.loadFromRenderedText( gRenderer,
                                       "Use SPACE to modify initial velocity [0..100]",
                                       gFont24, textColor);
+
+    text_03.loadFromRenderedText( gRenderer,
+                                      "You win!",
+                                      gFont32, textColor);
 }
 
 void Map::renderBackground(SDL_Renderer* &gRenderer, int x, int y)
@@ -34,4 +39,9 @@ void Map::renderText_01(SDL_Renderer* &gRenderer, int x, int y)
 void Map::renderText_02(SDL_Renderer* &gRenderer, int x, int y)
 {
     text_02.render(gRenderer, ( SCREEN_WIDTH - text_02.getWidth() ) / 2, 150);
+}
+
+void Map::renderText_03(SDL_Renderer* &gRenderer, int x, int y)
+{
+    text_03.render(gRenderer, ( SCREEN_WIDTH - text_03.getWidth() ) / 2, 100);
 }

@@ -6,6 +6,7 @@
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
 #include <iostream>
+#include <conio.h>
 #include <string>
 #include <cmath>
 
@@ -13,6 +14,7 @@
 #include "LTexture.h"
 #include "Character.h"
 
+const int EXPLOSION_FRAME_TOTAL = 6;
 class Bullet {
     int initPosX, initPosY;
     int posX, posY;
@@ -24,6 +26,8 @@ class Bullet {
     LTexture bulletTexture;
     LTexture arrowTexture;
     LTexture explodeTexture;
+    SDL_Rect explodeClips[EXPLOSION_FRAME_TOTAL];
+    int current_explosion_frame;
 public:
     const int BULLET_WIDTH = 30;
     const int BULLET_HEIGHT = 30;
