@@ -8,3 +8,4 @@
 
 **Week 9:**
 + Add character's action: standing, walking, lying, crawling, throwing.
++ Add character's & enemy's blood infomation.
