@@ -6,20 +6,12 @@ Character::Character()
     posY = 0;
     blood = MAX_BLOOD;
     is_forward = true;
-    current_walking_frame = 0;
-    current_lying_frame = 0;
-    current_crawling_frame = 0;
-    current_throwing_frame = 0;
 }
 Character::Character(int _posX, int _posY, bool _is_forward)
 {
     posX = _posX;
     posY = _posY;
     is_forward = _is_forward;
-    current_walking_frame = 0;
-    current_lying_frame = 0;
-    current_crawling_frame = 0;
-    current_throwing_frame = 0;
 }
 Character::~Character()
 {
@@ -38,24 +30,24 @@ void Character::loadTextures(SDL_Renderer* &gRenderer)
 {
     standingTexture.loadFromFile( gRenderer, "res/sprites/ninja/standing.png" );
     walkingTexture.loadFromFile( gRenderer, "res/sprites/ninja/walking.png" );
-    for (int i = 0; i < WALKING_FRAME_TOTAL; i++)
+    for (int i = 0; i < walkingClips.getTotalFrames(); i++)
     {
-        walkingClips[i] = {116 * i, 0, 116, 116};
+        walkingClips.clips.push_back({116 * i, 0, 116, 116});
     }
     lyingTexture.loadFromFile( gRenderer, "res/sprites/ninja/lying.png");
-    for (int i = 0; i < LYING_FRAME_TOTAL; i++)
+    for (int i = 0; i < lyingClips.getTotalFrames(); i++)
     {
-        lyingClips[i] = {116 * i, 0, 116, 116};
+        lyingClips.clips.push_back({116 * i, 0, 116, 116});
     }
     crawlingTexture.loadFromFile( gRenderer, "res/sprites/ninja/crawling.png");
-    for (int i = 0; i < CRAWLING_FRAME_TOTAL; i++)
+    for (int i = 0; i < crawlingClips.getTotalFrames(); i++)
     {
-        crawlingClips[i] = {121 * i, 0, 121, 116};
+        crawlingClips.clips.push_back({121 * i, 0, 121, 116});
     }
     throwingTexture.loadFromFile( gRenderer, "res/sprites/ninja/throwing.png");
-    for (int i = 0; i < THROWING_FRAME_TOTAL; i++)
+    for (int i = 0; i < throwingClips.getTotalFrames(); i++)
     {
-        throwingClips[i] = {116 * i, 0, 116, 116};
+        throwingClips.clips.push_back({116 * i, 0, 116, 116});
     }
 }
 
@@ -151,46 +143,47 @@ void Character::renderStanding(SDL_Renderer* &gRenderer)
 void Character::renderWalking(SDL_Renderer* &gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    walkingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, &walkingClips[current_walking_frame / 4], 0.0, NULL, flipType);
-    current_walking_frame++;
-    if (current_walking_frame / 4 == WALKING_FRAME_TOTAL)
+    walkingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, &walkingClips.clips[walkingClips.getCurrentFrame() / 4], 0.0, NULL, flipType);
+    walkingClips.nextFrame();
+    if (walkingClips.getCurrentFrame() / 4 == walkingClips.getTotalFrames())
     {
-        current_walking_frame = 0;
+        walkingClips.resetFrame();
     }
 }
 
 void Character::renderLying(SDL_Renderer* &gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    lyingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 8, &lyingClips[current_lying_frame], 0.0, NULL, flipType);
-    if (current_lying_frame < LYING_FRAME_TOTAL - 1)
+    lyingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 8, &lyingClips.clips[lyingClips.getCurrentFrame()], 0.0, NULL, flipType);
+    if (lyingClips.getCurrentFrame() < lyingClips.getTotalFrames() - 1)
     {
-        current_lying_frame++;
+        lyingClips.nextFrame();
     }
 }
 
 void Character::renderCrawling(SDL_Renderer* &gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    crawlingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 8, &crawlingClips[current_crawling_frame / 3], 0.0, NULL, flipType);
-    current_crawling_frame++;
-    if (current_crawling_frame / 3 == CRAWLING_FRAME_TOTAL)
+    crawlingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 8, &crawlingClips.clips[crawlingClips.getCurrentFrame() / 3], 0.0, NULL, flipType);
+    crawlingClips.nextFrame();
+    if (crawlingClips.getCurrentFrame() / 3 == crawlingClips.getTotalFrames())
     {
-        current_crawling_frame = 0;
+        crawlingClips.resetFrame();
     }
 }
 
 void Character::renderThrowing(SDL_Renderer* &gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    throwingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, &throwingClips[current_throwing_frame / 4], 0.0, NULL, flipType);
-    if (current_throwing_frame / 4 < THROWING_FRAME_TOTAL - 1)
+    throwingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, &throwingClips.clips[throwingClips.getCurrentFrame() / 4], 0.0, NULL, flipType);
+    if (throwingClips.getCurrentFrame() / 4 < throwingClips.getTotalFrames() - 1)
     {
-        current_throwing_frame++;
+        throwingClips.nextFrame();
+
     }
-    if (current_throwing_frame / 4 == THROWING_FRAME_TOTAL - 1)
+    if (throwingClips.getCurrentFrame() / 4 == throwingClips.getTotalFrames() - 1)
     {
-        current_throwing_frame = 0;
+        throwingClips.resetFrame();
         action = STANDING;
     }
 }

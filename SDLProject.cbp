@@ -38,12 +38,14 @@
 		<Unit filename="src/Enemy.cpp" />
 		<Unit filename="src/Enemy.h" />
 		<Unit filename="src/Global.h" />
-		<Unit filename="src/LTexture.cpp" />
-		<Unit filename="src/LTexture.h" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/Map.h" />
 		<Unit filename="src/SDL_Utils.cpp" />
 		<Unit filename="src/SDL_Utils.h" />
+		<Unit filename="src/Texture.cpp" />
+		<Unit filename="src/Texture.h" />
+		<Unit filename="src/TextureClips.cpp" />
+		<Unit filename="src/TextureClips.h" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

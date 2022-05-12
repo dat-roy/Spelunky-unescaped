@@ -1,5 +1,5 @@
-#ifndef LTEXTURE__H_
-#define LTEXTURE__H_
+#ifndef Texture__H_
+#define Texture__H_
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -10,11 +10,12 @@
 
 
 //Texture wrapper class
-class LTexture
+class Texture
 {
 public:
-    LTexture();
-    ~LTexture();
+    Texture();
+    Texture(int _total);
+    ~Texture();
 
     //Loads image at specified path
     bool loadFromFile( SDL_Renderer* &gRenderer, std::string path );
@@ -63,4 +64,7 @@ private:
     int mHeight;
 };
 
-#endif // LTEXTURE__H_
+#endif // Texture__H_
+
+
+

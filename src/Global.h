@@ -7,8 +7,6 @@
 #include <string>
 #include <cmath>
 
-#include "LTexture.h"
-
 //Window properties
 const std::string WINDOW_TITLE = "Unescaped";
 const int SCREEN_WIDTH = 1800;

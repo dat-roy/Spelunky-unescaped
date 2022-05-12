@@ -1,6 +1,6 @@
-#include "LTexture.h"
+#include "Texture.h"
 
-LTexture::LTexture()
+Texture::Texture()
 {
     //Initialize
     mTexture = NULL;
@@ -8,13 +8,21 @@ LTexture::LTexture()
     mHeight = 0;
 }
 
-LTexture::~LTexture()
+Texture::Texture(int _total)
+{
+    //Initialize
+    mTexture = NULL;
+    mWidth = 0;
+    mHeight = 0;
+}
+
+Texture::~Texture()
 {
     //Deallocate
     free();
 }
 
-bool LTexture::loadFromFile( SDL_Renderer* &gRenderer, std::string path )
+bool Texture::loadFromFile( SDL_Renderer* &gRenderer, std::string path )
 {
     //Get rid of preexisting texture
     free();
@@ -50,12 +58,12 @@ bool LTexture::loadFromFile( SDL_Renderer* &gRenderer, std::string path )
     }
     catch (const char* error)
     {
-        std::cerr << "In LTexture::loadFromFile(): " << path << ": " << error << std::endl;
+        std::cerr << "In Texture::loadFromFile(): " << path << ": " << error << std::endl;
         return false;
     }
 }
 
-bool LTexture::loadFromRenderedText(
+bool Texture::loadFromRenderedText(
     SDL_Renderer* &gRenderer,
     std::string textureText,
     TTF_Font* gFont,
@@ -92,12 +100,12 @@ bool LTexture::loadFromRenderedText(
     }
     catch (const char* error)
     {
-        std::cerr << "In LTexture::loadFromRenderedText(): " << textureText << ": " << error << std::endl;
+        std::cerr << "In Texture::loadFromRenderedText(): " << textureText << ": " << error << std::endl;
         return false;
     }
 }
 
-void LTexture::free()
+void Texture::free()
 {
     //Free texture if it exists
     if( mTexture != NULL )
@@ -109,25 +117,25 @@ void LTexture::free()
     }
 }
 
-void LTexture::setColor( Uint8 red, Uint8 green, Uint8 blue )
+void Texture::setColor( Uint8 red, Uint8 green, Uint8 blue )
 {
     //Modulate texture rgb
     SDL_SetTextureColorMod( mTexture, red, green, blue );
 }
 
-void LTexture::setBlendMode( SDL_BlendMode blending )
+void Texture::setBlendMode( SDL_BlendMode blending )
 {
     //Set blending function
     SDL_SetTextureBlendMode( mTexture, blending );
 }
 
-void LTexture::setAlpha( Uint8 alpha )
+void Texture::setAlpha( Uint8 alpha )
 {
     //Modulate texture alpha
     SDL_SetTextureAlphaMod( mTexture, alpha );
 }
 
-void LTexture::render(
+void Texture::render(
     SDL_Renderer* &gRenderer,
     int x,
     int y,
@@ -151,13 +159,14 @@ void LTexture::render(
     SDL_RenderCopyEx( gRenderer, mTexture, clip, &renderQuad, angle, center, flip );
 }
 
-int LTexture::getWidth()
+int Texture::getWidth()
 {
     return mWidth;
 }
 
-int LTexture::getHeight()
+int Texture::getHeight()
 {
     return mHeight;
 }
+
 

@@ -1,4 +1,4 @@
-#include "Bullet.h"
+#include "Bomb.h"
 #define PI 3.14159265
 
 double rad(double deg)
@@ -11,7 +11,7 @@ double deg(double rad)
     return 180.0 * rad / PI;
 }
 
-Bullet::Bullet()
+Bomb::Bomb()
 {
     initPosX = posX = 0;
     initPosY = posY = 0;
@@ -19,10 +19,9 @@ Bullet::Bullet()
     velY = 0;
     initVel = 0;
     maxTime = 0.0;
-    current_explosion_frame = 0;
 }
 
-Bullet::Bullet(int _posX, int _posY, int _velX, int _velY, int _initVel)
+Bomb::Bomb(int _posX, int _posY, int _velX, int _velY, int _initVel)
 {
     initPosX = posX = _posX;
     initPosY = posY = _posY;
@@ -30,66 +29,65 @@ Bullet::Bullet(int _posX, int _posY, int _velX, int _velY, int _initVel)
     velY = _velY;
     initVel = _initVel;
     maxTime = 0.0;
-    current_explosion_frame = 0;
 }
 
-Bullet::~Bullet()
+Bomb::~Bomb()
 {
-    bulletTexture.free();
+    bombTexture.free();
     arrowTexture.free();
     explodeTexture.free();
 }
 
-int Bullet::getPosX()
+int Bomb::getPosX()
 {
     return posX;
 }
-int Bullet::getPosY()
+int Bomb::getPosY()
 {
     return posY;
 }
-int Bullet::getVelX()
+int Bomb::getVelX()
 {
     return velX;
 }
-int Bullet::getVelY()
+int Bomb::getVelY()
 {
     return velY;
 }
-bool Bullet::getEndMove()
+bool Bomb::getEndMove()
 {
     return endMove;
 }
-double Bullet::getTimeOfMotion()
+double Bomb::getTimeOfMotion()
 {
     return maxTime;
 }
 
-void Bullet::setInitPosX(int _initPosX)
+void Bomb::setInitPosX(int _initPosX)
 {
     initPosX = _initPosX;
 }
-void Bullet::setInitPosY(int _initPosY)
+void Bomb::setInitPosY(int _initPosY)
 {
     initPosY = _initPosY;
 }
-void Bullet::setEndMove(bool _endMove)
+void Bomb::setEndMove(bool _endMove)
 {
     endMove = _endMove;
 }
 
 
-void Bullet::loadTextures(SDL_Renderer* &gRenderer)
+void Bomb::loadTextures(SDL_Renderer* &gRenderer)
 {
-    bulletTexture.loadFromFile( gRenderer, "res/img/bomb.png" );
+    bombTexture.loadFromFile( gRenderer, "res/img/bomb.png" );
     arrowTexture.loadFromFile( gRenderer, "res/img/arrow.png" );
     explodeTexture.loadFromFile( gRenderer, "res/sprites/explosion/explosion.png" );
-    for (int i = 0; i < EXPLOSION_FRAME_TOTAL; i++)
+    for (int i = 0; i < explodeClips.getTotalFrames(); i++)
     {
-        explodeClips[i] = {0, 128 * i, 128, 128};
+        explodeClips.clips.push_back({0, 128 * i, 128, 128});
     }
 }
-void Bullet::handleEvent(SDL_Event& event, int& mouseX, int& mouseY, bool& mouseDown, bool& mousePressed)
+void Bomb::handleEvent(SDL_Event& event, int& mouseX, int& mouseY, bool& mouseDown, bool& mousePressed)
 {
     switch (event.type)
     {
@@ -98,7 +96,7 @@ void Bullet::handleEvent(SDL_Event& event, int& mouseX, int& mouseY, bool& mouse
         {
             initVel += 2;
             initVel = std::min(initVel, MAX_INIT_VELOCITY);
-            system("cls");
+            //system("cls");
             std::cout << "Velocity = " << initVel << std::endl;
         }
         if (event.key.keysym.sym == SDLK_m)
@@ -123,7 +121,7 @@ void Bullet::handleEvent(SDL_Event& event, int& mouseX, int& mouseY, bool& mouse
     }
 }
 
-void Bullet::computeTimeOfMotion(const double &alpha)
+void Bomb::computeTimeOfMotion(const double &alpha)
 {
     double t1 = initVel * sin(alpha) / GRAVITY;
     double H = pow(initVel,2) * pow(sin(alpha),2) / (2 * GRAVITY);
@@ -131,14 +129,14 @@ void Bullet::computeTimeOfMotion(const double &alpha)
     maxTime = t1 + t2;
 }
 
-void Bullet::projectileMotion(SDL_Renderer* &gRenderer, double &alpha, double &time)
+void Bomb::projectileMotion(SDL_Renderer* &gRenderer, double &alpha, double &time)
 {
     updateState(alpha, time);
-    renderBullet(gRenderer, alpha);
+    renderbomb(gRenderer, alpha);
     SDL_RenderPresent( gRenderer );
 }
 
-void Bullet::updateState(double alpha, double time)
+void Bomb::updateState(double alpha, double time)
 {
     velX = initVel * cos(alpha);
     velY = initVel * sin(alpha) - GRAVITY * time;
@@ -146,7 +144,7 @@ void Bullet::updateState(double alpha, double time)
     posY = initPosY + initVel * sin(alpha) * time - GRAVITY * time * time / 2;
 }
 
-void Bullet::renderBullet(SDL_Renderer* &gRenderer, double alpha)
+void Bomb::renderbomb(SDL_Renderer* &gRenderer, double alpha)
 {
     double angle = -alpha;
     if (velX != 0)
@@ -155,10 +153,10 @@ void Bullet::renderBullet(SDL_Renderer* &gRenderer, double alpha)
         if (velY > 0)
             angle = -angle;
     }
-    bulletTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, NULL, deg(angle));
+    bombTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, NULL, deg(angle));
 }
 
-void Bullet::renderArrow(SDL_Renderer* &gRenderer, int& mouseX, int& mouseY)
+void Bomb::renderArrow(SDL_Renderer* &gRenderer, int& mouseX, int& mouseY)
 {
     arrowTexture.render(
         gRenderer,
@@ -168,11 +166,11 @@ void Bullet::renderArrow(SDL_Renderer* &gRenderer, int& mouseX, int& mouseY)
     );
 }
 
-void Bullet::renderExplosion(SDL_Renderer* &gRenderer)
+void Bomb::renderExplosion(SDL_Renderer* &gRenderer)
 {
-    for (int i = 0; i < EXPLOSION_FRAME_TOTAL; i++)
+    for (int i = 0; i < explodeClips.getTotalFrames(); i++)
     {
-        explodeTexture.render(gRenderer, posX - 50, SCREEN_HEIGHT - posY - 50, &explodeClips[i]);
+        explodeTexture.render(gRenderer, posX - 50, SCREEN_HEIGHT - posY - 50, &explodeClips.clips[i]);
         SDL_RenderPresent(gRenderer);
         SDL_Delay(30);
     }

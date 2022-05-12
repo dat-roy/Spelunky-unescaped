@@ -5,8 +5,6 @@ Enemy::Enemy()
     posX = 0;
     posY = 0;
     is_forward = false;
-    current_snake_crawling_frame = 0;
-    current_snake_attacking_frame = 0;
     blood = MAX_BLOOD;
 }
 
@@ -15,8 +13,6 @@ Enemy::Enemy(int _posX, int _posY, bool _is_forward)
     posX = _posX;
     posY = _posY;
     is_forward = _is_forward;
-    current_snake_crawling_frame = 0;
-    current_snake_attacking_frame = 0;
     blood = MAX_BLOOD;
 }
 
@@ -35,13 +31,13 @@ void Enemy::setFirstPosition(int _posX, int _posY, bool _is_forward)
 void Enemy::loadTextures(SDL_Renderer* &gRenderer)
 {
     snakeTexture.loadFromFile(gRenderer, "res/sprites/enemy/snake.png");
-    for (int i = 0; i < SNAKE_CRAWLING_FRAME_TOTAL; i++)
+    for (int i = 0; i < crawlingClips.getTotalFrames(); i++)
     {
-        snakeCrawlingClips[i] = {95 * i, 0, 95, 95};
+        crawlingClips.clips.push_back({95 * i, 0, 95, 95});
     }
-    for (int i = 0; i < SNAKE_ATTACKING_FRAME_TOTAL; i++)
+    for (int i = 0; i < attackingClips.getTotalFrames(); i++)
     {
-        snakeAttackingClips[i] = {96 * i, 95, 96, 95};
+        attackingClips.clips.push_back({96 * i, 95, 96, 95});
     }
 }
 
@@ -91,21 +87,21 @@ void Enemy::updateBlood(int db) {
 void Enemy::renderSnakeCrawling(SDL_Renderer* &gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    snakeTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 7, &snakeCrawlingClips[current_snake_crawling_frame / 3], 0.0, NULL, flipType);
-    current_snake_crawling_frame++;
-    if (current_snake_crawling_frame / 3 == SNAKE_CRAWLING_FRAME_TOTAL)
+    snakeTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 7, &crawlingClips.clips[crawlingClips.getCurrentFrame() / 3], 0.0, NULL, flipType);
+    crawlingClips.nextFrame();
+    if (crawlingClips.getCurrentFrame() / 3 == crawlingClips.getTotalFrames())
     {
-        current_snake_crawling_frame = 0;
+        crawlingClips.resetFrame();
     }
 }
 
 void Enemy::renderSnakeAttacking(SDL_Renderer* &gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    snakeTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, &snakeAttackingClips[current_snake_attacking_frame / 5], 0.0, NULL, flipType);
-    current_snake_attacking_frame++;
-    if (current_snake_attacking_frame / 5 == SNAKE_ATTACKING_FRAME_TOTAL)
+    snakeTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, &attackingClips.clips[attackingClips.getCurrentFrame() / 5], 0.0, NULL, flipType);
+    attackingClips.nextFrame();
+    if (attackingClips.getCurrentFrame() / 5 == attackingClips.getTotalFrames())
     {
-        current_snake_attacking_frame = 0;
+        attackingClips.resetFrame();
     }
 }

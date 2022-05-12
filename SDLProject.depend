@@ -101,15 +101,14 @@
 	"Global.h"
 	"LTexture.h"
 
-1650527047 d:\sdlproject\src\global.h
+1651393893 d:\sdlproject\src\global.h
 	<SDL.h>
 	<SDL_ttf.h>
 	<iostream>
 	<string>
 	<cmath>
-	"LTexture.h"
 
-1648717719 d:\sdlproject\src\ltexture.h
+1651399503 d:\sdlproject\src\ltexture.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -117,10 +116,10 @@
 	<iostream>
 	<string>
 
-1650379400 source:d:\sdlproject\src\ltexture.cpp
+1651399998 source:d:\sdlproject\src\ltexture.cpp
 	"LTexture.h"
 
-1650940650 source:d:\sdlproject\src\main.cpp
+1652362089 source:d:\sdlproject\src\main.cpp
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -131,7 +130,7 @@
 	<cmath>
 	"Global.h"
 	"SDL_Utils.h"
-	"LTexture.h"
+	"Texture.h"
 	"Map.h"
 	"Bullet.h"
 	"Character.h"
@@ -166,7 +165,7 @@
 1650538161 source:d:\sdlproject\src\bullet.cpp
 	"Bullet.h"
 
-1650538126 d:\sdlproject\src\bullet.h
+1652366296 d:\sdlproject\src\bullet.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -176,10 +175,27 @@
 	<string>
 	<cmath>
 	"Global.h"
-	"LTexture.h"
+	"Texture.h"
+	"TextureClips.h"
 	"Character.h"
 
-1650472849 d:\sdlproject\src\character.h
+1652065862 d:\sdlproject\src\character.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	<vector>
+	"Global.h"
+	"Texture.h"
+	"TextureClips.h"
+
+1652066086 source:d:\sdlproject\src\character.cpp
+	"Character.h"
+
+1652065879 d:\sdlproject\src\map.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -188,26 +204,12 @@
 	<string>
 	<cmath>
 	"Global.h"
-	"LTexture.h"
-
-1650940482 source:d:\sdlproject\src\character.cpp
-	"Character.h"
-
-1650852286 d:\sdlproject\src\map.h
-	<SDL.h>
-	<SDL_image.h>
-	<SDL_mixer.h>
-	<SDL_ttf.h>
-	<iostream>
-	<string>
-	<cmath>
-	"Global.h"
-	"LTexture.h"
+	"Texture.h"
 
 1650940416 source:d:\sdlproject\src\map.cpp
 	"Map.h"
 
-1650848206 d:\sdlproject\src\enemy.h
+1652361720 d:\sdlproject\src\enemy.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -216,8 +218,28 @@
 	<string>
 	<cmath>
 	"Global.h"
-	"LTexture.h"
+	"Texture.h"
+	"TextureClips.h"
 
-1650848733 source:d:\sdlproject\src\enemy.cpp
+1652361872 source:d:\sdlproject\src\enemy.cpp
 	"Enemy.h"
+
+1651802439 d:\sdlproject\src\texture.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+
+1652361322 d:\sdlproject\src\textureclips.h
+	<SDL.h>
+	<iostream>
+	<vector>
+
+1652065184 source:d:\sdlproject\src\texture.cpp
+	"Texture.h"
+
+1652065810 source:d:\sdlproject\src\textureclips.cpp
+	"TextureClips.h"
 

@@ -10,16 +10,16 @@
 #include <cmath>
 
 #include "Global.h"
-#include "LTexture.h"
+#include "Texture.h"
 
 class Map
 {
     //Graphics textures
-    LTexture gBgTexture;
+    Texture gBgTexture;
     //Text textures
-    LTexture text_01;
-    LTexture text_02;
-    LTexture text_03;
+    Texture text_01;
+    Texture text_02;
+    Texture text_03;
 
 public:
     Map();

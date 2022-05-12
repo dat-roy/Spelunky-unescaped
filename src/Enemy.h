@@ -10,10 +10,9 @@
 #include <cmath>
 
 #include "Global.h"
-#include "LTexture.h"
+#include "Texture.h"
+#include "TextureClips.h"
 
-const int SNAKE_CRAWLING_FRAME_TOTAL = 11;
-const int SNAKE_ATTACKING_FRAME_TOTAL = 7;
 class Enemy
 {
     const int MAX_BLOOD = 1000;
@@ -21,11 +20,11 @@ class Enemy
     int blood;
     bool is_forward;
 
-    LTexture snakeTexture;
-    SDL_Rect snakeCrawlingClips[SNAKE_CRAWLING_FRAME_TOTAL];
-    int current_snake_crawling_frame;
-    SDL_Rect snakeAttackingClips[SNAKE_ATTACKING_FRAME_TOTAL];
-    int current_snake_attacking_frame;
+    Texture snakeTexture;
+
+    TextureClips crawlingClips = TextureClips(11);
+    TextureClips attackingClips = TextureClips(7);
+
 public:
     enum CharacterAction {
         CRAWLING,

@@ -9,9 +9,9 @@
 
 #include "Global.h"
 #include "SDL_Utils.h"
-#include "LTexture.h"
+#include "Texture.h"
 #include "Map.h"
-#include "Bullet.h"
+#include "bomb.h"
 #include "Character.h"
 #include "Enemy.h"
 
@@ -29,12 +29,14 @@ bool winGame = false;
 
 int main( int argc, char* args[] )
 {
+
     if( !utils::init(gWindow, gRenderer, gFont24, gFont32, gFont48) )
     {
         std::cerr << "In main(): Failed to initialize initTools!\n";
         return 0;
     }
 
+    //Initialize maps
     Map map;
     map.loadTextures(gRenderer, gFont24, gFont32, gFont48);
 
@@ -44,15 +46,14 @@ int main( int argc, char* args[] )
     Character character(100, 185, true);
     character.loadTextures(gRenderer);
 
-    Bullet bullet(character.getPosX(), character.getPosY());
-    bullet.loadTextures(gRenderer);
+    Bomb bomb(character.getPosX(), character.getPosY());
+    bomb.loadTextures(gRenderer);
 
 
     std::vector<Enemy*> snakes;
     for (int i = 0; i < 3; i++)
     {
-        Enemy* pSnake = new Enemy;
-        snakes.push_back(pSnake);
+        snakes.push_back(new Enemy);
     }
     snakes[0]->setFirstPosition(1000, 160, true);
     snakes[1]->setFirstPosition(900, 160, false);
@@ -97,13 +98,13 @@ int main( int argc, char* args[] )
                 break;
             }
             character.handleAction(event);
-            bullet.handleEvent(event, mouseX, mouseY, mouseDown, mousePressed);
+            bomb.handleEvent(event, mouseX, mouseY, mouseDown, mousePressed);
         }
 
         if (mouseDown && mousePressed)
         {
             character.action = Character::STANDING;
-            bullet.renderArrow(gRenderer, mouseX, mouseY);
+            bomb.renderArrow(gRenderer, mouseX, mouseY);
         }
         if (!mouseDown && mousePressed)
         {
@@ -130,20 +131,20 @@ int main( int argc, char* args[] )
             character.move(3, 0);
         }
         SDL_RenderPresent( gRenderer );
-        bullet.setInitPosX(character.getPosX());
-        bullet.setInitPosY(character.getPosY());
+        bomb.setInitPosX(character.getPosX());
+        bomb.setInitPosY(character.getPosY());
         double alpha = atan(1.0 * (SCREEN_HEIGHT - character.getPosY() - mouseY) / (mouseX - character.getPosX()));
 
         double time = 0;
-        bullet.computeTimeOfMotion(alpha);
+        bomb.computeTimeOfMotion(alpha);
 
-        while (mousePressed == true && mouseDown == false && !bullet.getEndMove())
+        while (mousePressed == true && mouseDown == false && !bomb.getEndMove())
         {
             time += 0.12;
-            if (time > bullet.getTimeOfMotion())
+            if (time > bomb.getTimeOfMotion())
             {
                 mousePressed = false;
-                bullet.setEndMove(true);
+                bomb.setEndMove(true);
                 character.action = Character::STANDING;
             }
             map.renderBackground(gRenderer, 0, 0);
@@ -170,23 +171,23 @@ int main( int argc, char* args[] )
             {
                 character.renderStanding(gRenderer);
             }
-            if (bullet.getEndMove())
+            if (bomb.getEndMove())
             {
-                bullet.renderExplosion(gRenderer);
+                bomb.renderExplosion(gRenderer);
                 break;
             }
 
             for (auto &snake : snakes)
             {
-                if (std::abs(bullet.getPosX() - snake->getPosX()) <= 30
-                    && std::abs(bullet.getPosY() - snake->getPosY()) <= 30)
+                if (std::abs(bomb.getPosX() - snake->getPosX()) <= 30
+                    && std::abs(bomb.getPosY() - snake->getPosY()) <= 30)
                 {
                     snake->updateBlood(-1000);
                     if (snake->getBlood() == 0) {
                         snake->~Enemy();
                         delete snake;
                         snake = nullptr;
-                    }
+                     }
                 }
             }
             for (int i = 0; i < (int)snakes.size(); i++)
@@ -196,8 +197,7 @@ int main( int argc, char* args[] )
                     snakes.erase(snakes.begin() + i);
                 }
             }
-            std::cout << snakes.size() << std::endl;
-            bullet.projectileMotion(gRenderer, alpha, time);
+            bomb.projectileMotion(gRenderer, alpha, time);
             if (snakes.empty())
             {
                 winGame = true;
@@ -209,5 +209,3 @@ int main( int argc, char* args[] )
     }
     utils::close(gWindow, gRenderer, gFont24, gFont32, gFont48);
 }
-
-

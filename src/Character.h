@@ -8,14 +8,11 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <vector>
 
 #include "Global.h"
-#include "LTexture.h"
-
-const int WALKING_FRAME_TOTAL = 9;
-const int LYING_FRAME_TOTAL = 2;
-const int CRAWLING_FRAME_TOTAL = 7;
-const int THROWING_FRAME_TOTAL = 7;
+#include "Texture.h"
+#include "TextureClips.h"
 
 class Character
 {
@@ -24,23 +21,16 @@ class Character
     int blood;
     bool is_forward;
 
-    LTexture standingTexture;
+    Texture standingTexture;
+    Texture walkingTexture;
+    Texture lyingTexture;
+    Texture crawlingTexture;
+    Texture throwingTexture;
 
-    LTexture walkingTexture;
-    SDL_Rect walkingClips[WALKING_FRAME_TOTAL];
-    int current_walking_frame;
-
-    LTexture lyingTexture;
-    SDL_Rect lyingClips[LYING_FRAME_TOTAL];
-    int current_lying_frame;
-
-    LTexture crawlingTexture;
-    SDL_Rect crawlingClips[CRAWLING_FRAME_TOTAL];
-    int current_crawling_frame;
-
-    LTexture throwingTexture;
-    SDL_Rect throwingClips[THROWING_FRAME_TOTAL];
-    int current_throwing_frame;
+    TextureClips walkingClips = TextureClips(9);
+    TextureClips lyingClips = TextureClips(2);
+    TextureClips crawlingClips = TextureClips(7);
+    TextureClips throwingClips = TextureClips(7);
 
 public:
     enum CharacterAction {
