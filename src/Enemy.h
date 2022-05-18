@@ -34,7 +34,7 @@ public:
 
     //Constructors & Destructors
     Enemy();
-    Enemy(int _posX, int _posY, bool _is_forward = true);
+    Enemy(int posX, int posY, bool is_forward = true);
     ~Enemy();
 
     //Getters
@@ -43,7 +43,7 @@ public:
     int getBlood();
 
     //Setters
-    void setFirstPosition(int _posX, int _posY, bool _is_forward = true);
+    void setFirstPosition(int posX, int posY, bool is_forward = true);
 
     //Load textures
     void loadTextures(SDL_Renderer* &gRenderer);

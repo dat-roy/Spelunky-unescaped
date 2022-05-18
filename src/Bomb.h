@@ -19,8 +19,10 @@ class Bomb {
     int posX, posY;
     int velX, velY;
     int initVel;
+    double alpha;
+    double time;
     double maxTime;
-    bool endMove = false;
+    bool is_moving = false;
 
     Texture bombTexture;
     Texture arrowTexture;
@@ -34,32 +36,36 @@ public:
     //Gravity constant
     const double GRAVITY = 9.8;
     //Maximum initial velocity
-    const int MAX_INIT_VELOCITY = 100;
+    const int MAX_INIT_VELOCITY = 120;
 
     //Constructors & Destructors
     Bomb();
-    Bomb(int _posX, int _posY, int _velX = 0, int _velY = 0, int _initVel = 0);
+    Bomb(int posX, int posY, int velX = 0, int velY = 0, int initVel = 0);
     ~Bomb();
     //Getters
     int getPosX();
     int getPosY();
     int getVelX();
     int getVelY();
-    bool getEndMove();
+    bool isMoving();
+    double getTime();
     double getTimeOfMotion();
     //Setters
-    void setInitPosX(int _initPosX);
-    void setInitPosY(int _initPosY);
-    void setEndMove(bool _endMove);
+    void setInitPosX(int initPosX);
+    void setInitPosY(int initPosY);
+    void setAlpha(double alpha);
+    void setMoving(bool is_moving);
+    void resetTime();
 
     //Load textures
     void loadTextures(SDL_Renderer* &gRenderer);
 
     void handleEvent(SDL_Event& event, int& mouseX, int& mouseY, bool& mouseDown, bool& mousePressed);
-    void computeTimeOfMotion(const double &alpha);
-    void projectileMotion(SDL_Renderer* &gRenderer, double &alpha, double &time);
-    void updateState(double alpha, double time);
-    void renderbomb(SDL_Renderer* &gRenderer, double alpha);
+    void computeTimeOfMotion();
+    void projectileMotion(SDL_Renderer* &gRenderer);
+    void updateState();
+    void updateTime(double dt);
+    void renderBomb(SDL_Renderer* &gRenderer);
     void renderArrow(SDL_Renderer* &gRenderer, int& mouseX, int& mouseY);
     void renderExplosion(SDL_Renderer* &gRenderer);
 };

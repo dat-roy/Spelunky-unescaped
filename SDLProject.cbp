@@ -31,8 +31,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="src/Bullet.cpp" />
-		<Unit filename="src/Bullet.h" />
+		<Unit filename="src/Bomb.cpp" />
+		<Unit filename="src/Bomb.h" />
 		<Unit filename="src/Character.cpp" />
 		<Unit filename="src/Character.h" />
 		<Unit filename="src/Enemy.cpp" />

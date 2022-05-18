@@ -8,11 +8,11 @@ Enemy::Enemy()
     blood = MAX_BLOOD;
 }
 
-Enemy::Enemy(int _posX, int _posY, bool _is_forward)
+Enemy::Enemy(int posX, int posY, bool is_forward)
 {
-    posX = _posX;
-    posY = _posY;
-    is_forward = _is_forward;
+    this->posX = posX;
+    this->posY = posY;
+    this->is_forward = is_forward;
     blood = MAX_BLOOD;
 }
 
@@ -21,11 +21,11 @@ Enemy::~Enemy()
     snakeTexture.free();
 }
 
-void Enemy::setFirstPosition(int _posX, int _posY, bool _is_forward)
+void Enemy::setFirstPosition(int posX, int posY, bool is_forward)
 {
-    posX = _posX;
-    posY = _posY;
-    is_forward = _is_forward;
+    this->posX = posX;
+    this->posY = posY;
+    this->is_forward = is_forward;
 }
 
 void Enemy::loadTextures(SDL_Renderer* &gRenderer)

@@ -6,9 +6,8 @@ TextureClips::TextureClips()
     current_frame = 0;
 }
 
-TextureClips::TextureClips(const int _total_frames) : total_frames(_total_frames)
+TextureClips::TextureClips(const int total_frames) : total_frames(total_frames)
 {
-//    total_frames = _total_frames;
     current_frame = 0;
 }
 

@@ -1,5 +1,7 @@
 #include "Bomb.h"
-#define PI 3.14159265
+#include <conio.h>
+
+const double PI = 3.14159265;
 
 double rad(double deg)
 {
@@ -18,17 +20,23 @@ Bomb::Bomb()
     velX = 0;
     velY = 0;
     initVel = 0;
+    alpha = 0;
+    time = 0.0;
     maxTime = 0.0;
+    is_moving = false;
 }
 
-Bomb::Bomb(int _posX, int _posY, int _velX, int _velY, int _initVel)
+Bomb::Bomb(int posX, int posY, int velX, int velY, int initVel)
 {
-    initPosX = posX = _posX;
-    initPosY = posY = _posY;
-    velX = _velX;
-    velY = _velY;
-    initVel = _initVel;
+    this->initPosX = this->posX = posX;
+    this->initPosY = this->posY = posY;
+    this->velX = velX;
+    this->velY = velY;
+    this->initVel = initVel;
+    alpha = 0;
+    time = 0.0;
     maxTime = 0.0;
+    is_moving = false;
 }
 
 Bomb::~Bomb()
@@ -54,26 +62,36 @@ int Bomb::getVelY()
 {
     return velY;
 }
-bool Bomb::getEndMove()
+bool Bomb::isMoving()
 {
-    return endMove;
+    return is_moving;
+}
+double Bomb::getTime()
+{
+    return time;
 }
 double Bomb::getTimeOfMotion()
 {
     return maxTime;
 }
 
-void Bomb::setInitPosX(int _initPosX)
+void Bomb::setInitPosX(int initPosX)
 {
-    initPosX = _initPosX;
+    this->initPosX = initPosX;
 }
-void Bomb::setInitPosY(int _initPosY)
+void Bomb::setInitPosY(int initPosY)
 {
-    initPosY = _initPosY;
+    this->initPosY = initPosY;
 }
-void Bomb::setEndMove(bool _endMove)
+
+void Bomb::setAlpha(double alpha)
 {
-    endMove = _endMove;
+    this->alpha = alpha;
+}
+
+void Bomb::setMoving(bool is_moving)
+{
+    this->is_moving = is_moving;
 }
 
 
@@ -94,16 +112,16 @@ void Bomb::handleEvent(SDL_Event& event, int& mouseX, int& mouseY, bool& mouseDo
     case SDL_KEYDOWN:
         if (event.key.keysym.sym == SDLK_SPACE)
         {
-            initVel += 2;
-            initVel = std::min(initVel, MAX_INIT_VELOCITY);
-            //system("cls");
-            std::cout << "Velocity = " << initVel << std::endl;
-        }
-        if (event.key.keysym.sym == SDLK_m)
-        {
             mouseDown = true;
             mousePressed = true;
-            endMove = false;
+            is_moving = false;
+            initVel += 3;
+            if (initVel > MAX_INIT_VELOCITY)
+            {
+                initVel = 0;
+            }
+            system("cls");
+            std::cout << "Velocity = " << initVel << std::endl;
 
             SDL_GetMouseState(&mouseX, &mouseY);
             if (mouseX < posX)
@@ -113,7 +131,7 @@ void Bomb::handleEvent(SDL_Event& event, int& mouseX, int& mouseY, bool& mouseDo
         }
         break;
     case SDL_KEYUP:
-        if (event.key.keysym.sym == SDLK_m)
+        if (event.key.keysym.sym == SDLK_SPACE)
         {
             mouseDown = false;
         }
@@ -121,7 +139,7 @@ void Bomb::handleEvent(SDL_Event& event, int& mouseX, int& mouseY, bool& mouseDo
     }
 }
 
-void Bomb::computeTimeOfMotion(const double &alpha)
+void Bomb::computeTimeOfMotion()
 {
     double t1 = initVel * sin(alpha) / GRAVITY;
     double H = pow(initVel,2) * pow(sin(alpha),2) / (2 * GRAVITY);
@@ -129,14 +147,15 @@ void Bomb::computeTimeOfMotion(const double &alpha)
     maxTime = t1 + t2;
 }
 
-void Bomb::projectileMotion(SDL_Renderer* &gRenderer, double &alpha, double &time)
+void Bomb::projectileMotion(SDL_Renderer* &gRenderer)
 {
-    updateState(alpha, time);
-    renderbomb(gRenderer, alpha);
-    SDL_RenderPresent( gRenderer );
+    updateState();
+    if (time != 0) {
+        renderBomb(gRenderer);
+    }
 }
 
-void Bomb::updateState(double alpha, double time)
+void Bomb::updateState()
 {
     velX = initVel * cos(alpha);
     velY = initVel * sin(alpha) - GRAVITY * time;
@@ -144,7 +163,17 @@ void Bomb::updateState(double alpha, double time)
     posY = initPosY + initVel * sin(alpha) * time - GRAVITY * time * time / 2;
 }
 
-void Bomb::renderbomb(SDL_Renderer* &gRenderer, double alpha)
+void Bomb::updateTime(double dt)
+{
+    time += dt;
+}
+
+void Bomb::resetTime()
+{
+    time = 0;
+}
+
+void Bomb::renderBomb(SDL_Renderer* &gRenderer)
 {
     double angle = -alpha;
     if (velX != 0)
@@ -172,6 +201,5 @@ void Bomb::renderExplosion(SDL_Renderer* &gRenderer)
     {
         explodeTexture.render(gRenderer, posX - 50, SCREEN_HEIGHT - posY - 50, &explodeClips.clips[i]);
         SDL_RenderPresent(gRenderer);
-        SDL_Delay(30);
     }
 }

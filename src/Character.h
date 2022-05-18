@@ -44,7 +44,7 @@ public:
 
     //Constructors & Destructors
     Character();
-    Character(int _posX, int _posY, bool _is_forward = true);
+    Character(int posX, int posY, bool is_forward = true);
     ~Character();
 
     //Getter

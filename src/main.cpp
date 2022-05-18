@@ -5,13 +5,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include <cmath>
 
 #include "Global.h"
 #include "SDL_Utils.h"
 #include "Texture.h"
 #include "Map.h"
-#include "bomb.h"
+#include "Bomb.h"
 #include "Character.h"
 #include "Enemy.h"
 
@@ -26,31 +27,31 @@ TTF_Font *gFont48 = NULL;
 
 bool quitGame = false;
 bool winGame = false;
+int mouseX = 0;
+int mouseY = 0;
+bool mouseDown = false;
+bool mousePressed = false;
 
-int main( int argc, char* args[] )
+enum GameState {
+    MAIN_MENU,
+    RUNNING,
+    WINNING,
+    LOSING,
+    QUITING,
+};
+GameState gameState = MAIN_MENU;
+
+Map map;
+Character character(100, 185, true);
+Bomb bomb(character.getPosX(), character.getPosY());
+std::vector<Enemy*> snakes;
+
+void loadAllTextures()
 {
-
-    if( !utils::init(gWindow, gRenderer, gFont24, gFont32, gFont48) )
-    {
-        std::cerr << "In main(): Failed to initialize initTools!\n";
-        return 0;
-    }
-
-    //Initialize maps
-    Map map;
     map.loadTextures(gRenderer, gFont24, gFont32, gFont48);
-
-    SDL_Event event;
-    int mouseX = 0;
-    int mouseY = 0;
-    Character character(100, 185, true);
     character.loadTextures(gRenderer);
-
-    Bomb bomb(character.getPosX(), character.getPosY());
     bomb.loadTextures(gRenderer);
 
-
-    std::vector<Enemy*> snakes;
     for (int i = 0; i < 3; i++)
     {
         snakes.push_back(new Enemy);
@@ -62,39 +63,142 @@ int main( int argc, char* args[] )
     {
         snake->loadTextures(gRenderer);
     }
+}
 
-    bool mouseDown = false;
-    bool mousePressed = false;
-
-    while( !quitGame )
+void displayMaps()
+{
+    map.renderBackground(gRenderer, 0, 0);
+    if ( gameState == WINNING)
     {
-        map.renderBackground(gRenderer, 0, 0);
-        if (! winGame)
+        map.renderText_03(gRenderer);
+    } else {
+        map.renderText_01(gRenderer);
+        map.renderText_02(gRenderer);
+    }
+}
+
+void displayCharacter()
+{
+    switch (character.action)
+    {
+    case Character::STANDING:
+        character.renderStanding(gRenderer);
+        break;
+
+    case Character::LYING:
+        character.renderLying(gRenderer);
+        break;
+
+    case Character::WALKING:
+        character.renderWalking(gRenderer);
+        character.move(8, 0);
+        break;
+
+    case Character::CRAWLING:
+        character.renderCrawling(gRenderer);
+        character.move(3, 0);
+    }
+}
+
+void displayEnemies()
+{
+    for (auto &snake : snakes)
+    {
+        if (snake == nullptr) continue;
+        if (snake->action == Enemy::CRAWLING)
         {
-            map.renderText_01(gRenderer);
-            map.renderText_02(gRenderer);
-        } else {
-            map.renderText_03(gRenderer);
+            snake->renderSnakeCrawling(gRenderer);
+        }
+        if (snake->action == Enemy::ATTACKING)
+        {
+            snake->renderSnakeAttacking(gRenderer);
+        }
+        snake->move(1, 0);
+    }
+}
+
+void displayBomb()
+{
+    if (mousePressed == true && mouseDown == false && !bomb.isMoving())
+    {
+        bomb.setInitPosX(character.getPosX());
+        bomb.setInitPosY(character.getPosY());
+
+        bomb.setAlpha( atan(1.0 * (SCREEN_HEIGHT - character.getPosY() - mouseY) / (mouseX - character.getPosX())) );
+        bomb.resetTime();
+        bomb.computeTimeOfMotion();
+        bomb.setMoving(true);
+    }
+
+    if (mousePressed == true && mouseDown == false && bomb.isMoving())
+    {
+        bomb.updateTime(0.15);
+        if (bomb.getTime() > bomb.getTimeOfMotion())
+        {
+            bomb.setMoving(false);
+            bomb.resetTime();
+            character.action = Character::STANDING;
+            mousePressed = false;
+        }
+
+        if (character.action == Character::THROWING)
+        {
+            character.renderThrowing(gRenderer);
+        }
+        if (character.action == Character::STANDING)
+        {
+            character.renderStanding(gRenderer);
+        }
+        if (bomb.isMoving() == false)
+        {
+            bomb.renderExplosion(gRenderer);
         }
 
         for (auto &snake : snakes)
         {
-            if (snake->action == Enemy::CRAWLING)
+            if (snake == nullptr) continue;
+            if (std::abs(bomb.getPosX() - snake->getPosX()) <= 20
+                && std::abs(bomb.getPosY() - snake->getPosY()) <= 20)
             {
-                snake->renderSnakeCrawling(gRenderer);
+                    //bomb.renderExplosion(gRenderer);
+                    bomb.setMoving(false);
+                    character.action = Character::STANDING;
+                    //snake->~Enemy();
+                    delete snake;
+                    snake = nullptr;
             }
-            if (snake->action == Enemy::ATTACKING)
-            {
-                snake->renderSnakeAttacking(gRenderer);
-            }
-            snake->move(1, 0);
         }
+        if (std::count(snakes.begin(), snakes.end(), nullptr) == (int)snakes.size())
+        {
+            gameState = WINNING;
+        }
+        bomb.projectileMotion(gRenderer);
+    }
+}
+
+int main( int argc, char* args[] )
+{
+    if( !utils::init(gWindow, gRenderer, gFont24, gFont32, gFont48) )
+    {
+        std::cerr << "In main(): Failed to initialize initTools!\n";
+        return 0;
+    }
+
+    loadAllTextures();
+
+    SDL_Event event;
+
+    while( gameState != QUITING)
+    {
+        //Clear screen
+        SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+        SDL_RenderClear( gRenderer );
 
         while( SDL_PollEvent( &event ) != 0 )
         {
             if (event.type == SDL_QUIT)
             {
-                quitGame = true;
+                gameState = QUITING;
                 break;
             }
             character.handleAction(event);
@@ -110,102 +214,12 @@ int main( int argc, char* args[] )
         {
             character.action = Character::THROWING;
         }
-        if (character.action == Character::STANDING)
-        {
-            character.renderStanding(gRenderer);
-        }
 
-        if (character.action == Character::LYING)
-        {
-            character.renderLying(gRenderer);
-        }
-        if (character.action == Character::WALKING)
-        {
-            character.renderWalking(gRenderer);
-            character.move(8, 0);
-        }
-
-        if (character.action == Character::CRAWLING)
-        {
-            character.renderCrawling(gRenderer);
-            character.move(3, 0);
-        }
+        displayMaps();
+        displayCharacter();
+        displayEnemies();
+        displayBomb();
         SDL_RenderPresent( gRenderer );
-        bomb.setInitPosX(character.getPosX());
-        bomb.setInitPosY(character.getPosY());
-        double alpha = atan(1.0 * (SCREEN_HEIGHT - character.getPosY() - mouseY) / (mouseX - character.getPosX()));
-
-        double time = 0;
-        bomb.computeTimeOfMotion(alpha);
-
-        while (mousePressed == true && mouseDown == false && !bomb.getEndMove())
-        {
-            time += 0.12;
-            if (time > bomb.getTimeOfMotion())
-            {
-                mousePressed = false;
-                bomb.setEndMove(true);
-                character.action = Character::STANDING;
-            }
-            map.renderBackground(gRenderer, 0, 0);
-
-            for (auto &snake : snakes)
-            {
-                if (snake->action == Enemy::CRAWLING)
-                {
-                    snake->renderSnakeCrawling(gRenderer);
-                }
-                if (snake->action == Enemy::ATTACKING)
-                {
-                    snake->renderSnakeAttacking(gRenderer);
-                }
-                snake->move(1, 0);
-            }
-
-
-            if (character.action == Character::THROWING)
-            {
-                character.renderThrowing(gRenderer);
-            }
-            if (character.action == Character::STANDING)
-            {
-                character.renderStanding(gRenderer);
-            }
-            if (bomb.getEndMove())
-            {
-                bomb.renderExplosion(gRenderer);
-                break;
-            }
-
-            for (auto &snake : snakes)
-            {
-                if (std::abs(bomb.getPosX() - snake->getPosX()) <= 30
-                    && std::abs(bomb.getPosY() - snake->getPosY()) <= 30)
-                {
-                    snake->updateBlood(-1000);
-                    if (snake->getBlood() == 0) {
-                        snake->~Enemy();
-                        delete snake;
-                        snake = nullptr;
-                     }
-                }
-            }
-            for (int i = 0; i < (int)snakes.size(); i++)
-            {
-                if (snakes[i] == nullptr)
-                {
-                    snakes.erase(snakes.begin() + i);
-                }
-            }
-            bomb.projectileMotion(gRenderer, alpha, time);
-            if (snakes.empty())
-            {
-                winGame = true;
-            }
-        }
-        //Clear screen
-        SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
-        SDL_RenderClear( gRenderer );
     }
     utils::close(gWindow, gRenderer, gFont24, gFont32, gFont48);
 }

@@ -11,7 +11,7 @@ struct TextureClips {
     std::vector<SDL_Rect> clips;
 
     TextureClips();
-    TextureClips(const int _total_frames);
+    TextureClips(const int total_frames);
 
     //Get total frames
     int getTotalFrames();

@@ -7,11 +7,11 @@ Character::Character()
     blood = MAX_BLOOD;
     is_forward = true;
 }
-Character::Character(int _posX, int _posY, bool _is_forward)
+Character::Character(int posX, int posY, bool is_forward)
 {
-    posX = _posX;
-    posY = _posY;
-    is_forward = _is_forward;
+    this->posX = posX;
+    this->posY = posY;
+    this->is_forward = is_forward;
 }
 Character::~Character()
 {
@@ -179,7 +179,6 @@ void Character::renderThrowing(SDL_Renderer* &gRenderer)
     if (throwingClips.getCurrentFrame() / 4 < throwingClips.getTotalFrames() - 1)
     {
         throwingClips.nextFrame();
-
     }
     if (throwingClips.getCurrentFrame() / 4 == throwingClips.getTotalFrames() - 1)
     {
