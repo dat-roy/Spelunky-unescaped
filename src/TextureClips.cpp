@@ -1,8 +1,7 @@
 #include "TextureClips.h"
 
-TextureClips::TextureClips()
+TextureClips::TextureClips() : total_frames(1)
 {
-    total_frames = 1;
     current_frame = 0;
 }
 

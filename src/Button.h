@@ -13,15 +13,19 @@
 #include "Texture.h"
 
 class Button {
-    SDL_Point buttonPos;
+    const SDL_Rect btn;
     Texture buttonTexture;
-    SDL_Rect srect, drect;
 
     bool selected = false;
 public:
-    Button();
 
-    void handleEvent(SDL_Event& event);
+    Button();
+    Button(SDL_Rect btn);
+    ~Button();
+
+    bool isSelected();
+    void setSelected(bool selected);
+    void handleEvent(SDL_Event& event, SDL_Point& mousePos);
     void loadTextures(SDL_Renderer* gRenderer);
     void renderButton(SDL_Renderer* gRenderer);
 

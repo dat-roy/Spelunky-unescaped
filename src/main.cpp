@@ -15,6 +15,7 @@
 #include "Bomb.h"
 #include "Character.h"
 #include "Enemy.h"
+#include "Button.h"
 
 //SDL utilities
 SDL_Window* gWindow = NULL;
@@ -37,6 +38,9 @@ Character character({100, 185}, true);
 Bomb bomb(character.getPos(), 0, 0, 70);
 std::vector<Enemy*> snakes;
 
+// Start button
+Button startButton({ (SCREEN_WIDTH - 200)/ 2, 280, 200, 75 });
+
 void loadAllTextures()
 {
     map.loadTextures(gRenderer, gFont24, gFont32, gFont48);
@@ -54,6 +58,8 @@ void loadAllTextures()
     {
         snake->loadTextures(gRenderer);
     }
+
+    startButton.loadTextures(gRenderer);
 }
 
 void displayMaps()
@@ -193,14 +199,16 @@ int main( int argc, char* args[] )
                     gameState = QUITING;
                     break;
                 }
-                if (event.type == SDL_KEYDOWN)
+                startButton.handleEvent(event, mousePos);
+                if (startButton.isSelected())
                 {
-                    if (event.key.keysym.sym == SDLK_a) {
-                        gameState = RUNNING;
-                    }
+                    gameState = RUNNING;
+                    startButton.setSelected(false);
                 }
             }
             map.renderMainMenu(gRenderer);
+            startButton.renderButton(gRenderer);
+
         } else {
             while( SDL_PollEvent( &event ) != 0 && ! bomb.isMoving())
             {
@@ -237,4 +245,5 @@ int main( int argc, char* args[] )
         SDL_RenderPresent( gRenderer );
     }
     utils::close(gWindow, gRenderer, gFont24, gFont32, gFont48);
+    return 0;
 }

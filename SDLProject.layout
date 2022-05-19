@@ -2,21 +2,78 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
+	<File name="src\Global.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="315" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\Enemy.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2207" topLine="73" />
+		</Cursor>
+	</File>
+	<File name="src\Button.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="803" topLine="27" />
+		</Cursor>
+	</File>
 	<File name="src\main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4969" topLine="50" />
+			<Cursor1 position="5391" topLine="106" />
 		</Cursor>
 		<Folding>
-			<Collapse line="47" />
-			<Collapse line="66" />
-			<Collapse line="78" />
-			<Collapse line="101" />
-			<Collapse line="120" />
+			<Collapse line="77" />
+			<Collapse line="117" />
 		</Folding>
 	</File>
-	<File name="src\Button.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\TextureClips.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="0" topLine="0" />
+			<Cursor1 position="390" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\SDL_Utils.h" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="358" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\Character.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5082" topLine="158" />
+		</Cursor>
+	</File>
+	<File name="src\Texture.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="170" topLine="43" />
+		</Cursor>
+	</File>
+	<File name="src\Map.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="367" topLine="10" />
+		</Cursor>
+	</File>
+	<File name="src\Enemy.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1035" topLine="20" />
+		</Cursor>
+	</File>
+	<File name="src\Bomb.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3557" topLine="154" />
+		</Cursor>
+		<Folding>
+			<Collapse line="4" />
+			<Collapse line="9" />
+			<Collapse line="27" />
+		</Folding>
+	</File>
+	<File name="src\Map.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="592" topLine="24" />
+		</Cursor>
+	</File>
+	<File name="src\TextureClips.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="281" topLine="4" />
 		</Cursor>
 	</File>
 	<File name="src\Texture.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
@@ -33,86 +90,24 @@
 			<Collapse line="138" />
 		</Folding>
 	</File>
-	<File name="src\Enemy.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\Button.h" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="177" topLine="77" />
+			<Cursor1 position="413" topLine="8" />
+		</Cursor>
+	</File>
+	<File name="src\SDL_Utils.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1398" topLine="54" />
 		</Cursor>
 	</File>
 	<File name="src\Character.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="547" topLine="6" />
-		</Cursor>
-	</File>
-	<File name="src\SDL_Utils.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2106" topLine="39" />
-		</Cursor>
-	</File>
-	<File name="src\Map.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="308" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\Button.h" open="1" top="1" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\SDL_Utils.h" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="358" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\TextureClips.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="390" topLine="0" />
+			<Cursor1 position="1008" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="src\Bomb.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1080" topLine="38" />
+			<Cursor1 position="227" topLine="7" />
 		</Cursor>
-	</File>
-	<File name="src\Enemy.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="764" topLine="12" />
-		</Cursor>
-	</File>
-	<File name="src\Global.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="272" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\Map.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="599" topLine="9" />
-		</Cursor>
-	</File>
-	<File name="src\Texture.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="170" topLine="43" />
-		</Cursor>
-	</File>
-	<File name="src\Character.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="991" topLine="36" />
-		</Cursor>
-	</File>
-	<File name="src\TextureClips.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="281" topLine="4" />
-		</Cursor>
-	</File>
-	<File name="src\Bomb.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2534" topLine="108" />
-		</Cursor>
-		<Folding>
-			<Collapse line="6" />
-			<Collapse line="77" />
-			<Collapse line="81" />
-			<Collapse line="86" />
-			<Collapse line="91" />
-		</Folding>
 	</File>
 </CodeBlocks_layout_file>

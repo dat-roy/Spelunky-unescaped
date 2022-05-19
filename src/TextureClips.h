@@ -6,7 +6,7 @@
 #include <vector>
 
 struct TextureClips {
-    int total_frames;
+    const int total_frames;
     int current_frame;
     std::vector<SDL_Rect> clips;
 
