@@ -76,25 +76,7 @@ void displayMaps()
 
 void displayCharacter()
 {
-    switch (character.action)
-    {
-    case Character::STANDING:
-        character.renderStanding(gRenderer);
-        break;
-
-    case Character::LYING:
-        character.renderLying(gRenderer);
-        break;
-
-    case Character::WALKING:
-        character.renderWalking(gRenderer);
-        character.move(5, 0);
-        break;
-
-    case Character::CRAWLING:
-        character.renderCrawling(gRenderer);
-        character.move(3, 0);
-    }
+    character.renderAction(gRenderer);
 }
 
 void displayEnemies()
@@ -102,15 +84,8 @@ void displayEnemies()
     for (auto &snake : snakes)
     {
         if (snake == nullptr) continue;
-        if (snake->action == Enemy::CRAWLING)
-        {
-            snake->renderSnakeCrawling(gRenderer);
-        }
-        if (snake->action == Enemy::ATTACKING)
-        {
-            snake->renderSnakeAttacking(gRenderer);
-        }
-        snake->move(1, 0);
+
+        snake->renderAction(gRenderer);
     }
 }
 
@@ -135,18 +110,10 @@ void displayBomb()
         {
             bomb.setMoving(false);
             bomb.resetTime();
-            character.action = Character::STANDING;
+            character.action = STANDING;
             mousePressed = false;
         }
 
-        if (character.action == Character::THROWING)
-        {
-            character.renderThrowing(gRenderer);
-        }
-        if (character.action == Character::STANDING)
-        {
-            character.renderStanding(gRenderer);
-        }
         if (bomb.isMoving() == false)
         {
             bomb.renderExplosion(gRenderer);
@@ -155,12 +122,12 @@ void displayBomb()
         for (auto &snake : snakes)
         {
             if (snake == nullptr) continue;
-            if (std::abs(bomb.getPos().x - snake->getPos().x) <= 20
-                && std::abs(bomb.getPos().y - snake->getPos().y) <= 20)
+            if (std::abs(bomb.getPos().x - snake->getPos().x) <= 10
+                && std::abs(bomb.getPos().y - snake->getPos().y) <= 10)
             {
                     bomb.renderExplosion(gRenderer);
                     //bomb.setMoving(false);
-                    character.action = Character::STANDING;
+                    character.action = STANDING;
                     delete snake;
                     snake = nullptr;
             }
@@ -200,11 +167,11 @@ int main( int argc, char* args[] )
                     break;
                 }
                 startButton.handleEvent(event, mousePos);
-                if (startButton.isSelected())
-                {
-                    gameState = RUNNING;
-                    startButton.setSelected(false);
-                }
+            }
+            if (startButton.isSelected())
+            {
+                gameState = RUNNING;
+                startButton.setSelected(false);
             }
             map.renderMainMenu(gRenderer);
             startButton.renderButton(gRenderer);
@@ -219,21 +186,22 @@ int main( int argc, char* args[] )
                 }
                 if (event.type == SDL_KEYDOWN)
                 {
-                    if (event.key.keysym.sym == SDLK_b) {
+                    if (event.key.keysym.sym == SDLK_a) {
                         gameState = MAIN_MENU;
                     }
                 }
-                character.handleAction(event);
+                character.handleEvent(event);
                 bomb.handleEvent(event, mousePos, mouseDown, mousePressed);
             }
 
             if (mouseDown && mousePressed)
             {
-                character.action = Character::STANDING;
+                character.action = STANDING;
             }
-            if (!mouseDown && mousePressed)
+            if (!mouseDown && mousePressed && ! bomb.isMoving())
             {
-                character.action = Character::THROWING;
+                character.action = THROWING;
+                //mouseDown = true;
             }
             displayMaps();
             displayCharacter();

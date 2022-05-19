@@ -4,14 +4,14 @@ Enemy::Enemy()
 {
     SDL_Point pos = {0, 0};
     is_forward = false;
-    blood = MAX_BLOOD;
+    action = CRAWLING;
 }
 
 Enemy::Enemy(SDL_Point pos, bool is_forward)
 {
     this->pos = pos;
     this->is_forward = is_forward;
-    blood = MAX_BLOOD;
+    action = CRAWLING;
 }
 
 Enemy::~Enemy()
@@ -28,13 +28,13 @@ void Enemy::setFirstPosition(SDL_Point pos, bool is_forward)
 void Enemy::loadTextures(SDL_Renderer* gRenderer)
 {
     snakeTexture.loadFromFile(gRenderer, "res/sprites/enemy/snake.png");
-    for (int i = 0; i < crawlingClips.getTotalFrames(); i++)
+    for (int i = 0; i < textureClips[CRAWLING].getTotalFrames(); i++)
     {
-        crawlingClips.clips.push_back({95 * i, 0, 95, 95});
+        textureClips[CRAWLING].clips.push_back({95 * i, 0, 95, 95});
     }
-    for (int i = 0; i < attackingClips.getTotalFrames(); i++)
+    for (int i = 0; i < textureClips[ATTACKING].getTotalFrames(); i++)
     {
-        attackingClips.clips.push_back({96 * i, 95, 96, 95});
+        textureClips[ATTACKING].clips.push_back({95 * i, 95, 95, 95});
     }
 }
 
@@ -69,32 +69,14 @@ SDL_Point Enemy::getPos() {
     return pos;
 }
 
-int Enemy::getBlood() {
-    return blood;
-}
-
-void Enemy::updateBlood(int db) {
-    blood = std::max(blood + db, 0);
-}
-
-void Enemy::renderSnakeCrawling(SDL_Renderer* gRenderer)
+void Enemy::renderAction(SDL_Renderer* gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    snakeTexture.render(gRenderer, pos.x, SCREEN_HEIGHT - pos.y + 7, &crawlingClips.clips[crawlingClips.getCurrentFrame() / 3], 0.0, NULL, flipType);
-    crawlingClips.nextFrame();
-    if (crawlingClips.getCurrentFrame() / 3 == crawlingClips.getTotalFrames())
+    snakeTexture.render(gRenderer, pos.x, SCREEN_HEIGHT - pos.y, &textureClips[action].clips[textureClips[action].getCurrentFrame() / 3], 0.0, NULL, flipType);
+    textureClips[action].nextFrame();
+    if (textureClips[action].getCurrentFrame() / 3 == textureClips[action].getTotalFrames())
     {
-        crawlingClips.resetFrame();
+        textureClips[action].resetFrame();
     }
-}
-
-void Enemy::renderSnakeAttacking(SDL_Renderer* gRenderer)
-{
-    SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    snakeTexture.render(gRenderer, pos.x, SCREEN_HEIGHT - pos.y, &attackingClips.clips[attackingClips.getCurrentFrame() / 3], 0.0, NULL, flipType);
-    attackingClips.nextFrame();
-    if (attackingClips.getCurrentFrame() / 3 == attackingClips.getTotalFrames())
-    {
-        attackingClips.resetFrame();
-    }
+    move(1, 0);
 }

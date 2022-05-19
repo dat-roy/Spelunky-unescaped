@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <vector>
 
 //Window properties
 const std::string WINDOW_TITLE = "Unescaped";
@@ -25,6 +26,18 @@ enum GameState {
     WINNING,
     LOSING,
     QUITING,
+};
+
+//Charater actions
+enum CharacterAction {
+    DYING,
+    STANDING,
+    WALKING,
+    LYING,
+    CRAWLING,
+    THROWING,
+    JUMPING,
+    ATTACKING,
 };
 
 #endif // GLOBAL__H_

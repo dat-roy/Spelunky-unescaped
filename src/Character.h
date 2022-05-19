@@ -9,6 +9,7 @@
 #include <string>
 #include <cmath>
 #include <vector>
+#include <map>
 
 #include "Global.h"
 #include "Texture.h"
@@ -19,27 +20,30 @@ class Character
     SDL_Point pos;
     bool is_forward;
 
-    Texture standingTexture;
-    Texture walkingTexture;
-    Texture lyingTexture;
-    Texture crawlingTexture;
-    Texture throwingTexture;
+    std::map<CharacterAction, Texture> actionTexture =
+    {
+        { DYING, Texture() },
+        { STANDING, Texture() },
+        { WALKING, Texture() },
+        { LYING, Texture() },
+        { CRAWLING, Texture() },
+        { THROWING, Texture() },
+        { JUMPING, Texture() }
+    };
 
-    TextureClips standingClips = TextureClips(1);
-    TextureClips walkingClips = TextureClips(9);
-    TextureClips lyingClips = TextureClips(2);
-    TextureClips crawlingClips = TextureClips(7);
-    TextureClips throwingClips = TextureClips(7);
+    std::map<CharacterAction, TextureClips> textureClips =
+    {
+        { DYING, TextureClips(1) },
+        { STANDING, TextureClips(1) },
+        { WALKING, TextureClips(9) },
+        { LYING, TextureClips(1) },
+        { CRAWLING, TextureClips(7) },
+        { THROWING, TextureClips(7) },
+        { JUMPING, TextureClips(12) }
+    };
 
 public:
-    enum CharacterAction {
-        STANDING,
-        WALKING,
-        LYING,
-        CRAWLING,
-        THROWING
-    };
-    CharacterAction action = STANDING;
+    CharacterAction action;
 
     //Constructors & Destructors
     Character();
@@ -51,17 +55,13 @@ public:
     bool isForward();
 
     //Load textures
-    void loadTextures(SDL_Renderer* &gRenderer);
+    void loadTextures(SDL_Renderer* gRenderer);
 
-    void handleAction(SDL_Event& event);
+    void handleEvent(SDL_Event& event);
     void move(int dx, int dy);
 
     //Render graphics
-    void renderStanding(SDL_Renderer* &gRenderer);
-    void renderWalking(SDL_Renderer* &gRenderer);
-    void renderLying(SDL_Renderer* &gRenderer);
-    void renderCrawling(SDL_Renderer* &gRenderer);
-    void renderThrowing(SDL_Renderer* &gRenderer);
+    void renderAction(SDL_Renderer* gRenderer);
 };
 
 #endif // CHARACTER__H_
