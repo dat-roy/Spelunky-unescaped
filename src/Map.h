@@ -15,7 +15,8 @@
 class Map
 {
     //Graphics textures
-    Texture gBgTexture;
+    Texture menuTexture;
+    Texture backgroundTexture;
     //Text textures
     Texture text_01;
     Texture text_02;
@@ -24,12 +25,13 @@ class Map
 public:
     Map();
     ~Map();
-    void loadTextures(SDL_Renderer* &gRenderer, TTF_Font* &gFont24, TTF_Font* &gFont32, TTF_Font* &gFont48);
+    void loadTextures(SDL_Renderer* gRenderer, TTF_Font* &gFont24, TTF_Font* &gFont32, TTF_Font* &gFont48);
 
-    void renderBackground(SDL_Renderer* &gRenderer, int x = 0, int y = 0);
-    void renderText_01(SDL_Renderer* &gRenderer, int x = 0, int y = 0);
-    void renderText_02(SDL_Renderer* &gRenderer, int x = 0, int y = 0);
-    void renderText_03(SDL_Renderer* &gRenderer, int x = 0, int y = 0);
+    void renderMainMenu(SDL_Renderer* gRenderer, int x = 0, int y = 0);
+    void renderBackground(SDL_Renderer* gRenderer, int x = 0, int y = 0);
+    void renderText_01(SDL_Renderer* gRenderer, int x = 0, int y = 0);
+    void renderText_02(SDL_Renderer* gRenderer, int x = 0, int y = 0);
+    void renderText_03(SDL_Renderer* gRenderer, int x = 0, int y = 0);
 };
 
 #endif // MAP__H_

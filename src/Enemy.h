@@ -16,7 +16,7 @@
 class Enemy
 {
     const int MAX_BLOOD = 1000;
-    int posX, posY;
+    SDL_Point pos;
     int blood;
     bool is_forward;
 
@@ -34,27 +34,26 @@ public:
 
     //Constructors & Destructors
     Enemy();
-    Enemy(int posX, int posY, bool is_forward = true);
+    Enemy(SDL_Point pos, bool is_forward = true);
     ~Enemy();
 
     //Getters
-    int getPosX();
-    int getPosY();
+    SDL_Point getPos();
     int getBlood();
 
     //Setters
-    void setFirstPosition(int posX, int posY, bool is_forward = true);
+    void setFirstPosition(SDL_Point pos, bool is_forward = true);
 
     //Load textures
-    void loadTextures(SDL_Renderer* &gRenderer);
+    void loadTextures(SDL_Renderer* gRenderer);
 
     //
     void move(int dx, int dy);
     void updateBlood(int db);
 
     //Render graphics
-    void renderSnakeCrawling(SDL_Renderer* &gRenderer);
-    void renderSnakeAttacking(SDL_Renderer* &gRenderer);
+    void renderSnakeCrawling(SDL_Renderer* gRenderer);
+    void renderSnakeAttacking(SDL_Renderer* gRenderer);
 };
 
 #endif // ENEMY__H_

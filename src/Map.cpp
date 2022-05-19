@@ -4,15 +4,17 @@ Map::Map() {};
 Map::~Map()
 {
     //Free resources
-    gBgTexture.free();
+    menuTexture.free();
+    backgroundTexture.free();
     text_01.free();
     text_02.free();
     text_03.free();
 }
 
-void Map::loadTextures(SDL_Renderer* &gRenderer, TTF_Font* &gFont24, TTF_Font* &gFont32, TTF_Font* &gFont48)
+void Map::loadTextures(SDL_Renderer* gRenderer, TTF_Font* &gFont24, TTF_Font* &gFont32, TTF_Font* &gFont48)
 {
-    gBgTexture.loadFromFile( gRenderer, "res/img/bg1.jpg" );                 //Load background
+    menuTexture.loadFromFile(gRenderer, "res/img/main_menu.png");
+    backgroundTexture.loadFromFile( gRenderer, "res/img/bg1.jpg" );                 //Load background
     //Render text
     SDL_Color textColor = { 0xFF, 0xFF, 0xFF };
     text_01.loadFromRenderedText( gRenderer,
@@ -27,21 +29,26 @@ void Map::loadTextures(SDL_Renderer* &gRenderer, TTF_Font* &gFont24, TTF_Font* &
                                       gFont32, textColor);
 }
 
-void Map::renderBackground(SDL_Renderer* &gRenderer, int x, int y)
+void Map::renderMainMenu(SDL_Renderer* gRenderer, int x, int y)
 {
-    gBgTexture.render(gRenderer, x, y);
+    menuTexture.render(gRenderer, x, y);
 }
 
-void Map::renderText_01(SDL_Renderer* &gRenderer, int x, int y)
+void Map::renderBackground(SDL_Renderer* gRenderer, int x, int y)
+{
+    backgroundTexture.render(gRenderer, x, y);
+}
+
+void Map::renderText_01(SDL_Renderer* gRenderer, int x, int y)
 {
     text_01.render(gRenderer, ( SCREEN_WIDTH - text_01.getWidth() ) / 2, 100);
 }
-void Map::renderText_02(SDL_Renderer* &gRenderer, int x, int y)
+void Map::renderText_02(SDL_Renderer* gRenderer, int x, int y)
 {
     text_02.render(gRenderer, ( SCREEN_WIDTH - text_02.getWidth() ) / 2, 150);
 }
 
-void Map::renderText_03(SDL_Renderer* &gRenderer, int x, int y)
+void Map::renderText_03(SDL_Renderer* gRenderer, int x, int y)
 {
     text_03.render(gRenderer, ( SCREEN_WIDTH - text_03.getWidth() ) / 2, 100);
 }

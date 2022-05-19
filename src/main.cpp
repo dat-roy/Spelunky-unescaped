@@ -16,8 +16,6 @@
 #include "Character.h"
 #include "Enemy.h"
 
-#define PI 3.14159265
-
 //SDL utilities
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
@@ -25,25 +23,18 @@ TTF_Font *gFont24 = NULL;
 TTF_Font *gFont32 = NULL;
 TTF_Font *gFont48 = NULL;
 
-bool quitGame = false;
-bool winGame = false;
-int mouseX = 0;
-int mouseY = 0;
+//Init game state
+GameState gameState = MAIN_MENU;
+
+//Mouse position
+SDL_Point mousePos = {0, 0};
 bool mouseDown = false;
 bool mousePressed = false;
 
-enum GameState {
-    MAIN_MENU,
-    RUNNING,
-    WINNING,
-    LOSING,
-    QUITING,
-};
-GameState gameState = MAIN_MENU;
-
+// Map, characters & enemies
 Map map;
-Character character(100, 185, true);
-Bomb bomb(character.getPosX(), character.getPosY());
+Character character({100, 185}, true);
+Bomb bomb(character.getPos(), 0, 0, 70);
 std::vector<Enemy*> snakes;
 
 void loadAllTextures()
@@ -56,9 +47,9 @@ void loadAllTextures()
     {
         snakes.push_back(new Enemy);
     }
-    snakes[0]->setFirstPosition(1000, 160, true);
-    snakes[1]->setFirstPosition(900, 160, false);
-    snakes[2]->setFirstPosition(800, 160, true);
+    snakes[0]->setFirstPosition({1000, 160}, true);
+    snakes[1]->setFirstPosition({900, 160}, false);
+    snakes[2]->setFirstPosition({800, 160}, true);
     for (auto &snake : snakes)
     {
         snake->loadTextures(gRenderer);
@@ -91,7 +82,7 @@ void displayCharacter()
 
     case Character::WALKING:
         character.renderWalking(gRenderer);
-        character.move(8, 0);
+        character.move(5, 0);
         break;
 
     case Character::CRAWLING:
@@ -121,10 +112,11 @@ void displayBomb()
 {
     if (mousePressed == true && mouseDown == false && !bomb.isMoving())
     {
-        bomb.setInitPosX(character.getPosX());
-        bomb.setInitPosY(character.getPosY());
+        bomb.setInitPos(character.getPos());
 
-        bomb.setAlpha( atan(1.0 * (SCREEN_HEIGHT - character.getPosY() - mouseY) / (mouseX - character.getPosX())) );
+        double alpha = atan(1.0 * std::abs(mousePos.y - SCREEN_HEIGHT + character.getPos().y) / std::abs(mousePos.x - character.getPos().x));
+        bomb.setAlpha(alpha);
+
         bomb.resetTime();
         bomb.computeTimeOfMotion();
         bomb.setMoving(true);
@@ -157,13 +149,12 @@ void displayBomb()
         for (auto &snake : snakes)
         {
             if (snake == nullptr) continue;
-            if (std::abs(bomb.getPosX() - snake->getPosX()) <= 20
-                && std::abs(bomb.getPosY() - snake->getPosY()) <= 20)
+            if (std::abs(bomb.getPos().x - snake->getPos().x) <= 20
+                && std::abs(bomb.getPos().y - snake->getPos().y) <= 20)
             {
-                    //bomb.renderExplosion(gRenderer);
-                    bomb.setMoving(false);
+                    bomb.renderExplosion(gRenderer);
+                    //bomb.setMoving(false);
                     character.action = Character::STANDING;
-                    //snake->~Enemy();
                     delete snake;
                     snake = nullptr;
             }
@@ -194,31 +185,55 @@ int main( int argc, char* args[] )
         SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
         SDL_RenderClear( gRenderer );
 
-        while( SDL_PollEvent( &event ) != 0 )
-        {
-            if (event.type == SDL_QUIT)
+        if (gameState == MAIN_MENU) {
+            while( SDL_PollEvent( &event ) != 0)
             {
-                gameState = QUITING;
-                break;
+                if (event.type == SDL_QUIT)
+                {
+                    gameState = QUITING;
+                    break;
+                }
+                if (event.type == SDL_KEYDOWN)
+                {
+                    if (event.key.keysym.sym == SDLK_a) {
+                        gameState = RUNNING;
+                    }
+                }
             }
-            character.handleAction(event);
-            bomb.handleEvent(event, mouseX, mouseY, mouseDown, mousePressed);
+            map.renderMainMenu(gRenderer);
+        } else {
+            while( SDL_PollEvent( &event ) != 0 && ! bomb.isMoving())
+            {
+                if (event.type == SDL_QUIT)
+                {
+                    gameState = QUITING;
+                    break;
+                }
+                if (event.type == SDL_KEYDOWN)
+                {
+                    if (event.key.keysym.sym == SDLK_b) {
+                        gameState = MAIN_MENU;
+                    }
+                }
+                character.handleAction(event);
+                bomb.handleEvent(event, mousePos, mouseDown, mousePressed);
+            }
+
+            if (mouseDown && mousePressed)
+            {
+                character.action = Character::STANDING;
+            }
+            if (!mouseDown && mousePressed)
+            {
+                character.action = Character::THROWING;
+            }
+            displayMaps();
+            displayCharacter();
+            displayEnemies();
+            displayBomb();
         }
 
-        if (mouseDown && mousePressed)
-        {
-            character.action = Character::STANDING;
-            bomb.renderArrow(gRenderer, mouseX, mouseY);
-        }
-        if (!mouseDown && mousePressed)
-        {
-            character.action = Character::THROWING;
-        }
 
-        displayMaps();
-        displayCharacter();
-        displayEnemies();
-        displayBomb();
         SDL_RenderPresent( gRenderer );
     }
     utils::close(gWindow, gRenderer, gFont24, gFont32, gFont48);

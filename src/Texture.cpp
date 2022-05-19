@@ -8,14 +8,6 @@ Texture::Texture()
     mHeight = 0;
 }
 
-Texture::Texture(int _total)
-{
-    //Initialize
-    mTexture = NULL;
-    mWidth = 0;
-    mHeight = 0;
-}
-
 Texture::~Texture()
 {
     //Deallocate

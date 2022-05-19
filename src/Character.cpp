@@ -2,15 +2,12 @@
 
 Character::Character()
 {
-    posX = 0;
-    posY = 0;
-    blood = MAX_BLOOD;
+    pos = {0, 0};
     is_forward = true;
 }
-Character::Character(int posX, int posY, bool is_forward)
+Character::Character(SDL_Point pos, bool is_forward)
 {
-    this->posX = posX;
-    this->posY = posY;
+    this->pos = pos;
     this->is_forward = is_forward;
 }
 Character::~Character()
@@ -22,17 +19,17 @@ Character::~Character()
     throwingTexture.free();
 }
 
-int Character::getPosX() { return posX; }
-int Character::getPosY() { return posY; }
+SDL_Point Character::getPos() { return pos; }
 bool Character::isForward() { return is_forward; }
 
 void Character::loadTextures(SDL_Renderer* &gRenderer)
 {
     standingTexture.loadFromFile( gRenderer, "res/sprites/ninja/standing.png" );
     walkingTexture.loadFromFile( gRenderer, "res/sprites/ninja/walking.png" );
+
     for (int i = 0; i < walkingClips.getTotalFrames(); i++)
     {
-        walkingClips.clips.push_back({116 * i, 0, 116, 116});
+        walkingClips.clips.push_back({117 * i, 0, 117, 117});
     }
     lyingTexture.loadFromFile( gRenderer, "res/sprites/ninja/lying.png");
     for (int i = 0; i < lyingClips.getTotalFrames(); i++)
@@ -125,25 +122,25 @@ void Character::move(int dx, int dy)
 {
     if (is_forward)
     {
-        posX = std::min(posX + dx, SCREEN_WIDTH - 100);
+        pos.x = std::min(pos.x + dx, SCREEN_WIDTH - 100);
     }
     else
     {
-        posX = std::max(posX - dx, 0);
+        pos.x = std::max(pos.x - dx, 0);
     }
-    posY += dy;
+    pos.y += dy;
 }
 
 void Character::renderStanding(SDL_Renderer* &gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    standingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, NULL, 0.0, NULL, flipType);
+    standingTexture.render(gRenderer, pos.x, SCREEN_HEIGHT - pos.y, NULL, 0.0, NULL, flipType);
 }
 
 void Character::renderWalking(SDL_Renderer* &gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    walkingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, &walkingClips.clips[walkingClips.getCurrentFrame() / 4], 0.0, NULL, flipType);
+    walkingTexture.render(gRenderer, pos.x, SCREEN_HEIGHT - pos.y, &walkingClips.clips[walkingClips.getCurrentFrame() / 4], 0.0, NULL, flipType);
     walkingClips.nextFrame();
     if (walkingClips.getCurrentFrame() / 4 == walkingClips.getTotalFrames())
     {
@@ -154,7 +151,7 @@ void Character::renderWalking(SDL_Renderer* &gRenderer)
 void Character::renderLying(SDL_Renderer* &gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    lyingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 8, &lyingClips.clips[lyingClips.getCurrentFrame()], 0.0, NULL, flipType);
+    lyingTexture.render(gRenderer, pos.x, SCREEN_HEIGHT - pos.y + 8, &lyingClips.clips[lyingClips.getCurrentFrame()], 0.0, NULL, flipType);
     if (lyingClips.getCurrentFrame() < lyingClips.getTotalFrames() - 1)
     {
         lyingClips.nextFrame();
@@ -164,7 +161,7 @@ void Character::renderLying(SDL_Renderer* &gRenderer)
 void Character::renderCrawling(SDL_Renderer* &gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    crawlingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY + 8, &crawlingClips.clips[crawlingClips.getCurrentFrame() / 3], 0.0, NULL, flipType);
+    crawlingTexture.render(gRenderer, pos.x, SCREEN_HEIGHT - pos.y + 8, &crawlingClips.clips[crawlingClips.getCurrentFrame() / 3], 0.0, NULL, flipType);
     crawlingClips.nextFrame();
     if (crawlingClips.getCurrentFrame() / 3 == crawlingClips.getTotalFrames())
     {
@@ -175,7 +172,7 @@ void Character::renderCrawling(SDL_Renderer* &gRenderer)
 void Character::renderThrowing(SDL_Renderer* &gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    throwingTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, &throwingClips.clips[throwingClips.getCurrentFrame() / 4], 0.0, NULL, flipType);
+    throwingTexture.render(gRenderer, pos.x, SCREEN_HEIGHT - pos.y, &throwingClips.clips[throwingClips.getCurrentFrame() / 4], 0.0, NULL, flipType);
     if (throwingClips.getCurrentFrame() / 4 < throwingClips.getTotalFrames() - 1)
     {
         throwingClips.nextFrame();

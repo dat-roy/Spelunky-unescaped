@@ -16,9 +16,7 @@
 
 class Character
 {
-    const int MAX_BLOOD = 1000;
-    int posX, posY;
-    int blood;
+    SDL_Point pos;
     bool is_forward;
 
     Texture standingTexture;
@@ -27,6 +25,7 @@ class Character
     Texture crawlingTexture;
     Texture throwingTexture;
 
+    TextureClips standingClips = TextureClips(1);
     TextureClips walkingClips = TextureClips(9);
     TextureClips lyingClips = TextureClips(2);
     TextureClips crawlingClips = TextureClips(7);
@@ -44,12 +43,11 @@ public:
 
     //Constructors & Destructors
     Character();
-    Character(int posX, int posY, bool is_forward = true);
+    Character(SDL_Point pos, bool is_forward = true);
     ~Character();
 
     //Getter
-    int getPosX();
-    int getPosY();
+    SDL_Point getPos();
     bool isForward();
 
     //Load textures

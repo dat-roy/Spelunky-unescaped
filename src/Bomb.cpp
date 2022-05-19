@@ -1,8 +1,6 @@
 #include "Bomb.h"
 #include <conio.h>
 
-const double PI = 3.14159265;
-
 double rad(double deg)
 {
     return deg * PI / 180;
@@ -15,10 +13,10 @@ double deg(double rad)
 
 Bomb::Bomb()
 {
-    initPosX = posX = 0;
-    initPosY = posY = 0;
+    initPos = pos = {0, 0};
     velX = 0;
     velY = 0;
+    //vel = {0, 0};
     initVel = 0;
     alpha = 0;
     time = 0.0;
@@ -26,10 +24,9 @@ Bomb::Bomb()
     is_moving = false;
 }
 
-Bomb::Bomb(int posX, int posY, int velX, int velY, int initVel)
+Bomb::Bomb(SDL_Point pos, int velX, int velY, int initVel)
 {
-    this->initPosX = this->posX = posX;
-    this->initPosY = this->posY = posY;
+    this->initPos = this->pos = pos;
     this->velX = velX;
     this->velY = velY;
     this->initVel = initVel;
@@ -42,18 +39,14 @@ Bomb::Bomb(int posX, int posY, int velX, int velY, int initVel)
 Bomb::~Bomb()
 {
     bombTexture.free();
-    arrowTexture.free();
     explodeTexture.free();
 }
 
-int Bomb::getPosX()
+SDL_Point Bomb::getPos()
 {
-    return posX;
+    return pos;
 }
-int Bomb::getPosY()
-{
-    return posY;
-}
+
 int Bomb::getVelX()
 {
     return velX;
@@ -75,13 +68,9 @@ double Bomb::getTimeOfMotion()
     return maxTime;
 }
 
-void Bomb::setInitPosX(int initPosX)
+void Bomb::setInitPos(SDL_Point initPos)
 {
-    this->initPosX = initPosX;
-}
-void Bomb::setInitPosY(int initPosY)
-{
-    this->initPosY = initPosY;
+    this->initPos = initPos;
 }
 
 void Bomb::setAlpha(double alpha)
@@ -95,26 +84,41 @@ void Bomb::setMoving(bool is_moving)
 }
 
 
-void Bomb::loadTextures(SDL_Renderer* &gRenderer)
+void Bomb::loadTextures(SDL_Renderer* gRenderer)
 {
     bombTexture.loadFromFile( gRenderer, "res/img/bomb.png" );
-    arrowTexture.loadFromFile( gRenderer, "res/img/arrow.png" );
     explodeTexture.loadFromFile( gRenderer, "res/sprites/explosion/explosion.png" );
     for (int i = 0; i < explodeClips.getTotalFrames(); i++)
     {
         explodeClips.clips.push_back({0, 128 * i, 128, 128});
     }
 }
-void Bomb::handleEvent(SDL_Event& event, int& mouseX, int& mouseY, bool& mouseDown, bool& mousePressed)
+void Bomb::handleEvent(SDL_Event& event, SDL_Point& mousePos, bool& mouseDown, bool& mousePressed)
 {
     switch (event.type)
     {
-    case SDL_KEYDOWN:
-        if (event.key.keysym.sym == SDLK_SPACE)
+    case SDL_MOUSEBUTTONDOWN:
+        if (event.button.button == SDL_BUTTON_LEFT)
         {
             mouseDown = true;
             mousePressed = true;
             is_moving = false;
+            SDL_GetMouseState(&mousePos.x, &mousePos.y);
+            if (mousePos.x < pos.x)
+            {
+                mousePos.x = pos.x;
+            }
+        }
+        break;
+    case SDL_MOUSEBUTTONUP:
+        if (event.button.button == SDL_BUTTON_LEFT)
+        {
+            mouseDown = false;
+        }
+        break;
+    case SDL_KEYDOWN:
+        if (event.key.keysym.sym == SDLK_SPACE)
+        {
             initVel += 3;
             if (initVel > MAX_INIT_VELOCITY)
             {
@@ -122,18 +126,13 @@ void Bomb::handleEvent(SDL_Event& event, int& mouseX, int& mouseY, bool& mouseDo
             }
             system("cls");
             std::cout << "Velocity = " << initVel << std::endl;
-
-            SDL_GetMouseState(&mouseX, &mouseY);
-            if (mouseX < posX)
-            {
-                mouseX = posX;
-            }
         }
         break;
     case SDL_KEYUP:
         if (event.key.keysym.sym == SDLK_SPACE)
         {
-            mouseDown = false;
+            //mouseDown = false;
+            //initVel = 0;
         }
         break;
     }
@@ -143,11 +142,11 @@ void Bomb::computeTimeOfMotion()
 {
     double t1 = initVel * sin(alpha) / GRAVITY;
     double H = pow(initVel,2) * pow(sin(alpha),2) / (2 * GRAVITY);
-    double t2 = sqrt( 2 * (H + initPosY - 120) / GRAVITY);
+    double t2 = sqrt( 2 * (H + initPos.y - 120) / GRAVITY);
     maxTime = t1 + t2;
 }
 
-void Bomb::projectileMotion(SDL_Renderer* &gRenderer)
+void Bomb::projectileMotion(SDL_Renderer* gRenderer)
 {
     updateState();
     if (time != 0) {
@@ -159,8 +158,8 @@ void Bomb::updateState()
 {
     velX = initVel * cos(alpha);
     velY = initVel * sin(alpha) - GRAVITY * time;
-    posX = initPosX + initVel * cos(alpha) * time;
-    posY = initPosY + initVel * sin(alpha) * time - GRAVITY * time * time / 2;
+    pos.x = initPos.x + initVel * cos(alpha) * time;
+    pos.y = initPos.y + initVel * sin(alpha) * time - GRAVITY * time * time / 2;
 }
 
 void Bomb::updateTime(double dt)
@@ -173,7 +172,7 @@ void Bomb::resetTime()
     time = 0;
 }
 
-void Bomb::renderBomb(SDL_Renderer* &gRenderer)
+void Bomb::renderBomb(SDL_Renderer* gRenderer)
 {
     double angle = -alpha;
     if (velX != 0)
@@ -182,24 +181,14 @@ void Bomb::renderBomb(SDL_Renderer* &gRenderer)
         if (velY > 0)
             angle = -angle;
     }
-    bombTexture.render(gRenderer, posX, SCREEN_HEIGHT - posY, NULL, deg(angle));
+    bombTexture.render(gRenderer, pos.x, SCREEN_HEIGHT - pos.y, NULL, deg(angle));
 }
 
-void Bomb::renderArrow(SDL_Renderer* &gRenderer, int& mouseX, int& mouseY)
-{
-    arrowTexture.render(
-        gRenderer,
-        initPosX + 10, SCREEN_HEIGHT - initPosY + 10,
-        NULL,
-        -180 / PI * atan(1.0 * (SCREEN_HEIGHT - initPosY - mouseY) / (mouseX - initPosX))
-    );
-}
-
-void Bomb::renderExplosion(SDL_Renderer* &gRenderer)
+void Bomb::renderExplosion(SDL_Renderer* gRenderer)
 {
     for (int i = 0; i < explodeClips.getTotalFrames(); i++)
     {
-        explodeTexture.render(gRenderer, posX - 50, SCREEN_HEIGHT - posY - 50, &explodeClips.clips[i]);
+        explodeTexture.render(gRenderer, pos.x - 50, SCREEN_HEIGHT - pos.y - 50, &explodeClips.clips[i]);
         SDL_RenderPresent(gRenderer);
     }
 }

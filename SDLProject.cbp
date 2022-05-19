@@ -33,6 +33,8 @@
 		</Compiler>
 		<Unit filename="src/Bomb.cpp" />
 		<Unit filename="src/Bomb.h" />
+		<Unit filename="src/Button.cpp" />
+		<Unit filename="src/Button.h" />
 		<Unit filename="src/Character.cpp" />
 		<Unit filename="src/Character.h" />
 		<Unit filename="src/Enemy.cpp" />
