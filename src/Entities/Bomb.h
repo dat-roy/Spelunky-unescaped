@@ -9,10 +9,10 @@
 #include <string>
 #include <cmath>
 
-#include "Global.h"
-#include "Texture.h"
-#include "TextureClips.h"
-#include "Character.h"
+#include "../Global.h"
+#include "../Tools/Texture.h"
+#include "../Tools/TextureClips.h"
+#include "../Entities/Character.h"
 
 class Bomb {
     SDL_Point pos;
@@ -30,14 +30,12 @@ class Bomb {
     TextureClips explodeClips = TextureClips(6);
 
 public:
-    const int BOMB_WIDTH = 30;
-    const int BOMB_HEIGHT = 30;
-    //Maximum initial velocity
-    const int MAX_INIT_VELOCITY = 120;
+    const int WIDTH = 10;
+    const int HEIGHT = 10;
 
     //Constructors & Destructors
     Bomb();
-    Bomb(SDL_Point pos, int velX = 0, int velY = 0, int initVel = 0);
+    Bomb(SDL_Point pos, int initVel = 100);
     ~Bomb();
 
     //Getters

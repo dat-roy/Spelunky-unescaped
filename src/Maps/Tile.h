@@ -9,10 +9,10 @@
 #include <string>
 #include <cmath>
 
-#include "Global.h"
-#include "Texture.h"
-#include "TextureClips.h"
-#include "Character.h"
+#include "../Global.h"
+#include "../Tools/Texture.h"
+#include "../Tools/TextureClips.h"
+#include "../Entities/Character.h"
 
 class Tile
 {

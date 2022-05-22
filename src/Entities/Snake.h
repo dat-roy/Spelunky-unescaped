@@ -1,5 +1,5 @@
-#ifndef ENEMY__H_
-#define ENEMY__H_
+#ifndef SNAKE__H_
+#define SNAKE__H_
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -8,16 +8,20 @@
 #include <iostream>
 #include <string>
 #include <cmath>
-
-#include "Global.h"
-#include "Texture.h"
-#include "TextureClips.h"
 #include <map>
 
-class Enemy
+
+#include "../Global.h"
+#include "../Tools/Texture.h"
+#include "../Tools/TextureClips.h"
+
+class Snake
 {
     SDL_Point pos;
+    SDL_Point initPos;
     bool is_forward;
+    int WIDTH = 95;
+    int HEIGHT = 95;
 
     Texture snakeTexture;
 
@@ -31,9 +35,9 @@ public:
     ActionTypes action;
 
     //Constructors & Destructors
-    Enemy();
-    Enemy(SDL_Point pos, bool is_forward = true);
-    ~Enemy();
+    Snake();
+    Snake(SDL_Point pos, bool is_forward = true);
+    ~Snake();
 
     //Getters
     SDL_Point getPos();
@@ -42,14 +46,14 @@ public:
     void setFirstPosition(SDL_Point pos, bool is_forward = true);
 
     //Load textures
-    void loadTextures(SDL_Renderer* gRenderer);
+    void loadTextures(SDL_Renderer* gRenderer, std::string path);
 
     void move(int dx, int dy);
 
-    bool meet(SDL_Point pos, int dist);
+    bool meet(SDL_Rect character_rect);
 
     //Render graphics
     void renderAction(SDL_Renderer* gRenderer);
 };
 
-#endif // ENEMY__H_
+#endif //SNAKE__H_

@@ -22,20 +22,27 @@ const int TILE_WIDTH = 64;
 const int TILE_HEIGHT = 64;
 const int TILE_COUNT = 8;
 
+//Math constants & methods
+namespace math {
+    const double PI = 3.14159265;
+    double rad(double deg);
+    double deg(double rad);
+    bool checkCollision(SDL_Rect a, SDL_Rect b);
+    bool checkCenter(SDL_Rect a, SDL_Rect b);
+}
+
+//Physics constants & methods
+namespace physics {
+    const double GRAVITY = 9.8;
+}
+
 //Tile types
-
-enum TileTypes {
-
-};
-enum TileBorderTypes {
-
-};
-
-//Maths constants
-const double PI = 3.14159265;
-
-//Physics constants
-const double GRAVITY = 9.8;
+namespace tiles {
+    bool isSoil(int value);
+    bool isTrap(int value);
+    bool isLadder(int value);
+    bool isDoor(int value);
+}
 
 //Game states
 enum GameState {

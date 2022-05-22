@@ -1,34 +1,24 @@
 #include "Bomb.h"
 #include <conio.h>
 
-double rad(double deg)
-{
-    return deg * PI / 180;
-}
-
-double deg(double rad)
-{
-    return 180.0 * rad / PI;
-}
-
 Bomb::Bomb()
 {
     initPos = pos = {0, 0};
     velX = 0;
     velY = 0;
     //vel = {0, 0};
-    initVel = 0;
+    initVel = 100;
     alpha = 0;
     time = 0.0;
     maxTime = 0.0;
     is_moving = false;
 }
 
-Bomb::Bomb(SDL_Point pos, int velX, int velY, int initVel)
+Bomb::Bomb(SDL_Point pos, int initVel)
 {
     this->initPos = this->pos = pos;
-    this->velX = velX;
-    this->velY = velY;
+    this->velX = 0;
+    this->velY = 0;
     this->initVel = initVel;
     alpha = 0;
     time = 0.0;
@@ -116,33 +106,14 @@ void Bomb::handleEvent(SDL_Event& event, SDL_Point& mousePos, bool& mouseDown, b
             mouseDown = false;
         }
         break;
-    case SDL_KEYDOWN:
-        if (event.key.keysym.sym == SDLK_SPACE)
-        {
-            initVel += 3;
-            if (initVel > MAX_INIT_VELOCITY)
-            {
-                initVel = 0;
-            }
-            system("cls");
-            std::cout << "Velocity = " << initVel << std::endl;
-        }
-        break;
-    case SDL_KEYUP:
-        if (event.key.keysym.sym == SDLK_SPACE)
-        {
-            //mouseDown = false;
-            //initVel = 0;
-        }
-        break;
     }
 }
 
 void Bomb::computeTimeOfMotion()
 {
-    double t1 = initVel * sin(alpha) / GRAVITY;
-    double H = pow(initVel,2) * pow(sin(alpha),2) / (2 * GRAVITY);
-    double t2 = sqrt( 2 * (H + initPos.y) / GRAVITY);
+    double t1 = initVel * sin(alpha) / physics::GRAVITY;
+    double H = pow(initVel,2) * pow(sin(alpha),2) / (2 * physics::GRAVITY);
+    double t2 = sqrt( 2 * (H + initPos.y) / physics::GRAVITY);
     maxTime = t1 + t2;
 }
 
@@ -157,9 +128,9 @@ void Bomb::projectileMotion(SDL_Renderer* gRenderer)
 void Bomb::updateState()
 {
     velX = initVel * cos(alpha);
-    velY = initVel * sin(alpha) - GRAVITY * time;
+    velY = initVel * sin(alpha) - physics::GRAVITY * time;
     pos.x = initPos.x + initVel * cos(alpha) * time;
-    pos.y = initPos.y + initVel * sin(alpha) * time - GRAVITY * time * time / 2;
+    pos.y = initPos.y + initVel * sin(alpha) * time - physics::GRAVITY * time * time / 2;
 }
 
 void Bomb::updateTime(double dt)
@@ -181,7 +152,7 @@ void Bomb::renderBomb(SDL_Renderer* gRenderer)
         if (velY > 0)
             angle = -angle;
     }
-    bombTexture.render(gRenderer, pos.x, SCREEN_HEIGHT - pos.y, NULL, deg(angle));
+    bombTexture.render(gRenderer, pos.x, SCREEN_HEIGHT - pos.y, NULL, math::deg(angle));
 }
 
 void Bomb::renderExplosion(SDL_Renderer* gRenderer)

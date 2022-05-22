@@ -11,9 +11,9 @@
 #include <vector>
 #include <map>
 
-#include "Global.h"
-#include "Texture.h"
-#include "TextureClips.h"
+#include "../Global.h"
+#include "../Tools/Texture.h"
+#include "../Tools/TextureClips.h"
 
 class Character
 {
@@ -21,6 +21,9 @@ class Character
     bool is_forward;
     int HEIGHT = 117;
     int WIDTH = 117;
+
+    int vel_x = 0;
+    int vel_y = 0;
 
     std::map<ActionTypes, Texture> actionTexture =
     {
@@ -75,6 +78,9 @@ public:
 
     //Centers the camera
     void setCamera(SDL_Rect& camera);
+
+    //Control action by tiles
+    void controlAction(const std::vector<std::vector<int>>& tileValue, int TILE_ROW, int TILE_COL, GameState& gameState);
 
     //Render graphics
     void renderAction(SDL_Renderer* gRenderer);

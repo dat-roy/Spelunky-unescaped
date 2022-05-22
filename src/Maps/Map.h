@@ -10,9 +10,9 @@
 #include <cmath>
 #include <fstream>
 
-#include "Global.h"
-#include "Texture.h"
-#include "Tile.h"
+#include "../Global.h"
+#include "../Tools/Texture.h"
+#include "../Maps/Tile.h"
 
 
 class Map
@@ -25,18 +25,18 @@ class Map
     Texture backgroundTexture;
     Texture tileTexture;
 
+public:
     int TILE_ROW, TILE_COL;
     std::vector<std::vector<int>> tileValue;                //Value of tiles read from matrix
     std::vector<std::vector<int>> tileBorderValue;          //Value of border tiles read from matrix
     std::vector<SDL_Rect> tileClips;                        //Clips of 64 tiles, indexed from 1..64
 
-public:
     Map();
     ~Map();
     void setBackgroundPath(std::string path);
     void setTilesetPath(std::string path);
 
-    void loadTextures(SDL_Renderer* gRenderer, TTF_Font* &gFont24, TTF_Font* &gFont32, TTF_Font* &gFont48);
+    void loadTextures(SDL_Renderer* gRenderer);
     void loadTiles(SDL_Renderer* gRenderer, std::string path);
 
     void renderBackground(SDL_Renderer* gRenderer, int x = 0, int y = 0);

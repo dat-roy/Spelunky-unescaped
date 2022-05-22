@@ -10,7 +10,8 @@
 #include <cmath>
 
 #include "../Global.h"
-#include "../Texture.h"
+#include "../Tools/Texture.h"
+#include "Button.h"
 
 class Main_menu
 {
@@ -19,9 +20,10 @@ class Main_menu
 public:
     Main_menu();
     ~Main_menu();
-    void loadTextures(SDL_Renderer* gRenderer);
 
     void renderBackground(SDL_Renderer* gRenderer, int x = 0, int y = 0);
+
+    void display(SDL_Renderer* gRenderer, GameState& gameState);
 };
 
 #endif // MAIN_MENU__H_

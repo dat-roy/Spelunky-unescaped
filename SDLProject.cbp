@@ -40,6 +40,7 @@
 		<Unit filename="src/Character.h" />
 		<Unit filename="src/Enemy.cpp" />
 		<Unit filename="src/Enemy.h" />
+		<Unit filename="src/Global.cpp" />
 		<Unit filename="src/Global.h" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/Map.h" />

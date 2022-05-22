@@ -17,7 +17,7 @@ void Map::setTilesetPath(std::string path)
     tilesetPath = path;
 }
 
-void Map::loadTextures(SDL_Renderer* gRenderer, TTF_Font* &gFont24, TTF_Font* &gFont32, TTF_Font* &gFont48)
+void Map::loadTextures(SDL_Renderer* gRenderer)
 {
     backgroundTexture.loadFromFile( gRenderer, backgroundPath );
     //Tile textures and clips

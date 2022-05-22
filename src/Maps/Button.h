@@ -9,8 +9,8 @@
 #include <string>
 #include <cmath>
 
-#include "Global.h"
-#include "Texture.h"
+#include "../Global.h"
+#include "../Tools/Texture.h"
 
 class Button {
     const SDL_Rect btn;

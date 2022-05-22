@@ -101,7 +101,7 @@
 	"Global.h"
 	"LTexture.h"
 
-1653181893 d:\sdlproject\src\global.h
+1653202216 d:\sdlproject\src\global.h
 	<SDL.h>
 	<SDL_ttf.h>
 	<iostream>
@@ -120,7 +120,7 @@
 1651399998 source:d:\sdlproject\src\ltexture.cpp
 	"LTexture.h"
 
-1653180892 source:d:\sdlproject\src\main.cpp
+1653231383 source:d:\sdlproject\src\main.cpp
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -132,14 +132,15 @@
 	<cmath>
 	<fstream>
 	"Global.h"
-	"SDL_Utils.h"
-	"Texture.h"
-	"Map.h"
-	"Bomb.h"
-	"Character.h"
-	"Enemy.h"
-	"Button.h"
+	"Tools/SDL_Utils.h"
+	"Tools/Texture.h"
 	"Maps/Main_menu.h"
+	"Maps/Level_1.h"
+	"Maps/Level_2.h"
+	"Maps/Outro.h"
+	"Entities/Bomb.h"
+	"Entities/Character.h"
+	"Entities/Snake.h"
 
 1650201693 d:\sdlproject\src\sdl_utils.h
 	<SDL.h>
@@ -184,7 +185,7 @@
 	"TextureClips.h"
 	"Character.h"
 
-1653181932 d:\sdlproject\src\character.h
+1653202309 d:\sdlproject\src\character.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -198,10 +199,10 @@
 	"Texture.h"
 	"TextureClips.h"
 
-1653181932 source:d:\sdlproject\src\character.cpp
+1653213538 source:d:\sdlproject\src\character.cpp
 	"Character.h"
 
-1653181762 d:\sdlproject\src\map.h
+1653183364 d:\sdlproject\src\map.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -217,7 +218,7 @@
 1653181731 source:d:\sdlproject\src\map.cpp
 	"Map.h"
 
-1653181932 d:\sdlproject\src\enemy.h
+1653209247 d:\sdlproject\src\enemy.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -230,7 +231,7 @@
 	"TextureClips.h"
 	<map>
 
-1653143979 source:d:\sdlproject\src\enemy.cpp
+1653211945 source:d:\sdlproject\src\enemy.cpp
 	"Enemy.h"
 
 1652998688 d:\sdlproject\src\texture.h
@@ -252,7 +253,7 @@
 1652934284 source:d:\sdlproject\src\textureclips.cpp
 	"TextureClips.h"
 
-1652928906 d:\sdlproject\src\bomb.h
+1653208198 d:\sdlproject\src\bomb.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -265,7 +266,7 @@
 	"TextureClips.h"
 	"Character.h"
 
-1653030104 source:d:\sdlproject\src\bomb.cpp
+1653208225 source:d:\sdlproject\src\bomb.cpp
 	"Bomb.h"
 	<conio.h>
 
@@ -299,10 +300,10 @@
 1652995083 source:d:\sdlproject\src\tile.cpp
 	"Tile.h"
 
-1652999383 source:d:\sdlproject\src\maps\main_menu.cpp
+1653229087 source:d:\sdlproject\src\maps\main_menu.cpp
 	"Main_menu.h"
 
-1652998428 d:\sdlproject\src\maps\main_menu.h
+1653229054 d:\sdlproject\src\maps\main_menu.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -311,5 +312,204 @@
 	<string>
 	<cmath>
 	"../Global.h"
-	"../Texture.h"
+	"../Tools/Texture.h"
+	"Button.h"
+
+1653202248 source:d:\sdlproject\src\global.cpp
+	"Global.h"
+
+1653214503 source:d:\sdlproject\src\snake.cpp
+	"Snake.h"
+
+1653214515 d:\sdlproject\src\snake.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	"Global.h"
+	"Texture.h"
+	"TextureClips.h"
+	<map>
+
+1652998688 d:\sdlproject\src\tools\texture.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+
+1653215187 d:\sdlproject\src\tools\sdl_utils.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	"../Global.h"
+
+1653230182 d:\sdlproject\src\maps\map.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	<fstream>
+	"../Global.h"
+	"../Tools/Texture.h"
+	"../Maps/Tile.h"
+
+1653215238 d:\sdlproject\src\maps\tile.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	"../Global.h"
+	"../Tools/Texture.h"
+	"../Tools/TextureClips.h"
+	"../Entities/Character.h"
+
+1652934110 d:\sdlproject\src\tools\textureclips.h
+	<SDL.h>
+	<iostream>
+	<vector>
+
+1653219145 d:\sdlproject\src\entities\character.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	<vector>
+	<map>
+	"../Global.h"
+	"../Tools/Texture.h"
+	"../Tools/TextureClips.h"
+
+1653215275 d:\sdlproject\src\maps\button.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	"../Global.h"
+	"../Tools/Texture.h"
+
+1653215303 d:\sdlproject\src\entities\bomb.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	"../Global.h"
+	"../Tools/Texture.h"
+	"../Tools/TextureClips.h"
+	"../Entities/Character.h"
+
+1653215341 d:\sdlproject\src\entities\snake.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	<map>
+	"../Global.h"
+	"../Tools/Texture.h"
+	"../Tools/TextureClips.h"
+
+1653208225 source:d:\sdlproject\src\entities\bomb.cpp
+	"Bomb.h"
+	<conio.h>
+
+1653228463 source:d:\sdlproject\src\entities\character.cpp
+	"Character.h"
+
+1653214503 source:d:\sdlproject\src\entities\snake.cpp
+	"Snake.h"
+
+1653116648 source:d:\sdlproject\src\maps\button.cpp
+	"Button.h"
+
+1653230173 source:d:\sdlproject\src\maps\map.cpp
+	"Map.h"
+
+1652995083 source:d:\sdlproject\src\maps\tile.cpp
+	"Tile.h"
+
+1650205602 source:d:\sdlproject\src\tools\sdl_utils.cpp
+	"SDL_Utils.h"
+
+1652998826 source:d:\sdlproject\src\tools\texture.cpp
+	"Texture.h"
+
+1652934284 source:d:\sdlproject\src\tools\textureclips.cpp
+	"TextureClips.h"
+
+1653230840 source:d:\sdlproject\src\maps\level_1.cpp
+	"Level_1.h"
+
+1653230545 d:\sdlproject\src\maps\level_1.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<vector>
+	<cmath>
+	"../Global.h"
+	"../Tools/Texture.h"
+	"Map.h"
+	"../Entities/Character.h"
+	"../Entities/Snake.h"
+
+1653230789 d:\sdlproject\src\maps\level_2.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<algorithm>
+	<vector>
+	<cmath>
+	"../Global.h"
+	"../Tools/Texture.h"
+	"Map.h"
+	"../Entities/Character.h"
+	"../Entities/Snake.h"
+	"../Entities/Bomb.h"
+
+1653230824 source:d:\sdlproject\src\maps\level_2.cpp
+	"Level_2.h"
+
+1653231345 source:d:\sdlproject\src\maps\outro.cpp
+	"Outro.h"
+
+1653231214 d:\sdlproject\src\maps\outro.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	"../Global.h"
+	"../Tools/Texture.h"
+	"Map.h"
 
