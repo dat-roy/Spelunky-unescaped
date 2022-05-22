@@ -23,6 +23,9 @@ public:
     Button(SDL_Rect btn);
     ~Button();
 
+    int getWidth();
+    int getHeight();
+
     bool isSelected();
     void setSelected(bool selected);
     void handleEvent(SDL_Event& event, SDL_Point& mousePos);

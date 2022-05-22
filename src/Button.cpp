@@ -9,6 +9,25 @@ Button::~Button()
     buttonTexture.free();
 }
 
+int Button::getWidth()
+{
+    return btn.w;
+}
+
+int Button::getHeight()
+{
+    return btn.h;
+}
+
+bool Button::isSelected()
+{
+    return selected;
+}
+
+void Button::setSelected(bool selected)
+{
+    this->selected = selected;
+}
 
 void Button::handleEvent(SDL_Event& event, SDL_Point& mousePos)
 {
@@ -40,16 +59,6 @@ void Button::handleEvent(SDL_Event& event, SDL_Point& mousePos)
             selected = true;
         }
     }
-}
-
-bool Button::isSelected()
-{
-    return selected;
-}
-
-void Button::setSelected(bool selected)
-{
-    this->selected = selected;
 }
 
 void Button::loadTextures(SDL_Renderer* gRenderer)

@@ -14,7 +14,7 @@ Texture::~Texture()
     free();
 }
 
-bool Texture::loadFromFile( SDL_Renderer* &gRenderer, std::string path )
+bool Texture::loadFromFile( SDL_Renderer* gRenderer, std::string path )
 {
     //Get rid of preexisting texture
     free();
@@ -56,7 +56,7 @@ bool Texture::loadFromFile( SDL_Renderer* &gRenderer, std::string path )
 }
 
 bool Texture::loadFromRenderedText(
-    SDL_Renderer* &gRenderer,
+    SDL_Renderer* gRenderer,
     std::string textureText,
     TTF_Font* gFont,
     SDL_Color textColor
@@ -128,7 +128,7 @@ void Texture::setAlpha( Uint8 alpha )
 }
 
 void Texture::render(
-    SDL_Renderer* &gRenderer,
+    SDL_Renderer* gRenderer,
     int x,
     int y,
     SDL_Rect* clip,
@@ -153,11 +153,13 @@ void Texture::render(
 
 int Texture::getWidth()
 {
+    SDL_QueryTexture(mTexture, NULL, NULL, &mWidth, &mHeight);
     return mWidth;
 }
 
 int Texture::getHeight()
 {
+    SDL_QueryTexture(mTexture, NULL, NULL, &mWidth, &mHeight);
     return mHeight;
 }
 

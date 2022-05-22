@@ -142,7 +142,7 @@ void Bomb::computeTimeOfMotion()
 {
     double t1 = initVel * sin(alpha) / GRAVITY;
     double H = pow(initVel,2) * pow(sin(alpha),2) / (2 * GRAVITY);
-    double t2 = sqrt( 2 * (H + initPos.y - 120) / GRAVITY);
+    double t2 = sqrt( 2 * (H + initPos.y) / GRAVITY);
     maxTime = t1 + t2;
 }
 

@@ -21,14 +21,14 @@ class Enemy
 
     Texture snakeTexture;
 
-    std::map<CharacterAction, TextureClips> textureClips =
+    std::map<ActionTypes, TextureClips> textureClips =
     {
         { CRAWLING, TextureClips(11) },
         { ATTACKING, TextureClips(7) }
     };
 
 public:
-    CharacterAction action;
+    ActionTypes action;
 
     //Constructors & Destructors
     Enemy();
@@ -45,6 +45,8 @@ public:
     void loadTextures(SDL_Renderer* gRenderer);
 
     void move(int dx, int dy);
+
+    bool meet(SDL_Point pos, int dist);
 
     //Render graphics
     void renderAction(SDL_Renderer* gRenderer);

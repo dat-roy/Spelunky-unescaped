@@ -8,30 +8,40 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <fstream>
 
 #include "Global.h"
 #include "Texture.h"
+#include "Tile.h"
+
 
 class Map
 {
+    //Graphics path
+    std::string backgroundPath;
+    std::string tilesetPath;
+
     //Graphics textures
-    Texture menuTexture;
     Texture backgroundTexture;
-    //Text textures
-    Texture text_01;
-    Texture text_02;
-    Texture text_03;
+    Texture tileTexture;
+
+    int TILE_ROW, TILE_COL;
+    std::vector<std::vector<int>> tileValue;                //Value of tiles read from matrix
+    std::vector<std::vector<int>> tileBorderValue;          //Value of border tiles read from matrix
+    std::vector<SDL_Rect> tileClips;                        //Clips of 64 tiles, indexed from 1..64
 
 public:
     Map();
     ~Map();
-    void loadTextures(SDL_Renderer* gRenderer, TTF_Font* &gFont24, TTF_Font* &gFont32, TTF_Font* &gFont48);
+    void setBackgroundPath(std::string path);
+    void setTilesetPath(std::string path);
 
-    void renderMainMenu(SDL_Renderer* gRenderer, int x = 0, int y = 0);
+    void loadTextures(SDL_Renderer* gRenderer, TTF_Font* &gFont24, TTF_Font* &gFont32, TTF_Font* &gFont48);
+    void loadTiles(SDL_Renderer* gRenderer, std::string path);
+
     void renderBackground(SDL_Renderer* gRenderer, int x = 0, int y = 0);
-    void renderText_01(SDL_Renderer* gRenderer, int x = 0, int y = 0);
-    void renderText_02(SDL_Renderer* gRenderer, int x = 0, int y = 0);
-    void renderText_03(SDL_Renderer* gRenderer, int x = 0, int y = 0);
+    void renderTiles(SDL_Renderer* gRenderer, int x = 0, int y = 0);
+    void renderBorder(SDL_Renderer* gRenderer);
 };
 
 #endif // MAP__H_

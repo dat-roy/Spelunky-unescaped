@@ -43,7 +43,7 @@ void Enemy::move(int dx, int dy)
     if (is_forward)
     {
         pos.x = std::min(pos.x + dx, SCREEN_WIDTH - 100);
-        if (pos.x > 1200)
+        if (pos.x > 800)
         {
             is_forward = false;
             action = CRAWLING;
@@ -52,7 +52,7 @@ void Enemy::move(int dx, int dy)
     else
     {
         pos.x = std::max(pos.x - dx, 0);
-        if (pos.x < 1000)
+        if (pos.x < 600)
         {
             is_forward = true;
             action = CRAWLING;
@@ -63,6 +63,15 @@ void Enemy::move(int dx, int dy)
         }
     }
     pos.y += dy;
+}
+
+bool Enemy::meet(SDL_Point pos, int dist)
+{
+    if (std::abs(this->pos.x - pos.x) <= dist && std::abs(this->pos.y - pos.y) <= dist)
+    {
+        return true;
+    }
+    return false;
 }
 
 SDL_Point Enemy::getPos() {

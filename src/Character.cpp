@@ -15,14 +15,17 @@ Character::Character(SDL_Point pos, bool is_forward)
 
 Character::~Character()
 {
-    const std::vector<CharacterAction> actionVector{
+    const std::vector<ActionTypes> actionVector{
         DYING,
         STANDING,
         WALKING,
         LYING,
         CRAWLING,
         THROWING,
-        JUMPING
+        JUMPING_UP,
+        JUMPING_DOWN,
+        CLIMBING_UP,
+        CLIMBING_DOWN
     };
     for (auto a : actionVector)
     {
@@ -30,12 +33,29 @@ Character::~Character()
     }
 }
 
-SDL_Point Character::getPos() {
+SDL_Point Character::getPos()
+{
     return pos;
 }
 
-bool Character::isForward() {
+bool Character::isForward()
+{
     return is_forward;
+}
+
+int Character::getWidth()
+{
+    return WIDTH;
+}
+
+int Character::getHeight()
+{
+    return HEIGHT;
+}
+
+void Character::setPos(SDL_Point pos)
+{
+    this->pos = pos;
 }
 
 void Character::loadTextures(SDL_Renderer* gRenderer)
@@ -46,22 +66,29 @@ void Character::loadTextures(SDL_Renderer* gRenderer)
     actionTexture[LYING].loadFromFile( gRenderer, "res/sprites/ninja/lying.png");
     actionTexture[CRAWLING].loadFromFile( gRenderer, "res/sprites/ninja/crawling.png");
     actionTexture[THROWING].loadFromFile( gRenderer, "res/sprites/ninja/throwing.png");
-    actionTexture[JUMPING].loadFromFile( gRenderer, "res/sprites/ninja/jumping.png");
+    actionTexture[JUMPING_UP].loadFromFile( gRenderer, "res/sprites/ninja/jumping_up.png");
+    actionTexture[JUMPING_DOWN].loadFromFile( gRenderer, "res/sprites/ninja/jumping_down.png");
+    actionTexture[CLIMBING_UP].loadFromFile( gRenderer, "res/sprites/ninja/climbing_up.png");
+    actionTexture[CLIMBING_DOWN].loadFromFile( gRenderer, "res/sprites/ninja/climbing_down.png");
 
-    const std::vector<CharacterAction> actionVector{
+
+    const std::vector<ActionTypes> actionVector{
         DYING,
         STANDING,
         WALKING,
         LYING,
         CRAWLING,
         THROWING,
-        JUMPING,
+        JUMPING_UP,
+        JUMPING_DOWN,
+        CLIMBING_UP,
+        CLIMBING_DOWN
     };
     for (auto a : actionVector)
     {
         for (int i = 0; i < textureClips[a].getTotalFrames(); i++)
         {
-            textureClips[a].clips.push_back({117 * i, 0, 117, 117});
+            textureClips[a].clips.push_back({WIDTH * i, 0, WIDTH, HEIGHT});
         }
     }
 
@@ -78,14 +105,18 @@ void Character::handleEvent(SDL_Event& event)
             if (action == LYING)
             {
                 action = STANDING;
+                //action = CLIMBING_UP; ///test
             }
             if (action == STANDING)
             {
-                action = JUMPING;
+                action = JUMPING_UP;
             }
             break;
         case SDLK_DOWN:
-            action = LYING;
+            if (action != DYING)
+            {
+                action = LYING;
+            }
             break;
         case SDLK_RIGHT:
             is_forward = true;
@@ -115,6 +146,16 @@ void Character::handleEvent(SDL_Event& event)
     case SDL_KEYUP:
         switch (event.key.keysym.sym)
         {
+        case SDLK_UP:
+            if (action == JUMPING_UP)
+            {
+                action = JUMPING_DOWN;
+            }
+            if (action == CLIMBING_UP)
+            {
+                action = CLIMBING_DOWN;
+            }
+            break;
         case SDLK_RIGHT:
             if (action == CRAWLING)
             {
@@ -145,7 +186,7 @@ void Character::move(int dx, int dy)
 {
     if (is_forward)
     {
-        pos.x = std::min(pos.x + dx, SCREEN_WIDTH - 100);
+        pos.x = std::min(pos.x + dx, SCREEN_WIDTH - 10);
     }
     else
     {
@@ -179,15 +220,23 @@ void Character::renderAction(SDL_Renderer* gRenderer)
             return;
         }
         break;
-    case JUMPING:
-        if (textureClips[action].getCurrentFrame() / 3 < 6)
+    case JUMPING_UP:
+        move(0, 10);
+        if (textureClips[action].getCurrentFrame() / 3 == textureClips[action].getTotalFrames() - 1)
         {
-            move(3, 10);
+            textureClips[action].resetFrame();
+            action = JUMPING_DOWN;
         }
-        else
-        {
-            move(3, -10);
-        }
+        break;
+    case JUMPING_DOWN:
+        move(0, -10);
+        break;
+
+    case CLIMBING_UP:
+        move(0, 2);
+        break;
+    case CLIMBING_DOWN:
+        move(0, -2);
         break;
     }
 

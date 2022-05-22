@@ -31,6 +31,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="res/map/level_1.map" />
 		<Unit filename="src/Bomb.cpp" />
 		<Unit filename="src/Bomb.h" />
 		<Unit filename="src/Button.cpp" />
@@ -42,12 +43,16 @@
 		<Unit filename="src/Global.h" />
 		<Unit filename="src/Map.cpp" />
 		<Unit filename="src/Map.h" />
+		<Unit filename="src/Maps/Main_menu.cpp" />
+		<Unit filename="src/Maps/Main_menu.h" />
 		<Unit filename="src/SDL_Utils.cpp" />
 		<Unit filename="src/SDL_Utils.h" />
 		<Unit filename="src/Texture.cpp" />
 		<Unit filename="src/Texture.h" />
 		<Unit filename="src/TextureClips.cpp" />
 		<Unit filename="src/TextureClips.h" />
+		<Unit filename="src/Tile.cpp" />
+		<Unit filename="src/Tile.h" />
 		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
