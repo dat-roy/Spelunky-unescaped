@@ -101,7 +101,7 @@
 	"Global.h"
 	"LTexture.h"
 
-1653202216 d:\sdlproject\src\global.h
+1653240499 d:\sdlproject\src\global.h
 	<SDL.h>
 	<SDL_ttf.h>
 	<iostream>
@@ -120,7 +120,7 @@
 1651399998 source:d:\sdlproject\src\ltexture.cpp
 	"LTexture.h"
 
-1653231383 source:d:\sdlproject\src\main.cpp
+1653243520 source:d:\sdlproject\src\main.cpp
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -133,14 +133,12 @@
 	<fstream>
 	"Global.h"
 	"Tools/SDL_Utils.h"
-	"Tools/Texture.h"
 	"Maps/Main_menu.h"
 	"Maps/Level_1.h"
 	"Maps/Level_2.h"
+	"Maps/Intro.h"
 	"Maps/Outro.h"
-	"Entities/Bomb.h"
-	"Entities/Character.h"
-	"Entities/Snake.h"
+	"Maps/GameOver.h"
 
 1650201693 d:\sdlproject\src\sdl_utils.h
 	<SDL.h>
@@ -300,7 +298,7 @@
 1652995083 source:d:\sdlproject\src\tile.cpp
 	"Tile.h"
 
-1653229087 source:d:\sdlproject\src\maps\main_menu.cpp
+1653238213 source:d:\sdlproject\src\maps\main_menu.cpp
 	"Main_menu.h"
 
 1653229054 d:\sdlproject\src\maps\main_menu.h
@@ -351,7 +349,7 @@
 	<string>
 	"../Global.h"
 
-1653230182 d:\sdlproject\src\maps\map.h
+1653235536 d:\sdlproject\src\maps\map.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -382,7 +380,7 @@
 	<iostream>
 	<vector>
 
-1653219145 d:\sdlproject\src\entities\character.h
+1653235064 d:\sdlproject\src\entities\character.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -407,7 +405,7 @@
 	"../Global.h"
 	"../Tools/Texture.h"
 
-1653215303 d:\sdlproject\src\entities\bomb.h
+1653241344 d:\sdlproject\src\entities\bomb.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -420,7 +418,7 @@
 	"../Tools/TextureClips.h"
 	"../Entities/Character.h"
 
-1653215341 d:\sdlproject\src\entities\snake.h
+1653240328 d:\sdlproject\src\entities\snake.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -433,20 +431,20 @@
 	"../Tools/Texture.h"
 	"../Tools/TextureClips.h"
 
-1653208225 source:d:\sdlproject\src\entities\bomb.cpp
+1653241708 source:d:\sdlproject\src\entities\bomb.cpp
 	"Bomb.h"
 	<conio.h>
 
-1653228463 source:d:\sdlproject\src\entities\character.cpp
+1653236728 source:d:\sdlproject\src\entities\character.cpp
 	"Character.h"
 
-1653214503 source:d:\sdlproject\src\entities\snake.cpp
+1653243063 source:d:\sdlproject\src\entities\snake.cpp
 	"Snake.h"
 
 1653116648 source:d:\sdlproject\src\maps\button.cpp
 	"Button.h"
 
-1653230173 source:d:\sdlproject\src\maps\map.cpp
+1653235858 source:d:\sdlproject\src\maps\map.cpp
 	"Map.h"
 
 1652995083 source:d:\sdlproject\src\maps\tile.cpp
@@ -455,13 +453,13 @@
 1650205602 source:d:\sdlproject\src\tools\sdl_utils.cpp
 	"SDL_Utils.h"
 
-1652998826 source:d:\sdlproject\src\tools\texture.cpp
+1653243024 source:d:\sdlproject\src\tools\texture.cpp
 	"Texture.h"
 
 1652934284 source:d:\sdlproject\src\tools\textureclips.cpp
 	"TextureClips.h"
 
-1653230840 source:d:\sdlproject\src\maps\level_1.cpp
+1653239760 source:d:\sdlproject\src\maps\level_1.cpp
 	"Level_1.h"
 
 1653230545 d:\sdlproject\src\maps\level_1.h
@@ -479,7 +477,7 @@
 	"../Entities/Character.h"
 	"../Entities/Snake.h"
 
-1653230789 d:\sdlproject\src\maps\level_2.h
+1653242625 d:\sdlproject\src\maps\level_2.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_mixer.h>
@@ -494,12 +492,13 @@
 	"Map.h"
 	"../Entities/Character.h"
 	"../Entities/Snake.h"
+	"../Entities/Yetis.h"
 	"../Entities/Bomb.h"
 
-1653230824 source:d:\sdlproject\src\maps\level_2.cpp
+1653262747 source:d:\sdlproject\src\maps\level_2.cpp
 	"Level_2.h"
 
-1653231345 source:d:\sdlproject\src\maps\outro.cpp
+1653262696 source:d:\sdlproject\src\maps\outro.cpp
 	"Outro.h"
 
 1653231214 d:\sdlproject\src\maps\outro.h
@@ -512,4 +511,48 @@
 	"../Global.h"
 	"../Tools/Texture.h"
 	"Map.h"
+
+1653238140 d:\sdlproject\src\maps\intro.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	"../Global.h"
+	"../Tools/Texture.h"
+	"Map.h"
+
+1653262246 source:d:\sdlproject\src\maps\intro.cpp
+	"Intro.h"
+
+1653238702 d:\sdlproject\src\maps\gameover.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	"../Global.h"
+	"../Tools/Texture.h"
+	"Map.h"
+
+1653239524 source:d:\sdlproject\src\maps\gameover.cpp
+	"GameOver.h"
+
+1653262582 source:d:\sdlproject\src\entities\yetis.cpp
+	"Yetis.h"
+
+1653244239 d:\sdlproject\src\entities\yetis.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_mixer.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	<cmath>
+	<map>
+	"../Global.h"
+	"../Tools/Texture.h"
+	"../Tools/TextureClips.h"
 

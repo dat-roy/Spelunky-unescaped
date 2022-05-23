@@ -224,7 +224,7 @@ void Character::move(int dx, int dy)
 {
     if (is_forward)
     {
-        pos.x = std::min(pos.x + dx, SCREEN_WIDTH - 10);
+        pos.x = pos.x + dx;
     }
     else
     {
@@ -233,6 +233,31 @@ void Character::move(int dx, int dy)
     pos.y += dy;
     if (pos.y < 0) {pos.y = HEIGHT; action = STANDING;}
     if (pos.y > SCREEN_HEIGHT) pos.y = SCREEN_HEIGHT - HEIGHT;
+}
+
+void Character::setCamera(SDL_Rect& camera)
+{
+    //Center the camera
+    camera.x = ( pos.x + WIDTH / 2 ) - SCREEN_WIDTH / 2;
+    camera.y = ( pos.y + HEIGHT / 2 ) - SCREEN_HEIGHT / 2;
+
+    //Keep the camera in bounds
+    if( camera.x < 0 )
+    {
+        camera.x = 0;
+    }
+    if( camera.y < 0 )
+    {
+        camera.y = 0;
+    }
+    if( camera.x > LEVEL_WIDTH - camera.w )
+    {
+        camera.x = LEVEL_WIDTH - camera.w;
+    }
+    if( camera.y > LEVEL_HEIGHT - camera.h )
+    {
+        camera.y = LEVEL_HEIGHT - camera.h;
+    }
 }
 
 void Character::controlAction(const std::vector<std::vector<int>>& tileValue, int TILE_ROW, int TILE_COL, GameState& gameState)
@@ -327,50 +352,16 @@ void Character::controlAction(const std::vector<std::vector<int>>& tileValue, in
                     }
                 }
             }
-                ///UPPER
-                /*if (tile_rect.y > character_rect.y)
-                {
-                    std::cerr << "Hello upper \\";
-                    //If tile is a block
-                        switch (action)
-                        {
-                        case JUMPING_UP:
-                            std::cerr << "Jump up \n";
-                            int delta_y = character_rect.y - (tile_rect.y - tile_rect.h);
-                            move(0, -delta_y);
-                            action = JUMPING_DOWN;
-                            break;
-                        //case CLIMBING_UP:
-                          //  break;
-                        }
-                    }
-                }*/
-                ///Lower
-                /*if (tile_rect.y <= character_rect.y)
-                {
-                    std::cerr << "Hello lower \\";
-                    //If tile is a block
-                        std::cerr << "lower \n";
-                        if (action == STANDING || action == JUMPING_DOWN || action == CLIMBING_DOWN)
-                        {
-                            int delta_y = character_rect.h - (character_rect.y - tile_rect.y);
-                            move(0, delta_y);
-                            action = STANDING;
-                        }
-                    }
-                }*/
-
-
         }
     }
 }
 
 
-void Character::renderAction(SDL_Renderer* gRenderer)
+void Character::renderAction(SDL_Renderer* gRenderer, SDL_Rect camera)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
     actionTexture[action].render(
-            gRenderer, pos.x, SCREEN_HEIGHT - pos.y,
+            gRenderer, pos.x - camera.x, SCREEN_HEIGHT - pos.y - camera.y,
             &textureClips[action].clips[textureClips[action].getCurrentFrame() / 4],
             0.0, NULL, flipType);
 

@@ -30,8 +30,8 @@ class Bomb {
     TextureClips explodeClips = TextureClips(6);
 
 public:
-    const int WIDTH = 10;
-    const int HEIGHT = 10;
+    const int WIDTH = 30;
+    const int HEIGHT = 30;
 
     //Constructors & Destructors
     Bomb();
@@ -57,11 +57,13 @@ public:
 
     void handleEvent(SDL_Event& event, SDL_Point& mousePos, bool& mouseDown, bool& mousePressed);
     void computeTimeOfMotion();
-    void projectileMotion(SDL_Renderer* gRenderer);
+    void projectileMotion(SDL_Renderer* gRenderer, SDL_Rect camera);
     void updateState();
     void updateTime(double dt);
-    void renderBomb(SDL_Renderer* gRenderer);
-    void renderExplosion(SDL_Renderer* gRenderer);
+    void renderBomb(SDL_Renderer* gRenderer, SDL_Rect camera);
+    void renderExplosion(SDL_Renderer* gRenderer, SDL_Rect camera);
+
+    bool meetBarrier(std::vector<std::vector<int>> tileValue, int TILE_ROW, int TILE_COL);
 };
 
 #endif // bomb__H_

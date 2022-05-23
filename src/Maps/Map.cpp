@@ -89,7 +89,7 @@ void Map::renderBackground(SDL_Renderer* gRenderer, int x, int y)
     }
 }
 
-void Map::renderTiles(SDL_Renderer* gRenderer, int x, int y)
+void Map::renderTiles(SDL_Renderer* gRenderer, SDL_Rect camera)
 {
     for (int i = 1; i <= TILE_ROW; i++)
     {
@@ -98,12 +98,15 @@ void Map::renderTiles(SDL_Renderer* gRenderer, int x, int y)
             int value = tileValue[i][j];
             SDL_RendererFlip flipType = SDL_FLIP_NONE;
             if (value < 0 || value > TILE_COL * TILE_ROW) continue;
-            tileTexture.render(gRenderer, (j-1) * TILE_WIDTH, (i-1) * TILE_HEIGHT, &tileClips[value], NULL, NULL, flipType);
+            if (math::checkCollision(camera, {(j-1)*TILE_WIDTH, (i-1)*TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT}))
+            {
+                tileTexture.render(gRenderer, (j-1) * TILE_WIDTH - camera.x, (i-1) * TILE_HEIGHT - camera.y, &tileClips[value], NULL, NULL, flipType);
+            }
         }
     }
 }
 
-void Map::renderBorder(SDL_Renderer* gRenderer)
+void Map::renderBorder(SDL_Renderer* gRenderer, SDL_Rect camera)
 {
     for (int i = 1; i <= TILE_ROW; i++)
     {
@@ -137,7 +140,10 @@ void Map::renderBorder(SDL_Renderer* gRenderer)
             {
                 epsilon_x = -28;
             }
-            tileTexture.render(gRenderer, (j-1) * TILE_WIDTH + epsilon_x, (i-1) * TILE_HEIGHT + epsilon_y, &tileClips[value], NULL, NULL, flipType);
+            if (math::checkCollision(camera, {(j-1)*TILE_WIDTH, (i-1)*TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT}))
+            {
+                tileTexture.render(gRenderer, (j-1) * TILE_WIDTH + epsilon_x - camera.x, (i-1) * TILE_HEIGHT + epsilon_y - camera.y, &tileClips[value], NULL, NULL, flipType);
+            }
         }
     }
 }

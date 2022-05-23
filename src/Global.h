@@ -51,8 +51,8 @@ enum GameState {
     RUNNING_LEVEL_1,
     RUNNING_LEVEL_2,
     WINNING,
-    LOSING,
-    QUITING,
+    GAMEOVER,
+    QUITING
 };
 
 //Charater actions
@@ -68,6 +68,7 @@ enum ActionTypes {
     CLIMBING_UP,
     CLIMBING_DOWN,
     ATTACKING,
+    ROARING
 };
 
 

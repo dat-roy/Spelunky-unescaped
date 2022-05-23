@@ -109,19 +109,19 @@ void Bomb::handleEvent(SDL_Event& event, SDL_Point& mousePos, bool& mouseDown, b
     }
 }
 
-void Bomb::computeTimeOfMotion()
-{
-    double t1 = initVel * sin(alpha) / physics::GRAVITY;
-    double H = pow(initVel,2) * pow(sin(alpha),2) / (2 * physics::GRAVITY);
-    double t2 = sqrt( 2 * (H + initPos.y) / physics::GRAVITY);
-    maxTime = t1 + t2;
-}
+//void Bomb::computeTimeOfMotion()
+//{
+//    double t1 = initVel * sin(alpha) / physics::GRAVITY;
+//    double H = pow(initVel,2) * pow(sin(alpha),2) / (2 * physics::GRAVITY);
+//    double t2 = sqrt( 2 * (H + initPos.y) / physics::GRAVITY);
+//    maxTime = t1 + t2;
+//}
 
-void Bomb::projectileMotion(SDL_Renderer* gRenderer)
+void Bomb::projectileMotion(SDL_Renderer* gRenderer, SDL_Rect camera)
 {
     updateState();
     if (time != 0) {
-        renderBomb(gRenderer);
+        renderBomb(gRenderer, camera);
     }
 }
 
@@ -143,7 +143,7 @@ void Bomb::resetTime()
     time = 0;
 }
 
-void Bomb::renderBomb(SDL_Renderer* gRenderer)
+void Bomb::renderBomb(SDL_Renderer* gRenderer, SDL_Rect camera)
 {
     double angle = -alpha;
     if (velX != 0)
@@ -152,14 +152,43 @@ void Bomb::renderBomb(SDL_Renderer* gRenderer)
         if (velY > 0)
             angle = -angle;
     }
-    bombTexture.render(gRenderer, pos.x, SCREEN_HEIGHT - pos.y, NULL, math::deg(angle));
+    bombTexture.render(gRenderer, pos.x - camera.x, SCREEN_HEIGHT - pos.y - camera.y, NULL, math::deg(angle));
 }
 
-void Bomb::renderExplosion(SDL_Renderer* gRenderer)
+void Bomb::renderExplosion(SDL_Renderer* gRenderer, SDL_Rect camera)
 {
     for (int i = 0; i < explodeClips.getTotalFrames(); i++)
     {
-        explodeTexture.render(gRenderer, pos.x - 50, SCREEN_HEIGHT - pos.y - 50, &explodeClips.clips[i]);
+        explodeTexture.render(gRenderer, pos.x - 50 - camera.x, SCREEN_HEIGHT - pos.y - 50 - camera.y, &explodeClips.clips[i]);
         SDL_RenderPresent(gRenderer);
     }
+}
+
+bool Bomb::meetBarrier(std::vector<std::vector<int>> tileValue, int TILE_ROW, int TILE_COL)
+{
+    if (pos.y > LEVEL_HEIGHT || pos.y < 0) return true;
+    if (pos.x > LEVEL_WIDTH || pos.x < 0) return true;
+
+    for (int i = 1; i <= TILE_ROW; i++)
+    {
+        for (int j = 1; j <= TILE_COL; j++)
+        {
+            SDL_Rect tile_rect;
+            tile_rect.x = (j - 1) * TILE_WIDTH;
+            tile_rect.y = (TILE_ROW - i + 1) * TILE_HEIGHT;
+            tile_rect.w = TILE_WIDTH;
+            tile_rect.h = TILE_HEIGHT;
+
+            //Check tiles under character?
+            if (math::checkCollision({pos.x, pos.y, WIDTH, HEIGHT}, tile_rect))
+            {
+                //If it is a soil tile
+                if (tiles::isSoil(tileValue[i][j]))
+                {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
 }

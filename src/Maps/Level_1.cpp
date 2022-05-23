@@ -9,6 +9,13 @@ Level_1::~Level_1()
 
 void Level_1::display(SDL_Renderer* gRenderer, GameState& gameState, TTF_Font* gFont24, TTF_Font* gFont32, TTF_Font* gFont48)
 {
+    ///Camera
+    SDL_Rect camera;
+    camera.x = 0;
+    camera.y = 0;
+    camera.w = SCREEN_WIDTH;
+    camera.h = SCREEN_HEIGHT;
+
     ///Characters
     Character character({100, 64 * 2 + 117}, true);
     character.loadTextures(gRenderer);
@@ -34,6 +41,12 @@ void Level_1::display(SDL_Renderer* gRenderer, GameState& gameState, TTF_Font* g
 
     while (gameState == RUNNING_LEVEL_1)
     {
+        if (character.action == DYING)
+        {
+            SDL_Delay(500);
+            gameState = GAMEOVER;
+            return;
+        }
         SDL_Event event;
         while( SDL_PollEvent( &event ) != 0)
         {
@@ -52,17 +65,11 @@ void Level_1::display(SDL_Renderer* gRenderer, GameState& gameState, TTF_Font* g
         }
 
         level_1.renderBackground(gRenderer);
-        level_1.renderTiles(gRenderer);
-        level_1.renderBorder(gRenderer);
-
-        Texture text;
-        std::string content = "";
-        content = "Ninja in Jungle";
-        text.loadFromRenderedText( gRenderer, content, gFont32, { 0xFF, 0xFF, 0xFF });
-        text.render(gRenderer, ( SCREEN_WIDTH - text.getWidth() ) / 2, 150);
+        level_1.renderTiles(gRenderer, camera);
+        level_1.renderBorder(gRenderer, camera);
 
         character.controlAction(level_1.tileValue, level_1.TILE_ROW, level_1.TILE_COL, gameState);
-        character.renderAction(gRenderer);
+        character.renderAction(gRenderer, camera);
 
         for (auto &snake : snakes)
         {

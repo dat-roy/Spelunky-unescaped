@@ -40,8 +40,8 @@ public:
     void loadTiles(SDL_Renderer* gRenderer, std::string path);
 
     void renderBackground(SDL_Renderer* gRenderer, int x = 0, int y = 0);
-    void renderTiles(SDL_Renderer* gRenderer, int x = 0, int y = 0);
-    void renderBorder(SDL_Renderer* gRenderer);
+    void renderTiles(SDL_Renderer* gRenderer, SDL_Rect camera);
+    void renderBorder(SDL_Renderer* gRenderer, SDL_Rect camera);
 };
 
 #endif // MAP__H_

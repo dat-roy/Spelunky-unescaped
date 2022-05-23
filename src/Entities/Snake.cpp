@@ -73,9 +73,9 @@ SDL_Point Snake::getPos() {
 void Snake::renderAction(SDL_Renderer* gRenderer)
 {
     SDL_RendererFlip flipType = (is_forward) ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
-    snakeTexture.render(gRenderer, pos.x, SCREEN_HEIGHT - pos.y, &textureClips[action].clips[textureClips[action].getCurrentFrame() / 2], 0.0, NULL, flipType);
+    snakeTexture.render(gRenderer, pos.x, SCREEN_HEIGHT - pos.y, &textureClips[action].clips[textureClips[action].getCurrentFrame() / 3], 0.0, NULL, flipType);
     textureClips[action].nextFrame();
-    if (textureClips[action].getCurrentFrame() / 2 == textureClips[action].getTotalFrames())
+    if (textureClips[action].getCurrentFrame() / 3 == textureClips[action].getTotalFrames())
     {
         textureClips[action].resetFrame();
     }

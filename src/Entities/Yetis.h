@@ -1,5 +1,5 @@
-#ifndef SNAKE__H_
-#define SNAKE__H_
+#ifndef YETIS__H_
+#define YETIS__H_
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -14,29 +14,29 @@
 #include "../Tools/Texture.h"
 #include "../Tools/TextureClips.h"
 
-class Snake
+class Yetis
 {
     SDL_Point pos;
     SDL_Point initPos;
     bool is_forward;
-    int WIDTH = 95;
-    int HEIGHT = 95;
+    int WIDTH = 166;
+    int HEIGHT = 166;
 
-    Texture snakeTexture;
+    Texture yetisTexture;
 
     std::map<ActionTypes, TextureClips> textureClips =
     {
-        { CRAWLING, TextureClips(11) },
-        { ATTACKING, TextureClips(7) }
+        { WALKING, TextureClips(8) },
+        { ROARING, TextureClips(6) }
     };
 
 public:
     ActionTypes action;
 
     //Constructors & Destructors
-    Snake();
-    Snake(SDL_Point pos, bool is_forward = true);
-    ~Snake();
+    Yetis();
+    Yetis(SDL_Point pos, bool is_forward = true);
+    ~Yetis();
 
     //Getters
     SDL_Point getPos();
@@ -55,4 +55,4 @@ public:
     void renderAction(SDL_Renderer* gRenderer);
 };
 
-#endif //SNAKE__H_
+#endif // YETIS__H_

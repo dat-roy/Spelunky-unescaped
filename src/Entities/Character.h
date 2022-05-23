@@ -83,7 +83,7 @@ public:
     void controlAction(const std::vector<std::vector<int>>& tileValue, int TILE_ROW, int TILE_COL, GameState& gameState);
 
     //Render graphics
-    void renderAction(SDL_Renderer* gRenderer);
+    void renderAction(SDL_Renderer* gRenderer, SDL_Rect camera);
 };
 
 #endif // CHARACTER__H_

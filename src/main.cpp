@@ -11,14 +11,12 @@
 
 #include "Global.h"
 #include "Tools/SDL_Utils.h"
-#include "Tools/Texture.h"
 #include "Maps/Main_menu.h"
 #include "Maps/Level_1.h"
 #include "Maps/Level_2.h"
+#include "Maps/Intro.h"
 #include "Maps/Outro.h"
-#include "Entities/Bomb.h"
-#include "Entities/Character.h"
-#include "Entities/Snake.h"
+#include "Maps/GameOver.h"
 
 //SDL utilities
 SDL_Window* gWindow = NULL;
@@ -43,10 +41,11 @@ int main( int argc, char* args[] )
     }
 
     Main_menu mainMenu;
-    //Intro intro;
+    Intro intro;
     Level_1 mapLevel_1;
     Level_2 mapLevel_2;
     Outro outro;
+    GameOver gameOver;
     while( gameState != QUITING)
     {
         switch (gameState)
@@ -55,7 +54,7 @@ int main( int argc, char* args[] )
             mainMenu.display(gRenderer, gameState);
             break;
         case INTRO:
-            //intro.display();
+            intro.display(gRenderer, gameState, gFont24, gFont32, gFont48);
             break;
         case RUNNING_LEVEL_1:
             mapLevel_1.display(gRenderer, gameState, gFont24, gFont32, gFont48);
@@ -65,6 +64,9 @@ int main( int argc, char* args[] )
             break;
         case WINNING:
             outro.display(gRenderer, gameState, gFont24, gFont32, gFont48);
+            break;
+        case GAMEOVER:
+            gameOver.display(gRenderer, gameState, gFont24, gFont32, gFont48);
             break;
         }
     }

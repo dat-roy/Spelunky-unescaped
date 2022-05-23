@@ -53,7 +53,7 @@ void Main_menu::display(SDL_Renderer* gRenderer, GameState& gameState)
         }
         if (startButton.isSelected())
         {
-            gameState = RUNNING_LEVEL_1;
+            gameState = INTRO;
             return;
         }
         renderBackground(gRenderer);
