@@ -90,7 +90,10 @@ void Level_2::display(SDL_Renderer* gRenderer, GameState& gameState, TTF_Font* g
         yetis.renderAction(gRenderer);
         if (yetis.meet({character.getPos().x, character.getPos().y, character.getWidth() - 50, character.getHeight() - 50}))
         {
-            character.action = DYING;
+//            Texture text;
+//            std::string content = std::to_string(yetis.getPos().x);
+//            text.loadFromRenderedText( gRenderer, content, gFont32, { 0xFF, 0xFF, 0xFF });
+//            text.render(gRenderer, ( SCREEN_WIDTH - text.getWidth() ) / 2, 360);
         }
 
         for (auto &snake : snakes)
@@ -159,14 +162,8 @@ void Level_2::display(SDL_Renderer* gRenderer, GameState& gameState, TTF_Font* g
                         snake = nullptr;
                 }
             }
-            /*if (std::count(snakes.begin(), snakes.end(), nullptr) == (int)snakes.size())
-            {
-                //gameState = WINNING;
-                //return;
-            }
-            else
-            */
-                bomb.projectileMotion(gRenderer, camera);
+
+            bomb.projectileMotion(gRenderer, camera);
 
         }
         SDL_RenderPresent(gRenderer);

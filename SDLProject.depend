@@ -495,7 +495,7 @@
 	"../Entities/Yetis.h"
 	"../Entities/Bomb.h"
 
-1653262747 source:d:\sdlproject\src\maps\level_2.cpp
+1653292104 source:d:\sdlproject\src\maps\level_2.cpp
 	"Level_2.h"
 
 1653262696 source:d:\sdlproject\src\maps\outro.cpp
@@ -540,7 +540,7 @@
 1653239524 source:d:\sdlproject\src\maps\gameover.cpp
 	"GameOver.h"
 
-1653262582 source:d:\sdlproject\src\entities\yetis.cpp
+1653291249 source:d:\sdlproject\src\entities\yetis.cpp
 	"Yetis.h"
 
 1653244239 d:\sdlproject\src\entities\yetis.h
